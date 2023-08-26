@@ -1,0 +1,6 @@
+#tag {
+    background-color: var(--code-kbd-background-color);
+    color: var(--code-kbd-color);
+    vertical-align: baseline;
+    margin: 0.15rem;
+}

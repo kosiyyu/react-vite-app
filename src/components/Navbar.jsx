@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import setThemeStrategy from '../theme/setThemeStrategy'
 import ThemeStrategy from '../enum/ThemeStrategy'
+import { Link } from 'react-router-dom'
 
 function Navbar() {
 
@@ -17,9 +18,9 @@ function Navbar() {
         <nav className="container-fluid">
         <ul>
           <li>
-            <a href="./" className="primary">
+            <Link to="/" className="primary">
               <strong>Kot morderca nie ma serca</strong>
-            </a>
+            </Link>
           </li>
         </ul>
         <ul>
@@ -40,9 +41,9 @@ function Navbar() {
             <details role="list">
               <summary role="link" className="secondary">Resource Links</summary>
               <ul role="listbox">
-                <li><a href="../home/">🏠 Home</a></li>
-                <li><a href="../articles/">📰 Articles</a></li>
-                <li><a href="../settings/">⚙️ Settings</a></li>
+                <li><Link to="/">🏠 Home</Link></li>
+                <li><Link to="/articles">📰 Articles</Link></li>
+                <li><Link to="/settings">⚙️ Settings</Link></li>
               </ul>
             </details>
           </li>
