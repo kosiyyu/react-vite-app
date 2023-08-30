@@ -36,7 +36,7 @@ function ArticleList() {
                 <tbody>
                     {articles.map((article, index) => (
                         <tr scope="row" key={index}>
-                            <td>{index + 1}</td>
+                            <td><Link to={`/articles/${article.id}`}>{index + 1}</Link></td>
                             <td>{article.title1}</td>
                             <td>{article.issn1}</td>
                             <td>{article.eissn1}</td>
@@ -44,25 +44,10 @@ function ArticleList() {
                             <td>{article.issn2}</td>
                             <td>{article.title2}</td>
                             <td>
-                                {/* dummy tags */}
-                                <Link><Tag>Informatyka</Tag></Link>
-                                <Link><Tag>Fizyka molekularna</Tag></Link>
-                                <Link><Tag>Matematyka</Tag></Link>
-                                <Link><Tag>IT</Tag></Link>
-                                <Link><Tag>ML</Tag></Link>
-                                <Link><Tag>System</Tag></Link>
-                                <Link><Tag>Book</Tag></Link>
-                                <Link><Tag>OSLA</Tag></Link>
-                                <Link><Tag>Science material</Tag></Link>
-                                <Link><Tag>MIT-LICENCE</Tag></Link>
-                                <Link><Tag>Research</Tag></Link>
-                                <Link><Tag>Thesis</Tag></Link>
-                                <Link><Tag>FFA</Tag></Link>
-                                <Link><Tag>Limbo</Tag></Link>
-                                <Link><Tag>DAtabase</Tag></Link>
-                                <Link><Tag>ORM</Tag></Link>
-                        </td>
-
+                                {article.tags.map((tag, tagIndex) => (
+                                    <Tag tagId={tag.id}key={tagIndex}>{tag.value}</Tag>
+                                ))}
+                            </td>
                         </tr>
                     ))}
                 </tbody>

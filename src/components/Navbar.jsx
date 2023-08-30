@@ -44,6 +44,7 @@ function Navbar() {
                 <li><Link to="/">🏠 Home</Link></li>
                 <li><Link to="/articles">📰 Articles</Link></li>
                 <li><Link to="/settings">⚙️ Settings</Link></li>
+                <li><Link to="/tags">🏷️ Tags</Link></li>
               </ul>
             </details>
           </li>
