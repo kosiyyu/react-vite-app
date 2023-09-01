@@ -7,22 +7,25 @@ Tag.propTypes  = {
 }
 
 function Tag(props) {
+    // const num = props.tagId
+    // const n = 10 // numer of colors
+    // const jump = 30 // jump value
+    
+    // // const n = 30 // numer of colors
+    // // const jump = 10 // jump value
 
-    const num = props.tagId
-    const n = 10 // numer of colors
-    const jump = 30 // jump value
-    
-    
-    // const n = 30 // numer of colors
-    // const jump = 10 // jump value
+    // const tagStyle = {
+    //     //backgroundColor: `hsl(${((num % n) + 1) * jump}, 100%, 50%)`
+    //     backgroundColor: `hsl(${((num % n) + 1) * jump}, 100%, 50%)`
+    // };
 
     const tagStyle = {
-        //backgroundColor: `hsl(${((num % n) + 1) * jump}, 100%, 50%)`
-        backgroundColor: `hsl(${((num % n) + 1) * jump}, 100%, 50%)`
+        backgroundColor: `hsl(10%, 30%, 50%)`
     };
 
     return (
         <>
+            {/* <kbd id="tag" style={tagStyle}>{props.children}</kbd> */}
             <kbd id="tag" style={tagStyle}>{props.children}</kbd>
         </>
     )

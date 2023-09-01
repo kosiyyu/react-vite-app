@@ -10,16 +10,14 @@ function setThemeStrategy(themeStrategy) {
 
     const html = document.documentElement
     const currentTheme = html.getAttribute('data-theme')
+    let preferedTheme = DEFAULT_THEME
 
     if (!html || currentTheme === null) {
         return;
     }
 
     switch(themeStrategy){
-        case ThemeStrategy.AUTO:
-            // dark is default theme
-            let preferedTheme = DEFAULT_THEME
-
+        case ThemeStrategy.AUTO:            
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 preferedTheme = 'dark'
             }

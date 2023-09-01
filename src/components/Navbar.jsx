@@ -4,7 +4,6 @@ import ThemeStrategy from '../enum/ThemeStrategy'
 import { Link } from 'react-router-dom'
 
 function Navbar() {
-
     const changeTheme = (themeStrategy) => {
       setThemeStrategy(themeStrategy)
     }
@@ -50,6 +49,7 @@ function Navbar() {
           </li>
         </ul>
       </nav>
+      <hr />
     </>
     )
 }

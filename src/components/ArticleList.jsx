@@ -20,7 +20,7 @@ function ArticleList() {
 
     return(
         <section id="preview">
-            <table>
+            <table role="grid">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -36,7 +36,7 @@ function ArticleList() {
                 <tbody>
                     {articles.map((article, index) => (
                         <tr scope="row" key={index}>
-                            <td><Link to={`/articles/${article.id}`}>{index + 1}</Link></td>
+                            <td><Link to={`/article/${article.id}`}>{index + 1}</Link></td>
                             <td>{article.title1}</td>
                             <td>{article.issn1}</td>
                             <td>{article.eissn1}</td>
