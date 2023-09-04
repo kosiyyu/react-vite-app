@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types'
 
 Header.propTypes = {
-    headerValue: PropTypes.string.isRequired
+    children: PropTypes.node.isRequired
 }
 
-function Header(props) {
+function Header({children}) {
     return(
-        <>
-            <h1>{props.headerValue}</h1>
-            <hr />
-        </>
+        <hgroup>
+            <h1>{children}</h1>
+            <h2>You can specify sth ble ble</h2>
+        </hgroup>
     )
 }
 

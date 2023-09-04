@@ -4,8 +4,9 @@ function NotFound() {
     console.log("aa")
     return (
         <>
-            <Header headerValue="404 error - page not found"></Header>
+            <Header>404 error - page not found</Header>
             {/* <div id="streach"> </div> */}
+            
         </>
     )
 }
