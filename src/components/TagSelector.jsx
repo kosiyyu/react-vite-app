@@ -33,8 +33,9 @@ function TagSelector(){
             setSelectedTags([...selectedTags, tag])
             setTags(xArray => xArray.filter(x => x !== tag))
         }
-        // tododefine display strategy (it's more for backend imo)
+        // todo define display strategy (it's more for backend imo)
         // todo correct placement or sorting
+        // instead of deleting tags,  hide them dynamically.
     }
 
     return (
