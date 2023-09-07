@@ -27,15 +27,12 @@ function TagSelector(){
     const selectTag = (tag) => {
         if(selectedTags.includes(tag)) {
             setSelectedTags(xArray => xArray.filter(x => x !== tag))
-            setTags([...tags, tag])
         }    
         else {
             setSelectedTags([...selectedTags, tag])
-            setTags(xArray => xArray.filter(x => x !== tag))
         }
         // todo define display strategy (it's more for backend imo)
         // todo correct placement or sorting
-        // instead of deleting tags,  hide them dynamically.
     }
 
     return (
@@ -51,9 +48,15 @@ function TagSelector(){
                 ))}
             </div>
             <div>
-                {searchTerm !== '' && tags.filter(tag => tag.value.toLowerCase().includes(searchTerm.toLowerCase())).map((tag, index) => (
-                    <Tag tagId={tag.id} onClick={() => selectTag(tag)} key={index}>{tag.value}</Tag>
-                ))}
+                {searchTerm !== '' && 
+                    tags
+                        .filter(array => !selectedTags.includes(array))
+                        .filter(tag => tag.value.toLowerCase().includes(searchTerm.toLowerCase()))
+                        .map((tag, index) => (
+                            <Tag tagId={tag.id} onClick={() => selectTag(tag)} key={index}>{tag.value}</Tag>
+                        )
+                    )
+                }
             </div>
         </form>
     )
