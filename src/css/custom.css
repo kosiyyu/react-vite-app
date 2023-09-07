@@ -4,3 +4,20 @@
     vertical-align: baseline;
     margin: 0.15rem;
 }
+
+#streach {
+    background-image: url('../assets/fail.gif');
+    background-size: cover;
+    /*background-repeat: no-repeat;*/
+    background-position: center;
+    width: 30vw; /* 100% of the viewport width */
+    height: 30vh; /* 100% of the viewport height */
+}
+
+/* html {
+    background-image: url('../assets/sssquiggly.svg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: repeat;
+} */
+

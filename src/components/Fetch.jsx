@@ -17,7 +17,7 @@ function Fetch() {
                 console.log(response.data)
             })
             .catch(error => {
-                console.log('ERROR')
+                console.log(`ERROR: ${error}`)
             })
     }, [])
 

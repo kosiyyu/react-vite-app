@@ -1,10 +1,9 @@
-import ArticleList from "../components/ArticleList"
+import ArticleList from "../../components/ArticleList"
 
 function Articles() {
-
     return (
         <>
-            <h1>Articles asdasdasdas</h1>
+            <h1>Articles</h1>
             <ArticleList></ArticleList>
         </>
     )
