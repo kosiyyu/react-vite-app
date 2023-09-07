@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 
 Tag.propTypes  = {
     children: PropTypes.node.isRequired,
-    tagId: PropTypes.number.isRequired
+    tagId: PropTypes.number.isRequired,
+    onClick: PropTypes.func
 }
 
 function Tag(props) {
@@ -20,13 +21,14 @@ function Tag(props) {
     // };
 
     const tagStyle = {
-        backgroundColor: `hsl(10%, 30%, 50%)`
+        backgroundColor: `hsl(10%, 30%, 50%)`,
+        cursor: 'pointer'
     };
 
     return (
         <>
             {/* <kbd id="tag" style={tagStyle}>{props.children}</kbd> */}
-            <kbd id="tag" style={tagStyle}>{props.children}</kbd>
+            <kbd id="tag" style={tagStyle} onClick={props.onClick}>{props.children.toLowerCase()}</kbd>
         </>
     )
 }

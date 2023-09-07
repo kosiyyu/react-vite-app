@@ -45,7 +45,7 @@ function ArticleList() {
                             <td>{article.title2}</td>
                             <td>
                                 {article.tags.map((tag, tagIndex) => (
-                                    <Tag tagId={tag.id}key={tagIndex}>{tag.value}</Tag>
+                                    <Tag tagId={tag.id} key={tagIndex}>{tag.value}</Tag>
                                 ))}
                             </td>
                         </tr>

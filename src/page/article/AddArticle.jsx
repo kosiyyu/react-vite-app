@@ -59,43 +59,43 @@ function AddArticle() {
         <>
             <Header>Add article</Header>
             <article>
-                <label>
-                    Title
-                    <input placeholder="Title" required/>
-                </label>
-                <div className="grid">
                     <label>
-                        Issn code
-                        <input placeholder="Issn code" required/>
+                        Title
+                        <input placeholder="Title" required/>
                     </label>
+                    <div className="grid">
+                        <label>
+                            Issn code
+                            <input placeholder="Issn code" required/>
+                        </label>
+                        <label>
+                            E-issn code
+                            <input placeholder="E-issn code" required/>
+                        </label>                 
+                    </div>
                     <label>
-                        E-issn code
-                        <input placeholder="E-issn code" required/>
-                    </label>                 
-                </div>
-                <label>
-                    Title 2
-                    <input placeholder="Title 2"/>
-                </label>
-                <div className="grid">
-                    <label>
-                        Issn code 2
-                        <input placeholder="Issn code 2"/>
+                        Title 2
+                        <input placeholder="Title 2"/>
                     </label>
-                    <label>
-                        E-issn code 2
-                        <input placeholder="E-issn code 2"/>
-                    </label>                 
-                </div>
-                <div>
-                    <TagSelector />
-                </div>
-                <label>File browser
-                        <input type="file"/>
-                    </label>
-                <button onClick={() => sendArticle()}>
-                    Send
-                </button>
+                    <div className="grid">
+                        <label>
+                            Issn code 2
+                            <input placeholder="Issn code 2"/>
+                        </label>
+                        <label>
+                            E-issn code 2
+                            <input placeholder="E-issn code 2"/>
+                        </label>                 
+                    </div>
+                    <div>
+                        <TagSelector />
+                    </div>
+                    <label>File browser
+                            <input type="file"/>
+                        </label>
+                    <button onClick={() => sendArticle()}>
+                        Send
+                    </button>
             </article>
         </>
     )
