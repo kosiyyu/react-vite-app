@@ -26,7 +26,7 @@ function TagSelector(){
 
     const selectTag = (tag) => {
         if(selectedTags.includes(tag)) {
-            setSelectedTags(xArray => xArray.filter(x => x !== tag))
+            setSelectedTags(array => array.filter(x => x !== tag))
         }    
         else {
             setSelectedTags([...selectedTags, tag])
@@ -36,7 +36,7 @@ function TagSelector(){
     }
 
     return (
-        <form>
+        <>
             <label>
                 Search tag
                 <input value={searchTerm} onChange={search} type="search" />
@@ -58,7 +58,7 @@ function TagSelector(){
                     )
                 }
             </div>
-        </form>
+        </>
     )
 }
 

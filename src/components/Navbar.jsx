@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import setThemeStrategy from '../theme/setThemeStrategy'
-import ThemeStrategy from '../enum/ThemeStrategy'
+import ThemeStrategy from '../theme/ThemeStrategy'
 import { Link } from 'react-router-dom'
 
 function Navbar() {

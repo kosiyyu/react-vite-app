@@ -1,5 +1,5 @@
 import DEFAULT_THEME from '../global'
-import ThemeStrategy from '../enum/ThemeStrategy'
+import ThemeStrategy from './ThemeStrategy'
 
 /**
  * 
