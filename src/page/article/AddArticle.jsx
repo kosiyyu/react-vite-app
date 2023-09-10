@@ -7,7 +7,9 @@ import Header from "../../components/Header"
 import TagSelector from "../../components/TagSelector"
 
 function AddArticle() {
-  const isMount = useIsMount();
+  const isMountArticle = useIsMount();
+  const isMountTags = useIsMount();
+  const [tags, setTags] = useState([])
   const [article, setArticle] = useState({
     "article": {
       "id": null,
@@ -24,7 +26,7 @@ function AddArticle() {
   })
 
   useEffect(() => {
-    if (isMount)
+    if (isMountArticle)
       return
     console.log(article)
     axios.post(ARTICLE_BUNDLE_POST_URL, article)
@@ -34,7 +36,13 @@ function AddArticle() {
     .catch((error) => {
       console.error(`ERROR: ${error}`)
     })
-  }, [article, isMount])
+  }, [article, isMountArticle])
+
+  useEffect(()=>{
+    if(isMountTags)
+      return
+    console.log(tags)
+  }, [tags, isMountTags])
 
   function updateArticle(e){
     e.preventDefault() 
@@ -48,17 +56,19 @@ function AddArticle() {
             "title2": e.target.elements.title2.value,
             "issn2": e.target.elements.issn2.value,
             "eissn2": e.target.elements.eissn2.value,
-            "tags": [
-              {"value": "Diagram"},
-              {"value": "0"}
-            ]
+            "tags": tags
           },
           "originalFilename": "AAA.txt",
           "byteArray": "QUFB"
       }
     }))
+    console.log(article)
   }
 
+  // async function test(value){
+  //   console.log(value)
+  //   setTags(value)
+  // }
 
   return (
     <>
@@ -75,10 +85,10 @@ function AddArticle() {
             <label>E-issn code 2<input name="eissn2" placeholder="E-issn code 2"/></label>                 
         </div>
         <div>
-            <TagSelector />
+            <TagSelector tags={(value) => setTags(value)}/>
         </div>
         <label>File browser<input type="file"/></label>
-        <button type="submit">Send</button>
+        <button type="submit" >Send</button>
       </form>
     </>
   )

@@ -1,14 +1,21 @@
 import { useState, useEffect } from "react"
 import { TAGS_DOWNLOAD_URL } from '../global'
+import PropTypes from 'prop-types'
 import axios from "axios"
 import TagCorrect from "./TagCorrect"
 import Tag from "./Tag"
+import useIsMount from "../hooks/useIsMount"
 //import TagNotFoundModal from "./TagNotFoundModal"
 
-function TagSelector(){
+TagSelector.propTypes  = {
+    tags: PropTypes.func.isRequired
+}
+
+function TagSelector(props){
     const [tags, setTags] = useState([])
     const [selectedTags, setSelectedTags] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
+    const isMount = useIsMount();
 
     useEffect(()=>{
         axios.get(TAGS_DOWNLOAD_URL)
@@ -19,7 +26,15 @@ function TagSelector(){
             .catch(error => {
                 console.log(`error ${error}`)
             })
-    }, [])
+        }, [])
+
+    useEffect(()=>{
+        if(isMount)
+            return
+        props.tags(selectedTags)
+        //console.log('TagSelector change')
+        //console.log(selectedTags)
+    }, [props])
 
     const search = (event) => {
         setSearchTerm(event.target.value)
