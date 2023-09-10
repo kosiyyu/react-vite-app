@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react"
-import Tag from "./Tag"
+import { useState, useEffect } from "react"
+import { TAGS_DOWNLOAD_URL } from '../global'
 import axios from "axios"
-//import TagNotFoundModal from "./TagNotFoundModal"
 import TagCorrect from "./TagCorrect"
+import Tag from "./Tag"
+//import TagNotFoundModal from "./TagNotFoundModal"
 
 function TagSelector(){
     const [tags, setTags] = useState([])
@@ -10,7 +11,7 @@ function TagSelector(){
     const [searchTerm, setSearchTerm] = useState('')
 
     useEffect(()=>{
-        axios.get('http://localhost:8081/api/v1/tags/download')
+        axios.get(TAGS_DOWNLOAD_URL)
             .then(object => {
                 setTags(object.data)
                 console.log(object.data)

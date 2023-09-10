@@ -1,9 +1,10 @@
 import { useState } from "react"
+import { useEffect } from "react"
+import { ARTICLE_BUNDLE_POST_URL } from "./../../global"
+import useIsMount from "../../hooks/useIsMount"
+import axios from "axios"
 import Header from "../../components/Header"
 import TagSelector from "../../components/TagSelector"
-import { useEffect } from "react"
-import axios from "axios"
-import useIsMount from "../../hooks/useIsMount"
 
 function AddArticle() {
   const isMount = useIsMount();
@@ -26,7 +27,7 @@ function AddArticle() {
     if (isMount)
       return
     console.log(article)
-    axios.post('http://localhost:8081/api/v1/article/bundle/upload/', article)
+    axios.post(ARTICLE_BUNDLE_POST_URL, article)
     .then((response) => {
       console.log(`SUCCESS: ${response.data}`)
     })

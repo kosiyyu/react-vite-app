@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom"
-import Header from "../../components/Header";
 import { useEffect } from "react";
+import { ARTICLE_DOWNLOAD_URL } from "../../global"
+import Header from "../../components/Header";
 import axios from "axios";
 
 function Article() {
@@ -9,7 +10,7 @@ function Article() {
     // dummy fetch later, bundle object with file + article will be needed, but it needs to be implemented in backend
 
     useEffect(()=>{
-        axios.get(`http://localhost:8081/api/v1/article/download/${articleId}`)
+        axios.get(ARTICLE_DOWNLOAD_URL(articleId))
             .then(response => {
                 console.log(response.data)
             })

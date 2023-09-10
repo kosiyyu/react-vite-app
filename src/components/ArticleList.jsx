@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import { ARTICLES_DOWNLOAD_URL } from "../global"
 import axios from 'axios'
 import Tag from '../components/Tag'
 import { Link } from 'react-router-dom'
@@ -8,7 +8,7 @@ function ArticleList() {
     const [articles, setArticles] = useState([]);
 
     useEffect(()=>{
-        axios.get("http://localhost:8081/api/v1/articles/download")
+        axios.get(ARTICLES_DOWNLOAD_URL)
             .then(response => {
                 setArticles(response.data)
                 console.log(response.data)

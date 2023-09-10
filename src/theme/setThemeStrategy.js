@@ -1,4 +1,4 @@
-import DEFAULT_THEME from '../global'
+import { DEFAULT_THEME } from '../global'
 import ThemeStrategy from './ThemeStrategy'
 
 /**
