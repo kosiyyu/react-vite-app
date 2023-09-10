@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react"
-import Tag from "./Tag"
+import { useState, useEffect } from "react"
+import { TAGS_DOWNLOAD_URL } from '../global'
 import axios from "axios"
-//import TagNotFoundModal from "./TagNotFoundModal"
 import TagCorrect from "./TagCorrect"
+import Tag from "./Tag"
+//import TagNotFoundModal from "./TagNotFoundModal"
 
 function TagSelector(){
     const [tags, setTags] = useState([])
@@ -10,7 +11,7 @@ function TagSelector(){
     const [searchTerm, setSearchTerm] = useState('')
 
     useEffect(()=>{
-        axios.get('http://localhost:8081/api/v1/tags/download')
+        axios.get(TAGS_DOWNLOAD_URL)
             .then(object => {
                 setTags(object.data)
                 console.log(object.data)
@@ -26,20 +27,17 @@ function TagSelector(){
 
     const selectTag = (tag) => {
         if(selectedTags.includes(tag)) {
-            setSelectedTags(xArray => xArray.filter(x => x !== tag))
-            setTags([...tags, tag])
+            setSelectedTags(array => array.filter(x => x !== tag))
         }    
         else {
             setSelectedTags([...selectedTags, tag])
-            setTags(xArray => xArray.filter(x => x !== tag))
         }
         // todo define display strategy (it's more for backend imo)
         // todo correct placement or sorting
-        // instead of deleting tags,  hide them dynamically.
     }
 
     return (
-        <form>
+        <>
             <label>
                 Search tag
                 <input value={searchTerm} onChange={search} type="search" />
@@ -51,11 +49,17 @@ function TagSelector(){
                 ))}
             </div>
             <div>
-                {searchTerm !== '' && tags.filter(tag => tag.value.toLowerCase().includes(searchTerm.toLowerCase())).map((tag, index) => (
-                    <Tag tagId={tag.id} onClick={() => selectTag(tag)} key={index}>{tag.value}</Tag>
-                ))}
+                {searchTerm !== '' && 
+                    tags
+                        .filter(array => !selectedTags.includes(array))
+                        .filter(tag => tag.value.toLowerCase().includes(searchTerm.toLowerCase()))
+                        .map((tag, index) => (
+                            <Tag tagId={tag.id} onClick={() => selectTag(tag)} key={index}>{tag.value}</Tag>
+                        )
+                    )
+                }
             </div>
-        </form>
+        </>
     )
 }
 
