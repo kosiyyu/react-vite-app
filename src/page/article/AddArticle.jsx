@@ -28,7 +28,6 @@ function AddArticle() {
   useEffect(() => {
     if (isMountArticle)
       return
-    console.log(article)
     axios.post(ARTICLE_BUNDLE_POST_URL, article)
     .then((response) => {
       console.log(`SUCCESS: ${response.data}`)
@@ -36,13 +35,12 @@ function AddArticle() {
     .catch((error) => {
       console.error(`ERROR: ${error}`)
     })
-  }, [article, isMountArticle])
+  }, [article])
 
   useEffect(()=>{
     if(isMountTags)
       return
-    console.log(tags)
-  }, [tags, isMountTags])
+  }, [tags])
 
   function updateArticle(e){
     e.preventDefault() 
@@ -62,13 +60,11 @@ function AddArticle() {
           "byteArray": "QUFB"
       }
     }))
-    console.log(article)
   }
 
-  // async function test(value){
-  //   console.log(value)
-  //   setTags(value)
-  // }
+  function transferTags(value){
+    setTags(value)
+  }
 
   return (
     <>
@@ -85,7 +81,7 @@ function AddArticle() {
             <label>E-issn code 2<input name="eissn2" placeholder="E-issn code 2"/></label>                 
         </div>
         <div>
-            <TagSelector tags={(value) => setTags(value)}/>
+            <TagSelector transferTags={(value) => transferTags(value)}/>
         </div>
         <label>File browser<input type="file"/></label>
         <button type="submit" >Send</button>

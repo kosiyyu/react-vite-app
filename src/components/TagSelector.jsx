@@ -8,7 +8,7 @@ import useIsMount from "../hooks/useIsMount"
 //import TagNotFoundModal from "./TagNotFoundModal"
 
 TagSelector.propTypes  = {
-    tags: PropTypes.func.isRequired
+    transferTags: PropTypes.func.isRequired
 }
 
 function TagSelector(props){
@@ -21,20 +21,17 @@ function TagSelector(props){
         axios.get(TAGS_DOWNLOAD_URL)
             .then(object => {
                 setTags(object.data)
-                console.log(object.data)
             })
             .catch(error => {
-                console.log(`error ${error}`)
+                console.error(`error ${error}`)
             })
         }, [])
 
     useEffect(()=>{
         if(isMount)
-            return
-        props.tags(selectedTags)
-        //console.log('TagSelector change')
-        //console.log(selectedTags)
-    }, [props])
+             return
+        props.transferTags(selectedTags)
+    }, [selectedTags])
 
     const search = (event) => {
         setSearchTerm(event.target.value)
@@ -52,7 +49,7 @@ function TagSelector(props){
     }
 
     return (
-        <>
+        <div>
             <label>
                 Search tag
                 <input value={searchTerm} onChange={search} type="search" />
@@ -74,7 +71,7 @@ function TagSelector(props){
                     )
                 }
             </div>
-        </>
+        </div>
     )
 }
 
