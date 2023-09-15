@@ -7,9 +7,10 @@ import Header from "../../components/Header"
 import TagSelector from "../../components/TagSelector"
 
 function AddArticle() {
-  const isMountArticle = useIsMount();
-  const isMountTags = useIsMount();
-  const [tags, setTags] = useState([])
+  const isMoutFile = useIsMount()
+  const isMountArticle = useIsMount()
+  const isMountTags = useIsMount()
+  const [file, setFile] = useState(null)
   const [article, setArticle] = useState({
     "article": {
       "id": null,
@@ -20,15 +21,26 @@ function AddArticle() {
       "issn2": null,
       "eissn2": null,
       "tags": []
-    },
-    "originalFilename": null,
-    "byteArray": null
+    }
   })
+  const [tags, setTags] = useState([])
+
+  useEffect(() => {
+    if(isMoutFile)
+      return
+  }, [file])
 
   useEffect(() => {
     if (isMountArticle)
       return
-    axios.post(ARTICLE_BUNDLE_POST_URL, article)
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('article', article)
+    axios.post(ARTICLE_BUNDLE_POST_URL, formData, {
+      "headers": {
+        "Content-Type": "multipart/form-data"
+      }
+    })
     .then((response) => {
       console.log(`SUCCESS: ${response.data}`)
     })
@@ -42,7 +54,7 @@ function AddArticle() {
       return
   }, [tags])
 
-  function updateArticle(e){
+  function updateData(e){
     e.preventDefault() 
     setArticle((x) => ({
       ...x,
@@ -55,9 +67,7 @@ function AddArticle() {
             "issn2": e.target.elements.issn2.value,
             "eissn2": e.target.elements.eissn2.value,
             "tags": tags
-          },
-          "originalFilename": "AAA.txt",
-          "byteArray": "QUFB"
+          }
       }
     }))
   }
@@ -69,7 +79,7 @@ function AddArticle() {
   return (
     <>
       <Header>Add article</Header>
-      <form onSubmit={(e) => updateArticle(e)}>
+      <form onSubmit={(e) => updateData(e)}>
         <label>Title<input name="title" placeholder="Title" required/></label>
         <div className="grid">
             <label>Issn code<input name="issn" placeholder="Issn code"/></label>
@@ -83,8 +93,8 @@ function AddArticle() {
         <div>
             <TagSelector transferTags={(value) => transferTags(value)}/>
         </div>
-        <label>File browser<input type="file"/></label>
-        <button type="submit" >Send</button>
+        <label>File browser<input type="file" onChange={(e) => setFile(e.target.files[0])}/></label>
+        <button type="submit">Send</button>
       </form>
     </>
   )
