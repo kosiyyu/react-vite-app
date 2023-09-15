@@ -11,9 +11,9 @@ function AddArticle() {
   const isMountArticle = useIsMount()
   const isMountTags = useIsMount()
   const [file, setFile] = useState(null)
-  const [article, setArticle] = useState({
-    "article": {
-      "id": null,
+  const [article, setArticle] = useState(
+    {
+      //"id": null,
       "title1": null,
       "issn1": null,
       "eissn1": null,
@@ -22,7 +22,7 @@ function AddArticle() {
       "eissn2": null,
       "tags": []
     }
-  })
+  )
   const [tags, setTags] = useState([])
 
   useEffect(() => {
@@ -35,7 +35,7 @@ function AddArticle() {
       return
     const formData = new FormData()
     formData.append('file', file)
-    formData.append('article', article)
+    formData.append('article', JSON.stringify(article))
     axios.post(ARTICLE_BUNDLE_POST_URL, formData, {
       "headers": {
         "Content-Type": "multipart/form-data"
@@ -59,17 +59,16 @@ function AddArticle() {
     setArticle((x) => ({
       ...x,
       ...{
-        "article": {
-            "title1": e.target.elements.title.value,
-            "issn1": e.target.elements.issn.value,
-            "eissn1": e.target.elements.eissn.value,
-            "title2": e.target.elements.title2.value,
-            "issn2": e.target.elements.issn2.value,
-            "eissn2": e.target.elements.eissn2.value,
-            "tags": tags
-          }
+          "title1": e.target.elements.title.value,
+          "issn1": e.target.elements.issn.value,
+          "eissn1": e.target.elements.eissn.value,
+          "title2": e.target.elements.title2.value,
+          "issn2": e.target.elements.issn2.value,
+          "eissn2": e.target.elements.eissn2.value,
+          "tags": tags
+        }
       }
-    }))
+    ))
   }
 
   function transferTags(value){

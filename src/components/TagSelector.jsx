@@ -64,7 +64,7 @@ function TagSelector(props){
                 {searchTerm !== '' && 
                     tags
                         .filter(array => !selectedTags.includes(array))
-                        .filter(tag => tag.value.toLowerCase().includes(searchTerm.toLowerCase()))
+                        .filter(tag => tag.value?.toLowerCase().includes(searchTerm.toLowerCase()))
                         .map((tag, index) => (
                             <Tag tagId={tag.id} onClick={() => selectTag(tag)} key={index}>{tag.value}</Tag>
                         )
