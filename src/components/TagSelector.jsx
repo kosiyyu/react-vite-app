@@ -1,25 +1,37 @@
 import { useState, useEffect } from "react"
 import { TAGS_DOWNLOAD_URL } from '../global'
+import PropTypes from 'prop-types'
 import axios from "axios"
 import TagCorrect from "./TagCorrect"
 import Tag from "./Tag"
+import useIsMount from "../hooks/useIsMount"
 //import TagNotFoundModal from "./TagNotFoundModal"
 
-function TagSelector(){
+TagSelector.propTypes  = {
+    transferTags: PropTypes.func.isRequired
+}
+
+function TagSelector(props){
     const [tags, setTags] = useState([])
     const [selectedTags, setSelectedTags] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
+    const isMount = useIsMount();
 
     useEffect(()=>{
         axios.get(TAGS_DOWNLOAD_URL)
             .then(object => {
                 setTags(object.data)
-                console.log(object.data)
             })
             .catch(error => {
-                console.log(`error ${error}`)
+                console.error(`error ${error}`)
             })
-    }, [])
+        }, [])
+
+    useEffect(()=>{
+        if(isMount)
+             return
+        props.transferTags(selectedTags)
+    }, [selectedTags])
 
     const search = (event) => {
         setSearchTerm(event.target.value)
@@ -37,7 +49,7 @@ function TagSelector(){
     }
 
     return (
-        <>
+        <div>
             <label>
                 Search tag
                 <input value={searchTerm} onChange={search} type="search" />
@@ -52,14 +64,14 @@ function TagSelector(){
                 {searchTerm !== '' && 
                     tags
                         .filter(array => !selectedTags.includes(array))
-                        .filter(tag => tag.value.toLowerCase().includes(searchTerm.toLowerCase()))
+                        .filter(tag => tag.value?.toLowerCase().includes(searchTerm.toLowerCase()))
                         .map((tag, index) => (
                             <Tag tagId={tag.id} onClick={() => selectTag(tag)} key={index}>{tag.value}</Tag>
                         )
                     )
                 }
             </div>
-        </>
+        </div>
     )
 }
 

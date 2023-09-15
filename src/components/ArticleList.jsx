@@ -6,12 +6,13 @@ import { Link } from 'react-router-dom'
 
 function ArticleList() {
     const [articles, setArticles] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(()=>{
         axios.get(ARTICLES_DOWNLOAD_URL)
             .then(response => {
                 setArticles(response.data)
-                console.log(response.data)
+                setIsLoading(false)
             })
             .catch(error => {
                 console.log(error)
@@ -20,7 +21,8 @@ function ArticleList() {
 
     return(
         <section id="preview">
-            <table role="grid">
+            {isLoading ? <div aria-busy="true">Please wait…</div> :
+                <table role="grid">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -52,7 +54,7 @@ function ArticleList() {
                     ))}
                 </tbody>
             </table>
-
+            }
         </section>
     )
 }

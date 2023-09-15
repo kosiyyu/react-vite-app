@@ -7,10 +7,13 @@ import Header from "../../components/Header"
 import TagSelector from "../../components/TagSelector"
 
 function AddArticle() {
-  const isMount = useIsMount();
-  const [article, setArticle] = useState({
-    "article": {
-      "id": null,
+  const isMoutFile = useIsMount()
+  const isMountArticle = useIsMount()
+  const isMountTags = useIsMount()
+  const [file, setFile] = useState(null)
+  const [article, setArticle] = useState(
+    {
+      //"id": null,
       "title1": null,
       "issn1": null,
       "eissn1": null,
@@ -18,52 +21,64 @@ function AddArticle() {
       "issn2": null,
       "eissn2": null,
       "tags": []
-    },
-    "originalFilename": null,
-    "byteArray": null
-  })
+    }
+  )
+  const [tags, setTags] = useState([])
 
   useEffect(() => {
-    if (isMount)
+    if(isMoutFile)
       return
-    console.log(article)
-    axios.post(ARTICLE_BUNDLE_POST_URL, article)
+  }, [file])
+
+  useEffect(() => {
+    if (isMountArticle)
+      return
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('article', JSON.stringify(article))
+    axios.post(ARTICLE_BUNDLE_POST_URL, formData, {
+      "headers": {
+        "Content-Type": "multipart/form-data"
+      }
+    })
     .then((response) => {
       console.log(`SUCCESS: ${response.data}`)
     })
     .catch((error) => {
       console.error(`ERROR: ${error}`)
     })
-  }, [article, isMount])
+  }, [article])
 
-  function updateArticle(e){
+  useEffect(()=>{
+    if(isMountTags)
+      return
+  }, [tags])
+
+  function updateData(e){
     e.preventDefault() 
     setArticle((x) => ({
       ...x,
       ...{
-        "article": {
-            "title1": e.target.elements.title.value,
-            "issn1": e.target.elements.issn.value,
-            "eissn1": e.target.elements.eissn.value,
-            "title2": e.target.elements.title2.value,
-            "issn2": e.target.elements.issn2.value,
-            "eissn2": e.target.elements.eissn2.value,
-            "tags": [
-              {"value": "Diagram"},
-              {"value": "0"}
-            ]
-          },
-          "originalFilename": "AAA.txt",
-          "byteArray": "QUFB"
+          "title1": e.target.elements.title.value,
+          "issn1": e.target.elements.issn.value,
+          "eissn1": e.target.elements.eissn.value,
+          "title2": e.target.elements.title2.value,
+          "issn2": e.target.elements.issn2.value,
+          "eissn2": e.target.elements.eissn2.value,
+          "tags": tags
+        }
       }
-    }))
+    ))
   }
 
+  function transferTags(value){
+    setTags(value)
+  }
 
   return (
     <>
       <Header>Add article</Header>
-      <form onSubmit={(e) => updateArticle(e)}>
+      <form onSubmit={(e) => updateData(e)}>
         <label>Title<input name="title" placeholder="Title" required/></label>
         <div className="grid">
             <label>Issn code<input name="issn" placeholder="Issn code"/></label>
@@ -75,9 +90,9 @@ function AddArticle() {
             <label>E-issn code 2<input name="eissn2" placeholder="E-issn code 2"/></label>                 
         </div>
         <div>
-            <TagSelector />
+            <TagSelector transferTags={(value) => transferTags(value)}/>
         </div>
-        <label>File browser<input type="file"/></label>
+        <label>File browser<input type="file" onChange={(e) => setFile(e.target.files[0])}/></label>
         <button type="submit">Send</button>
       </form>
     </>
