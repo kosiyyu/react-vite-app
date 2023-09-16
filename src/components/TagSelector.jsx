@@ -5,7 +5,6 @@ import axios from "axios"
 import TagCorrect from "./TagCorrect"
 import Tag from "./Tag"
 import useIsMount from "../hooks/useIsMount"
-//import TagNotFoundModal from "./TagNotFoundModal"
 
 TagSelector.propTypes  = {
     transferTags: PropTypes.func.isRequired
@@ -54,7 +53,6 @@ function TagSelector(props){
                 Search tag
                 <input value={searchTerm} onChange={search} type="search" />
             </label>
-            {/* <TagNotFoundModal /> */}
             <div>
                 {selectedTags.map((tag, index) => (
                     <TagCorrect tagId={tag.id} onClick={() => selectTag(tag)} key={index}>{tag.value}</TagCorrect>
