@@ -25,6 +25,7 @@ function AddArticleModal(props) {
       "title2": null,
       "issn2": null,
       "eissn2": null,
+      "points": null,
       "tags": []
     }
   )
@@ -70,6 +71,7 @@ function AddArticleModal(props) {
           "title2": e.target.elements.title2.value,
           "issn2": e.target.elements.issn2.value,
           "eissn2": e.target.elements.eissn2.value,
+          "points": e.target.elements.points.value,
           "tags": tags
         }
       }
@@ -90,15 +92,16 @@ function AddArticleModal(props) {
                     <label>Issn code<input name="issn" placeholder="Issn code"/></label>
                     <label>E-issn code<input name="eissn" placeholder="E-issn code" /></label>                 
                 </div>
-                    <label>Title 2<input name="title2" placeholder="Title 2"/></label>
-                <div className="grid">
+                <label>Title 2<input name="title2" placeholder="Title 2"/></label>
+                <div className="grid">                    
                     <label>Issn code 2<input name="issn2" placeholder="Issn code 2"/></label>
                     <label>E-issn code 2<input name="eissn2" placeholder="E-issn code 2"/></label>                 
                 </div>
+                <label>Points<input name="points" placeholder="Points"/></label>
                 <div>
                     <TagSelector transferTags={(value) => transferTags(value)}/>
-                </div>
-                <label>File browser<input type="file" onChange={(e) => setFile(e.target.files[0])}/></label>
+                </div>  
+                <label>File browser<input type="file" onChange={(e) => setFile(e.target.files[0])}/></label>        
                 <button type="submit">Send</button>                
             </form>
             <button onClick={() => props.closeModal()}>Close</button>    
