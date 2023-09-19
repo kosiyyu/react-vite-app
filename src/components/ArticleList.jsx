@@ -32,21 +32,21 @@ function ArticleList() {
                         <th scope="col">Title 2</th>
                         <th scope="col">Issn 2</th>
                         <th scope="col">Eissn 2</th>
-                        <th scope="col">Tags</th>
                         <th scope="col">Points</th>
+                        <th scope="col">Tags</th>
                     </tr>
                 </thead>
                 <tbody>
                     {articles.map((article, index) => (
                         <tr scope="row" key={index}>
                             <td><Link to={`/article/${article.id}`}>{index + 1}</Link></td>
-                            <td>{article.title1}</td>
-                            <td>{article.issn1}</td>
-                            <td>{article.eissn1}</td>
-                            <td>{article.title2}</td>
-                            <td>{article.issn2}</td>
-                            <td>{article.title2}</td>
-                            <td>{article.points}</td>
+                            <td>{article.title1 !== '' ? article.title1 : '-'}</td>
+                            <td>{article.issn1 !== '' ? article.issn1 : '-'}</td>
+                            <td>{article.eissn1 !== '' ? article.eissn1 : '-'}</td>
+                            <td>{article.title2 !== '' ? article.title2 : '-'}</td>
+                            <td>{article.issn2 !== '' ? article.issn2 : '-'}</td>
+                            <td>{article.title2 !== '' ? article.title2 : '-'}</td>
+                            <td>{article.points !== '' ? article.points : '-'}</td>
                             <td>
                                 {article.tags.map((tag, tagIndex) => (
                                     <Tag tagId={tag.id} key={tagIndex}>{tag.value}</Tag>
