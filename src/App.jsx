@@ -4,8 +4,7 @@ import Navbar from './components/Navbar'
 import Home from './page/Home'
 import Articles from './page/article/Articles'
 // import NotFound from './page/error/NotFound'
-import ValidateArticle from './page/article/ValidateArticle'
-import AddArticle from './page/article/AddArticle'
+//import ValidateArticle from './page/article/ValidateArticle'
 //import Article from './page/article/Article'
 
 function App() {
@@ -20,8 +19,8 @@ function App() {
         <Route path="/tags" element={<Articles />}></Route>
 
         {/* {sub routes} */}
-        <Route path="/article/:id" element={<ValidateArticle />}></Route>
-        <Route path="/article/add" element={<AddArticle />}></Route>
+        {/* <Route path="/article/:id" element={<ValidateArticle />}></Route>
+        <Route path="/article/add" element={<AddArticle />}></Route> */}
 
       </Routes>
     </main>

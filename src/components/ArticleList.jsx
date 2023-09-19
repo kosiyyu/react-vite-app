@@ -33,6 +33,7 @@ function ArticleList() {
                         <th scope="col">Issn 2</th>
                         <th scope="col">Eissn 2</th>
                         <th scope="col">Tags</th>
+                        <th scope="col">Points</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +46,7 @@ function ArticleList() {
                             <td>{article.title2}</td>
                             <td>{article.issn2}</td>
                             <td>{article.title2}</td>
+                            <td>{article.points}</td>
                             <td>
                                 {article.tags.map((tag, tagIndex) => (
                                     <Tag tagId={tag.id} key={tagIndex}>{tag.value}</Tag>
