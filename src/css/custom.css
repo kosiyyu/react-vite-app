@@ -3,6 +3,7 @@
     color: var(--code-kbd-color);
     vertical-align: baseline;
     margin: 0.15rem;
+    /* white-space: nowrap; */
 }
 
 #streach {
