@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react'
 import { ARTICLES_DOWNLOAD_URL } from "../global"
 import axios from 'axios'
-import Tag from '../components/Tag'
+import Tag from './Tag'
 import { Link } from 'react-router-dom'
 
-function ArticleList() {
-    const [articles, setArticles] = useState([]);
+function JournalList() {
+    const [journals, setJournals] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(()=>{
         axios.get(ARTICLES_DOWNLOAD_URL)
             .then(response => {
-                setArticles(response.data)
+                setJournals(response.data)
                 setIsLoading(false)
             })
             .catch(error => {
@@ -37,18 +37,18 @@ function ArticleList() {
                     </tr>
                 </thead>
                 <tbody>
-                    {articles.map((article, index) => (
+                    {journals.map((journal, index) => (
                         <tr scope="row" key={index}>
-                            <td><Link to={`/article/${article.id}`}>{index + 1}</Link></td>
-                            <td>{article.title1 !== '' ? article.title1 : '-'}</td>
-                            <td>{article.issn1 !== '' ? article.issn1 : '-'}</td>
-                            <td>{article.eissn1 !== '' ? article.eissn1 : '-'}</td>
-                            <td>{article.title2 !== '' ? article.title2 : '-'}</td>
-                            <td>{article.issn2 !== '' ? article.issn2 : '-'}</td>
-                            <td>{article.title2 !== '' ? article.title2 : '-'}</td>
-                            <td>{article.points !== '' ? article.points : '-'}</td>
+                            <td><Link to={`/article/${journal.id}`}>{index + 1}</Link></td>
+                            <td>{journal.title1 !== '' ? journal.title1 : '-'}</td>
+                            <td>{journal.issn1 !== '' ? journal.issn1 : '-'}</td>
+                            <td>{journal.eissn1 !== '' ? journal.eissn1 : '-'}</td>
+                            <td>{journal.title2 !== '' ? journal.title2 : '-'}</td>
+                            <td>{journal.issn2 !== '' ? journal.issn2 : '-'}</td>
+                            <td>{journal.title2 !== '' ? journal.title2 : '-'}</td>
+                            <td>{journal.points !== '' ? journal.points : '-'}</td>
                             <td>
-                                {article.tags.map((tag, tagIndex) => (
+                                {journal.tags.map((tag, tagIndex) => (
                                     <Tag tagId={tag.id} key={tagIndex}>{tag.value}</Tag>
                                 ))}
                             </td>
@@ -61,4 +61,4 @@ function ArticleList() {
     )
 }
 
-export default ArticleList
+export default JournalList

@@ -3,20 +3,20 @@ import { useEffect } from "react"
 import { ARTICLE_BUNDLE_POST_URL } from "../global"
 import useIsMount from "../hooks/useIsMount"
 import axios from "axios"
-import Header from "../components/Header"
-import TagSelector from "../components/TagSelector"
+import Header from "./Header"
+import TagSelector from "./TagSelector"
 import PropTypes from "prop-types"
 
-AddArticleModal.propTypes = {
+AddJournalModal.propTypes = {
     closeModal: PropTypes.func.isRequired
 }
 
-function AddArticleModal(props) {
+function AddJournalModal(props) {
   const isMoutFile = useIsMount()
-  const isMountArticle = useIsMount()
+  const isMountJournal = useIsMount()
   const isMountTags = useIsMount()
   const [file, setFile] = useState(null)
-  const [article, setArticle] = useState(
+  const [journal, setJournal] = useState(
     {
       //"id": null,
       "title1": null,
@@ -37,11 +37,11 @@ function AddArticleModal(props) {
   }, [file])
 
   useEffect(() => {
-    if (isMountArticle)
+    if (isMountJournal)
       return
     const formData = new FormData()
     formData.append('file', file)
-    formData.append('article', JSON.stringify(article))
+    formData.append('article', JSON.stringify(journal))
     axios.post(ARTICLE_BUNDLE_POST_URL, formData, {
       "headers": {
         "Content-Type": "multipart/form-data"
@@ -53,7 +53,7 @@ function AddArticleModal(props) {
     .catch((error) => {
       console.error(`ERROR: ${error}`)
     })
-  }, [article])
+  }, [journal])
 
   useEffect(()=>{
     if(isMountTags)
@@ -62,7 +62,7 @@ function AddArticleModal(props) {
 
   function updateData(e){
     e.preventDefault() 
-    setArticle((x) => ({
+    setJournal((x) => ({
       ...x,
       ...{
           "title1": e.target.elements.title.value,
@@ -85,7 +85,7 @@ function AddArticleModal(props) {
   return (
     <dialog open>
         <article>
-            <Header>Add article</Header>
+            <Header>Add journal</Header>
             <form onSubmit={(e) => updateData(e)}>
                 <label>Title<input name="title" placeholder="Title" required/></label>
                 <div className="grid">
@@ -110,4 +110,4 @@ function AddArticleModal(props) {
   )
 }
 
-export default AddArticleModal
+export default AddJournalModal

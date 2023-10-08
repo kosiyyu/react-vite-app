@@ -41,7 +41,7 @@ function Navbar() {
               <summary role="link" className="secondary">Resource Links</summary>
               <ul role="listbox">
                 <li><Link to="/">🏠 Home</Link></li>
-                <li><Link to="/articles">📰 Articles</Link></li>
+                <li><Link to="/articles">📰 Journals</Link></li>
                 <li><Link to="/settings">⚙️ Settings</Link></li>
                 <li><Link to="/tags">🏷️ Tags</Link></li>
               </ul>
