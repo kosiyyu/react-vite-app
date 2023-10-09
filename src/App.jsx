@@ -2,10 +2,7 @@ import { Routes } from 'react-router-dom'
 import { Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './page/Home'
-import Articles from './page/article/Articles'
-// import NotFound from './page/error/NotFound'
-//import ValidateArticle from './page/article/ValidateArticle'
-//import Article from './page/article/Article'
+import Journals from './page/journal/Journals'
 
 function App() {
   return (
@@ -15,12 +12,12 @@ function App() {
       <Routes>
         {/* {main routes} */}
         <Route path="/" element={<Home></Home>}></Route>
-        <Route path="/articles" element={<Articles />}></Route>
-        <Route path="/tags" element={<Articles />}></Route>
+        <Route path="/journals" element={<Journals />}></Route>
+        <Route path="/tags" element={<Journals />}></Route>
 
         {/* {sub routes} */}
-        {/* <Route path="/article/:id" element={<ValidateArticle />}></Route>
-        <Route path="/article/add" element={<AddArticle />}></Route> */}
+        {/* <Route path="/journal/:id" element={<ValidateJournal />}></Route>
+        <Route path="/journal/add" element={<AddJournal />}></Route> */}
 
       </Routes>
     </main>
