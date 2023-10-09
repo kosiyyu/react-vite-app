@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ARTICLES_DOWNLOAD_URL } from "../global"
+import { JOURNALS_DOWNLOAD_URL } from "../global"
 import axios from 'axios'
 import Tag from './Tag'
 import { Link } from 'react-router-dom'
@@ -9,7 +9,7 @@ function JournalList() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(()=>{
-        axios.get(ARTICLES_DOWNLOAD_URL)
+        axios.get(JOURNALS_DOWNLOAD_URL)
             .then(response => {
                 setJournals(response.data)
                 setIsLoading(false)
@@ -39,7 +39,7 @@ function JournalList() {
                 <tbody>
                     {journals.map((journal, index) => (
                         <tr scope="row" key={index}>
-                            <td><Link to={`/article/${journal.id}`}>{index + 1}</Link></td>
+                            <td><Link to={`/journal/${journal.id}`}>{index + 1}</Link></td>
                             <td>{journal.title1 !== '' ? journal.title1 : '-'}</td>
                             <td>{journal.issn1 !== '' ? journal.issn1 : '-'}</td>
                             <td>{journal.eissn1 !== '' ? journal.eissn1 : '-'}</td>

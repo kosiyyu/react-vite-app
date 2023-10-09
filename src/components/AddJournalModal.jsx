@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useEffect } from "react"
-import { ARTICLE_BUNDLE_POST_URL } from "../global"
+import { JOURNAL_BUNDLE_POST_URL } from "../global"
 import useIsMount from "../hooks/useIsMount"
 import axios from "axios"
 import Header from "./Header"
@@ -41,8 +41,8 @@ function AddJournalModal(props) {
       return
     const formData = new FormData()
     formData.append('file', file)
-    formData.append('article', JSON.stringify(journal))
-    axios.post(ARTICLE_BUNDLE_POST_URL, formData, {
+    formData.append('journalJson', JSON.stringify(journal))
+    axios.post(JOURNAL_BUNDLE_POST_URL, formData, {
       "headers": {
         "Content-Type": "multipart/form-data"
       }

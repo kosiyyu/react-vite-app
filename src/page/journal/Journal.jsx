@@ -1,16 +1,14 @@
 import { useParams } from "react-router-dom"
 import { useEffect } from "react";
-import { ARTICLE_DOWNLOAD_URL } from "../../global"
+import { JOURNAL_DOWNLOAD_URL } from "../../global"
 import Header from "../../components/Header";
 import axios from "axios";
 
 function Journal() {
     const journalId = useParams().id;
-
-    // dummy fetch later, bundle object with file + article will be needed, but it needs to be implemented in backend
-
+    
     useEffect(()=>{
-        axios.get(ARTICLE_DOWNLOAD_URL(journalId))
+        axios.get(JOURNAL_DOWNLOAD_URL(journalId))
             .then(response => {
                 console.log(response.data)
             })

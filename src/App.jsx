@@ -12,12 +12,12 @@ function App() {
       <Routes>
         {/* {main routes} */}
         <Route path="/" element={<Home></Home>}></Route>
-        <Route path="/articles" element={<Journals />}></Route>
+        <Route path="/journals" element={<Journals />}></Route>
         <Route path="/tags" element={<Journals />}></Route>
 
         {/* {sub routes} */}
-        {/* <Route path="/article/:id" element={<ValidateJournal />}></Route>
-        <Route path="/article/add" element={<AddJournal />}></Route> */}
+        {/* <Route path="/journal/:id" element={<ValidateJournal />}></Route>
+        <Route path="/journal/add" element={<AddJournal />}></Route> */}
 
       </Routes>
     </main>
