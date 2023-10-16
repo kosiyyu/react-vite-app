@@ -3,6 +3,7 @@ import JournalList from "../../components/JournalList"
 import AddJournalModal from "../../components/AddJournalModal"
 import useIsMount from "../../hooks/useIsMount";
 import TagSelector from "../../components/TagSelector";
+import JournalSearch from "./JournalSearch";
 
 function Journals() {
     const [displayModal, setDisplayModal] = useState(false);
@@ -18,6 +19,7 @@ function Journals() {
     );
     const [whereArguments, setWhereArguments] = useState([]);
     const isMountSearchToken = useIsMount();
+    //const [phrases]
 
     useEffect(()=>{
         if(isMountSearchToken){
@@ -42,7 +44,11 @@ function Journals() {
     }
 
     function transferTags(value){
-        setWhereArguments([...whereArguments, value])
+        setWhereArguments([...whereArguments, ...value.map(v => v.value)])
+    }
+
+    function transferPhrases(value){
+        setWhereArguments([...whereArguments, ...value])
     }
 
 
@@ -74,6 +80,7 @@ function Journals() {
                         Search phrase
                         <input type="search" placeholder="e.g. hello world"/>
                     </label>
+                    <JournalSearch transferPhrases={(value) => transferPhrases(value)}></JournalSearch>
                     <TagSelector transferTags={(value) => transferTags(value)}/>
                     <fieldset>
                         <label>
