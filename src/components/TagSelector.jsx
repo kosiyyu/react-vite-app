@@ -43,15 +43,13 @@ function TagSelector(props){
         else {
             setSelectedTags([...selectedTags, tag])
         }
-        // todo define display strategy (it's more for backend imo)
-        // todo correct placement or sorting
     }
 
     return (
         <div>
             <label>
                 Search tag
-                <input value={searchTerm} onChange={search} type="search" />
+                <input value={searchTerm} onChange={search} type="search" placeholder="e.g. super mario" />
             </label>
             <div>
                 {selectedTags.map((tag, index) => (
