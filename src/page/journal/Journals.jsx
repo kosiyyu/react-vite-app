@@ -10,21 +10,28 @@ function Journals() {
     const [displaySearch, setDisplaySearch] = useState(false);
     const [searchToken, setsearchToken] = useState(
         {
-            "whereArguments": [],
+            "searchStrings": [],
+            "tagStrings": [],
             "orderByArgument": "",
             "pageIndex": 0,
             "pageSize": 3,
             "isDescSort": false
         }
     );
-    const [whereArguments, setWhereArguments] = useState([]);
+    const [searchStrings, setSearchStrings] = useState([]);
+    const [tagStrings, setTagStrings] = useState([]);
     const isMountSearchToken = useIsMount();
-    //const [phrases]
 
     useEffect(()=>{
         if(isMountSearchToken){
             return
         }
+        /////////////////////////
+        // send it to JournalList
+        // todo
+        /////////////////////////
+        setSearchStrings([])
+        setTagStrings([])
         console.log(searchToken)
     },[searchToken])
 
@@ -33,7 +40,8 @@ function Journals() {
         setsearchToken((x) => ({
             ...x,
             ...{
-            "whereArguments": whereArguments,
+            "searchStrings": searchStrings,
+            "tagStrings": tagStrings,
             "orderByArgument": e.target.elements.orderBy.value,
             "pageIndex": 0,
             "pageSize": 3,
@@ -44,15 +52,12 @@ function Journals() {
     }
 
     function transferTags(value){
-        setWhereArguments([...whereArguments, ...value.map(v => v.value)])
+        setTagStrings(value.map(v => v.value))
     }
 
-    function transferPhrases(value){
-        setWhereArguments([...whereArguments, ...value])
+    function transferSearchStrings(value){
+        setSearchStrings(value)
     }
-
-
-
 
     return (
         <>
@@ -76,11 +81,7 @@ function Journals() {
                         <option>issn2</option>
                         <option>e-issn2</option>
                     </select>
-                    <label>
-                        Search phrase
-                        <input type="search" placeholder="e.g. hello world"/>
-                    </label>
-                    <JournalSearch transferPhrases={(value) => transferPhrases(value)}></JournalSearch>
+                    <JournalSearch transferSearchStrings={(value) => transferSearchStrings(value)}></JournalSearch>
                     <TagSelector transferTags={(value) => transferTags(value)}/>
                     <fieldset>
                         <label>

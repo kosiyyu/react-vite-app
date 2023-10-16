@@ -5,26 +5,25 @@ import useIsMount from "../../hooks/useIsMount";
 import PropTypes from 'prop-types'
 
 JournalSearch.propTypes = {
-    transferPhrases: PropTypes.func.isRequired
+    transferSearchStrings: PropTypes.func.isRequired
 }
 function JournalSearch(props) {
-    const [phrases, setPhrases] = useState([]);
+    const [searchStrings, setSearchStrings] = useState([]);
     const [searchTerm, setSearchTerm] = useState('')
-    const isMountPhrases = useIsMount()
+    const isMountSearchStrings = useIsMount()
 
     useEffect(()=>{
-        if(isMountPhrases)
+        if(isMountSearchStrings)
             return
-        props.transferPhrases(phrases)
-    }, [phrases])
+        props.transferSearchStrings(searchStrings)
+    }, [searchStrings])
 
-    function selectPhrase(phrase) {
-        
-        if(phrases.includes(phrase)) {
-            setPhrases(array => array.filter(x => x !== phrase))
+    function selectSearchStrings(searchString) {
+        if(searchStrings.includes(searchString)) {
+            setSearchStrings(array => array.filter(x => x !== searchString))
         }    
         else {
-            setPhrases([...phrases, phrase])
+            setSearchStrings([...searchStrings, searchString])
         }
         setSearchTerm('')
     }
@@ -36,15 +35,15 @@ function JournalSearch(props) {
     return (
         <>
             <label>
-                Search phrase
+                Search term
                 <input value={searchTerm} onChange={search} onKeyDown={(e)=>{if(e.key==='Enter'){e.preventDefault();}}} type="search" placeholder="e.g. hello world"/>
             </label>
             <div>
-                {phrases.map((phrase, index) => (
-                    <TagCorrect tagId={-1} onClick={() => selectPhrase(phrase)} key={index}>{phrase}</TagCorrect>
+                {searchStrings.map((searchString, index) => (
+                    <TagCorrect tagId={-1} onClick={() => selectSearchStrings(searchString)} key={index}>{searchString}</TagCorrect>
                 ))}
             </div>
-           {searchTerm === '' ? '' : <Tag tagId={-1} onClick={() => selectPhrase(searchTerm)}>{searchTerm}</Tag>}
+           {searchTerm === '' ? '' : <Tag tagId={-1} onClick={() => selectSearchStrings(searchTerm)}>{searchTerm}</Tag>}
         </>
     )
 }
