@@ -1,23 +1,32 @@
 import { useState, useEffect } from 'react'
-import { JOURNALS_DOWNLOAD_URL } from "../global"
+import { JOURNALS_TOKENIZED_DOWNLOAD_URL } from "../global"
 import axios from 'axios'
 import Tag from './Tag'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-function JournalList() {
+JournalList.propTypes = {
+    searchToken: PropTypes.object.isRequired
+}
+function JournalList(props) {
     const [journals, setJournals] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(()=>{
-        axios.get(JOURNALS_DOWNLOAD_URL)
+        console.log(`JournalList | ${JSON.stringify(props.searchToken)}`)
+        axios.post(JOURNALS_TOKENIZED_DOWNLOAD_URL, JSON.stringify(props.searchToken), {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
             .then(response => {
-                setJournals(response.data)
+                setJournals(response.data.journals)
                 setIsLoading(false)
             })
             .catch(error => {
                 console.log(error)
             })
-    }, [])
+    }, [props.searchToken])
 
     return(
         <section id="preview">
@@ -45,7 +54,7 @@ function JournalList() {
                             <td>{journal.eissn1 !== '' ? journal.eissn1 : '-'}</td>
                             <td>{journal.title2 !== '' ? journal.title2 : '-'}</td>
                             <td>{journal.issn2 !== '' ? journal.issn2 : '-'}</td>
-                            <td>{journal.title2 !== '' ? journal.title2 : '-'}</td>
+                            <td>{journal.eissn2 !== '' ? journal.eissn2 : '-'}</td>
                             <td>{journal.points !== '' ? journal.points : '-'}</td>
                             <td>
                                 {journal.tags.map((tag, tagIndex) => (

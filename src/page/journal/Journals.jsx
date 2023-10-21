@@ -27,8 +27,7 @@ function Journals() {
             return
         }
         /////////////////////////
-        // send it to JournalList
-        // todo
+        // I send it using JournalList and prop rerender
         /////////////////////////
         setSearchStrings([])
         setTagStrings([])
@@ -94,7 +93,7 @@ function Journals() {
             </div>
             :
             ""}
-            <JournalList></JournalList>
+            <JournalList searchToken={searchToken}></JournalList>
         </>
     )
 }
