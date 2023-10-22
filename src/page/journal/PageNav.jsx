@@ -5,7 +5,7 @@ PageNav.propTypes = {
     pageData: PropTypes.object.isRequired,
     setPageNumber: PropTypes.func.isRequired
 }
-function PageNav(props) {//setPageNumber
+function PageNav(props) {
     function displayNext() {
         return props.pageData.pageNumber + 1 < props.pageData.numberOfPages
     }

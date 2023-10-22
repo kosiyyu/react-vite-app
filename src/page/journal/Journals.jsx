@@ -14,7 +14,7 @@ function Journals() {
             "tagStrings": [],
             "orderByArgument": "",
             "pageIndex": 0,
-            "pageSize": 3,
+            "pageSize": 5,
             "isDescSort": false
         }
     );
