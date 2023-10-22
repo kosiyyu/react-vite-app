@@ -43,7 +43,7 @@ function Journals() {
             "tagStrings": tagStrings,
             "orderByArgument": e.target.elements.orderBy.value,
             "pageIndex": 0,
-            "pageSize": 3,
+            "pageSize": 5,
             "isDescSort": e.target.elements.isDesc.checked
             }
         })
@@ -72,13 +72,13 @@ function Journals() {
                 <form onSubmit={(e) => updateOnSubmit(e)}>
                     <label>Sort by</label>
                     <select name="orderBy" required>
-                        <option>id</option>
-                        <option>title1</option>
+                        <option>Id</option>
+                        <option>Title 1</option>
                         <option>issn1</option>
-                        <option>e-issn1</option>
-                        <option>title2</option>
-                        <option>issn2</option>
-                        <option>e-issn2</option>
+                        <option>E-issn 1</option>
+                        <option>Title 2</option>
+                        <option>Issn 2</option>
+                        <option>E-issn 2</option>
                     </select>
                     <JournalSearch transferSearchStrings={(value) => transferSearchStrings(value)}></JournalSearch>
                     <TagSelector transferTags={(value) => transferTags(value)}/>
