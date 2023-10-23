@@ -32,6 +32,28 @@ function JournalList(props) {
                 setPageData(
                     {
                         numberOfPages: response.data.numberOfPages,
+                        pageNumber: 0
+                    }
+                )
+                setIsLoading(false)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }, [props.searchToken])
+
+    useEffect(()=>{
+        console.log(`JournalList | ${JSON.stringify({...props.searchToken, "pageIndex": pageNumber})}`)
+        axios.post(JOURNALS_TOKENIZED_DOWNLOAD_URL, JSON.stringify({...props.searchToken, "pageIndex": pageNumber}), {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => {
+                setJournals(response.data.journals)
+                setPageData(
+                    {
+                        numberOfPages: response.data.numberOfPages,
                         pageNumber: pageNumber
                     }
                 )
@@ -40,7 +62,7 @@ function JournalList(props) {
             .catch(error => {
                 console.log(error)
             })
-    }, [props.searchToken, pageNumber])
+    }, [pageNumber])
 
     return(
         <section id="preview">

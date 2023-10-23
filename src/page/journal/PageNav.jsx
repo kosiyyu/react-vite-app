@@ -23,7 +23,7 @@ function PageNav(props) {
     }
 
     return (
-        <>Page {props.pageData.pageNumber + 1} out of {props.pageData.numberOfPages} {displayPrevious() ? <> | <a onClick={previous}>previous</a></> : ''} {displayNext() ? <> | <a onClick={next}>next</a></> : ''} </>
+        <>Page {props.pageData.numberOfPages <= 0 ? 0 : props.pageData.pageNumber + 1} out of {props.pageData.numberOfPages} {displayPrevious() ? <> | <a onClick={previous}>previous</a></> : ''} {displayNext() ? <> | <a onClick={next}>next</a></> : ''} </>
     )
 }
 
