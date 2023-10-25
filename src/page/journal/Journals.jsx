@@ -61,7 +61,7 @@ function Journals() {
     return (
         <>
             <h1>📰 Journals</h1>
-            <h6><a onClick={() => setDisplayModal(true)}>🆕 :: add journal ::</a></h6>
+            <h6><a onClick={() => setDisplayModal(true)}>:: add journal ::</a></h6>
             {displayModal && <AddJournalModal closeModal={() => setDisplayModal(false)} />}
             <label>
                 <input type="checkbox" role="switch" checked={displaySearch ? "active" : ""} onChange={() => setDisplaySearch(!displaySearch)}/>

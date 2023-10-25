@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './page/Home'
 import Journals from './page/journal/Journals'
+import ValidateJournal from './page/journal/ValidateJournal'
 
 function App() {
   return (
@@ -16,8 +17,7 @@ function App() {
         <Route path="/tags" element={<Journals />}></Route>
 
         {/* {sub routes} */}
-        {/* <Route path="/journal/:id" element={<ValidateJournal />}></Route>
-        <Route path="/journal/add" element={<AddJournal />}></Route> */}
+        <Route path="/journal/:id" element={<ValidateJournal />}></Route>
 
       </Routes>
     </main>
