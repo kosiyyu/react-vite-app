@@ -7,9 +7,9 @@ import Tag from "./Tag"
 import useIsMount from "../hooks/useIsMount"
 
 TagSelector.propTypes  = {
-    transferTags: PropTypes.func.isRequired
+    transferTags: PropTypes.func.isRequired,
+    reset: PropTypes.bool
 }
-
 function TagSelector(props){
     const [tags, setTags] = useState([])
     const [selectedTags, setSelectedTags] = useState([])
@@ -28,9 +28,15 @@ function TagSelector(props){
 
     useEffect(()=>{
         if(isMount)
-             return
+            return
         props.transferTags(selectedTags)
     }, [selectedTags])
+
+    useEffect(()=>{
+        if(props.reset){
+            setSelectedTags([])
+        }
+    }, [props.reset])
 
     const search = (event) => {
         setSearchTerm(event.target.value)

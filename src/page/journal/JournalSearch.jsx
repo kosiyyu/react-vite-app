@@ -1,32 +1,44 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import TagCorrect from "../../components/TagCorrect";
 import Tag from "../../components/Tag";
 import useIsMount from "../../hooks/useIsMount";
 import PropTypes from 'prop-types'
 
 JournalSearch.propTypes = {
-    transferSearchStrings: PropTypes.func.isRequired
+    transferSearchStrings: PropTypes.func.isRequired,
+    reset: PropTypes.bool
 }
 function JournalSearch(props) {
     const [searchStrings, setSearchStrings] = useState([]);
     const [searchTerm, setSearchTerm] = useState('')
     const isMountSearchStrings = useIsMount()
 
+    useEffect(() => {
+        console.log('JournalSearch rerendered')
+    })
+    
     useEffect(()=>{
         if(isMountSearchStrings)
             return
         props.transferSearchStrings(searchStrings)
     }, [searchStrings])
 
-    function selectSearchStrings(searchString) {
-        if(searchStrings.includes(searchString)) {
-            setSearchStrings(array => array.filter(x => x !== searchString))
-        }    
-        else {
-            setSearchStrings([...searchStrings, searchString])
+    useEffect(()=>{
+        if(props.reset){
+            setSearchStrings([])
+            setSearchTerm('')
         }
-        setSearchTerm('')
-    }
+    },[props.reset])
+
+    const selectSearchStrings = useCallback((searchString, event) => {
+        event.preventDefault(); // Prevent the default behavior
+        if (searchStrings.includes(searchString)) {
+            setSearchStrings(array => array.filter(x => x !== searchString));
+        } else {
+            setSearchStrings([...searchStrings, searchString]);
+        }
+        setSearchTerm('');
+    }, [searchStrings]);
 
     const search = (event) => {
         setSearchTerm(event.target.value)
@@ -36,7 +48,17 @@ function JournalSearch(props) {
         <>
             <label>
                 Search term
-                <input value={searchTerm} onChange={search} onKeyDown={(e)=>{if(e.key==='Enter'){e.preventDefault();}}} type="search" placeholder="e.g. hello world"/>
+                <input 
+                    value={searchTerm} 
+                    onChange={search} 
+                    onKeyDown={(e)=>{
+                        if(e.key === 'Enter'){
+                            e.preventDefault();
+                        }
+                    }} 
+                    type="search" 
+                    placeholder="e.g. hello world"
+                />
             </label>
             <div>
                 {searchStrings.map((searchString, index) => (

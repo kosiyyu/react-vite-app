@@ -21,6 +21,8 @@ function Journals() {
     const [searchStrings, setSearchStrings] = useState([]);
     const [tagStrings, setTagStrings] = useState([]);
     const isMountSearchToken = useIsMount();
+    const [reset, setReset] = useState(false);
+
 
     useEffect(()=>{
         if(isMountSearchToken){
@@ -29,13 +31,14 @@ function Journals() {
         /////////////////////////
         // I send it using JournalList and prop rerender
         /////////////////////////
-        setSearchStrings([])
-        setTagStrings([])
+        // setSearchStrings([])
+        // setTagStrings([])
         console.log(searchToken)
     },[searchToken])
 
     function updateOnSubmit(e) {
         e.preventDefault()
+        setReset(false)
         setsearchToken((x) => ({
             ...x,
             ...{
@@ -49,6 +52,17 @@ function Journals() {
         })
         )
     }
+
+    function resetToggle(){
+        setReset(true)
+    }
+
+    useEffect(()=>{
+        if(reset){
+            setSearchStrings([])
+            setTagStrings([])
+        }
+    }, [reset])
 
     function transferTags(value){
         setTagStrings(value.map(v => v.value))
@@ -81,8 +95,8 @@ function Journals() {
                         <option>E-issn 2</option>
                         <option>Points</option>
                     </select>
-                    <JournalSearch transferSearchStrings={(value) => transferSearchStrings(value)}></JournalSearch>
-                    <TagSelector transferTags={(value) => transferTags(value)}/>
+                    <JournalSearch reset={reset} transferSearchStrings={(value) => transferSearchStrings(value)}></JournalSearch>
+                    <TagSelector reset={reset} transferTags={(value) => transferTags(value)}/>
                     <fieldset>
                         <label>
                             Descending order
@@ -90,6 +104,7 @@ function Journals() {
                         <input type="checkbox" name="isDesc" role="switch"/>
                     </fieldset>
                     <button type="submit">Search</button>
+                    <a onClick={resetToggle}>Fresh start? Reset your search filters here.</a>
                 </form>
             </div>
             :
