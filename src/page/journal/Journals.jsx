@@ -22,7 +22,8 @@ function Journals() {
     const [tagStrings, setTagStrings] = useState([]);
     const isMountSearchToken = useIsMount();
     const [reset, setReset] = useState(false);
-
+    const [orderByArgument, setOrderByArgument] = useState("Id");
+    const [isDescSort, setDescSort] = useState(false);
 
     useEffect(()=>{
         if(isMountSearchToken){
@@ -61,6 +62,8 @@ function Journals() {
         if(reset){
             setSearchStrings([])
             setTagStrings([])
+            setOrderByArgument("Id")
+            setDescSort(false)
         }
     }, [reset])
 
@@ -85,7 +88,12 @@ function Journals() {
             <div>
                 <form onSubmit={(e) => updateOnSubmit(e)}>
                     <label>Sort by</label>
-                    <select name="orderBy" required>
+                    <select 
+                        value={orderByArgument}
+                        onChange={(e) => setOrderByArgument(e.target.value)}
+                        name="orderBy" 
+                        required
+                    >
                         <option>Id</option>
                         <option>Title 1</option>
                         <option>issn1</option>
@@ -101,7 +109,7 @@ function Journals() {
                         <label>
                             Descending order
                         </label>
-                        <input type="checkbox" name="isDesc" role="switch"/>
+                        <input checked={isDescSort} onChange={(e) => setDescSort(e.target.checked)} type="checkbox" name="isDesc" role="switch"/>
                     </fieldset>
                     <button type="submit">Search</button>
                     <a onClick={resetToggle}>Fresh start? Reset your search filters here.</a>
