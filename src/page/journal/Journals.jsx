@@ -54,7 +54,7 @@ function Journals() {
     }
 
     function resetToggle(){
-        setReset(true)
+        setReset(x => !x)
     }
 
     useEffect(()=>{

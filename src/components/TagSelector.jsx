@@ -33,10 +33,12 @@ function TagSelector(props){
     }, [selectedTags])
 
     useEffect(()=>{
-        if(props.reset){
+        if(props.reset !== undefined){
             setSelectedTags([])
+            setSearchTerm('')
         }
     }, [props.reset])
+
 
     const search = (event) => {
         setSearchTerm(event.target.value)

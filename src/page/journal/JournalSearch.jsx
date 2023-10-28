@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState } from "react"
 import TagCorrect from "../../components/TagCorrect";
 import Tag from "../../components/Tag";
 import useIsMount from "../../hooks/useIsMount";
@@ -12,10 +12,6 @@ function JournalSearch(props) {
     const [searchStrings, setSearchStrings] = useState([]);
     const [searchTerm, setSearchTerm] = useState('')
     const isMountSearchStrings = useIsMount()
-
-    useEffect(() => {
-        console.log('JournalSearch rerendered')
-    })
     
     useEffect(()=>{
         if(isMountSearchStrings)
@@ -24,21 +20,21 @@ function JournalSearch(props) {
     }, [searchStrings])
 
     useEffect(()=>{
-        if(props.reset){
+        if(props.reset !== undefined){
             setSearchStrings([])
             setSearchTerm('')
         }
     },[props.reset])
 
-    const selectSearchStrings = useCallback((searchString, event) => {
-        event.preventDefault(); // Prevent the default behavior
-        if (searchStrings.includes(searchString)) {
-            setSearchStrings(array => array.filter(x => x !== searchString));
-        } else {
-            setSearchStrings([...searchStrings, searchString]);
+    function selectSearchStrings(searchString) {
+        if(searchStrings.includes(searchString)) {
+            setSearchStrings(array => array.filter(x => x !== searchString))
+        }    
+        else {
+            setSearchStrings([...searchStrings, searchString])
         }
-        setSearchTerm('');
-    }, [searchStrings]);
+        setSearchTerm('')
+    }
 
     const search = (event) => {
         setSearchTerm(event.target.value)
