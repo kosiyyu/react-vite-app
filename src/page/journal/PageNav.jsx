@@ -14,14 +14,10 @@ function PageNav(props) {
     }
 
     const previous = () => {
-        console.log("previous")
-        console.log(props.pageData.pageNumber)
         props.setPageNumber(p => p - 1)
     }
 
     const next = () => {
-        console.log("next")
-        console.log(props.pageData.pageNumber)
         props.setPageNumber(p => p + 1)
     }
 

@@ -21,12 +21,10 @@ function JournalList(props) {
     const [pageNumber, setPageNumber] = useState(0)
 
     useEffect(()=>{
-        console.log("useEffect 0")
         setPageData({
             "numberOfPages": 0,
             "pageNumber": 0,
         })
-        console.log(`JournalList | ${JSON.stringify({...props.searchToken, "pageIndex": 0})}`)
         axios.post(JOURNALS_TOKENIZED_DOWNLOAD_URL, JSON.stringify({...props.searchToken, "pageIndex": 0}), {
             headers: {
                 'Content-Type': 'application/json',
@@ -45,16 +43,9 @@ function JournalList(props) {
             .catch(error => {
                 console.log(error)
             })
-            console.log(journals)
     }, [props.searchToken])
 
-    // useEffect(()=>{
-    //     console.log(`page number: ${pageNumber}`)
-    // }, [pageNumber])
-
     useEffect(()=>{
-        console.log("useEffect pageNumber")
-        console.log(`JournalList | ${JSON.stringify({...props.searchToken, "pageIndex": pageNumber})}`)
         axios.post(JOURNALS_TOKENIZED_DOWNLOAD_URL, JSON.stringify({...props.searchToken, "pageIndex": pageNumber}), {
             headers: {
                 'Content-Type': 'application/json',
@@ -73,7 +64,6 @@ function JournalList(props) {
             .catch(error => {
                 console.log(error)
             })
-            console.log(journals)
     }, [pageNumber])
 
     return(

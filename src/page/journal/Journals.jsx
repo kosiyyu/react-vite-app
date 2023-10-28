@@ -29,12 +29,6 @@ function Journals() {
         if(isMountSearchToken){
             return
         }
-        /////////////////////////
-        // I send it using JournalList and prop rerender
-        /////////////////////////
-        // setSearchStrings([])
-        // setTagStrings([])
-        console.log(searchToken)
     },[searchToken])
 
     function updateOnSubmit(e) {
