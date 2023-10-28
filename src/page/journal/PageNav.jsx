@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-import { useEffect } from 'react'
 
 PageNav.propTypes = {
     pageData: PropTypes.object.isRequired,
@@ -15,11 +14,15 @@ function PageNav(props) {
     }
 
     const previous = () => {
-        props.setPageNumber(props.pageData.pageNumber - 1)
+        console.log("previous")
+        console.log(props.pageData.pageNumber)
+        props.setPageNumber(p => p - 1)
     }
 
     const next = () => {
-        props.setPageNumber(props.pageData.pageNumber + 1)
+        console.log("next")
+        console.log(props.pageData.pageNumber)
+        props.setPageNumber(p => p + 1)
     }
 
     return (
