@@ -1,30 +1,31 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import TagCorrect from "../../components/TagCorrect";
 import Tag from "../../components/Tag";
 import useIsMount from "../../hooks/useIsMount";
-import PropTypes from 'prop-types'
+import { SearchTokenContext } from "../../context/SearchTokenProvider";
 
-JournalSearch.propTypes = {
-    transferSearchStrings: PropTypes.func.isRequired,
-    reset: PropTypes.bool
-}
-function JournalSearch(props) {
+function JournalSearch() {
     const [searchStrings, setSearchStrings] = useState([]);
     const [searchTerm, setSearchTerm] = useState('')
-    const isMountSearchStrings = useIsMount()
-    
-    useEffect(()=>{
-        if(isMountSearchStrings)
-            return
-        props.transferSearchStrings(searchStrings)
-    }, [searchStrings])
+
+    const { state, dispatch, reset } = useContext(SearchTokenContext)
+    const [isReset, setIsReset] = useState(false)
+    const isMount = useIsMount()
+
+    useEffect(() => {
+        console.log("JournalSearch: USE_EFFECT RESET")
+        setSearchStrings([])
+        setIsReset(true)
+    }, [reset])
 
     useEffect(()=>{
-        if(props.reset !== undefined){
-            setSearchStrings([])
-            setSearchTerm('')
+        if (isMount || isReset) {
+            setIsReset(false)
+            return
         }
-    },[props.reset])
+        const updatedSearchToken = {...state, "searchStrings": searchStrings}
+        dispatch({type: "UPDATE", value: {searchToken: updatedSearchToken}})
+    }, [searchStrings])
 
     function selectSearchStrings(searchString) {
         if(searchStrings.includes(searchString)) {

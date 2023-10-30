@@ -17,9 +17,9 @@ function TagSearch(){
     const [isReset, setIsReset] = useState(false)
 
     useEffect(() => {
+        console.log("TagSearch: USE_EFFECT RESET")
         setSelectedTags([])
         setSearchTerm('')
-        console.log("TagSearch: USE_EFFECT RESET")
         setIsReset(true)
     }, [reset])
 
