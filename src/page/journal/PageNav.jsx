@@ -1,28 +1,57 @@
-import PropTypes from 'prop-types'
+import { useContext } from 'react'
+import { SearchTokenContext } from '../../context/SearchTokenProvider'
 
-PageNav.propTypes = {
-    pageData: PropTypes.object.isRequired,
-    setPageNumber: PropTypes.func.isRequired
-}
-function PageNav(props) {
-    function displayNext() {
-        return props.pageData.pageNumber + 1 < props.pageData.numberOfPages
+function PageNav() {
+    const { state, dispatch, pageInfo, setSent} = useContext(SearchTokenContext)
+
+    function isNext() {
+        return state.pageIndex + 1 < pageInfo.numberOfPages
     }
 
-    function displayPrevious() {
-        return props.pageData.pageNumber > 0
+    function isPrevious() {
+        return state.pageIndex > 0
     }
 
     const previous = () => {
-        props.setPageNumber(p => p - 1)
+        const pageIndex = state.pageIndex - 1
+        const newSearchToken = {...state, pageIndex: pageIndex}
+        dispatch({type: "UPDATE", value: {searchToken: newSearchToken}})
+        setSent(s => !s)
     }
 
     const next = () => {
-        props.setPageNumber(p => p + 1)
+        const pageIndex = state.pageIndex + 1
+        const newSearchToken = {...state, pageIndex: pageIndex}
+        dispatch({type: "UPDATE", value: {searchToken: newSearchToken}})
+        setSent(s => !s)
+    }
+
+    function firstNumber(){
+        if(pageInfo.numberOfPages === 0)
+            return 0
+        return state.pageIndex + 1<= 0 ? 1 : state.pageIndex + 1
+    }
+ 
+    function displayPrevious() {
+        if(isPrevious()){
+            return <> | <a onClick={previous}>previous</a></>
+        }
+        else{
+            return ''
+        }
+    }
+
+    function displayNext() {
+        if(isNext()){
+            return <> | <a onClick={next}>next</a></>
+        }
+        else{
+            return ''
+        }
     }
 
     return (
-        <>Page {props.pageData.numberOfPages <= 0 ? 0 : props.pageData.pageNumber + 1} out of {props.pageData.numberOfPages} {displayPrevious() ? <> | <a onClick={previous}>previous</a></> : ''} {displayNext() ? <> | <a onClick={next}>next</a></> : ''} </>
+        <>Page {firstNumber()} out of {pageInfo.numberOfPages} {displayPrevious()} {displayNext()} </>
     )
 }
 
