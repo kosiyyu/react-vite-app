@@ -1,76 +1,80 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { JOURNALS_TOKENIZED_DOWNLOAD_URL } from "../global"
 import axios from 'axios'
 import Tag from './Tag'
 import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
 import PageNav from '../page/journal/PageNav'
+import { SearchTokenContext } from '../context/SearchTokenProvider'
+import useIsMount from '../hooks/useIsMount'
 
-JournalList.propTypes = {
-    searchToken: PropTypes.object.isRequired
-}
-function JournalList(props) {
+function JournalList() {
     const [journals, setJournals] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-    const [pageData, setPageData] = useState(
-        {
-            "numberOfPages": 0,
-            "pageNumber": 0,
-        }
-    )
-    const [pageNumber, setPageNumber] = useState(0)
+
+    const { state, dispatch, pageInfo, setPageInfo, sent, buttonSent } = useContext(SearchTokenContext)
+
+    const isMount = useIsMount()
 
     useEffect(()=>{
-        setPageData({
-            "numberOfPages": 0,
-            "pageNumber": 0,
-        })
-        axios.post(JOURNALS_TOKENIZED_DOWNLOAD_URL, JSON.stringify({...props.searchToken, "pageIndex": 0}), {
+        axios.post(JOURNALS_TOKENIZED_DOWNLOAD_URL, JSON.stringify(state), {
             headers: {
                 'Content-Type': 'application/json',
             }
         })
             .then(response => {
                 setJournals(response.data.journals)
-                setPageData(
-                    {
-                        numberOfPages: response.data.numberOfPages,
-                        pageNumber: 0
-                    }
-                )
+                console.log('JournalList: SUCESS')
+                setPageInfo({
+                    numberOfPages: response.data.numberOfPages,
+                    pageNumber: response.data.pageNumber
+                })
+                console.log(state)
                 setIsLoading(false)
             })
             .catch(error => {
-                console.log(error)
+                console.log(`JournalList: ERROR | ${error}`)
             })
-    }, [props.searchToken])
+    }, [sent])
 
     useEffect(()=>{
-        axios.post(JOURNALS_TOKENIZED_DOWNLOAD_URL, JSON.stringify({...props.searchToken, "pageIndex": pageNumber}), {
+        if(isMount)
+            return
+        const newSearchToken = {...state, pageIndex: 0}
+        // SENT NEW STATE (NOT SAVED YET)
+        axios.post(JOURNALS_TOKENIZED_DOWNLOAD_URL, JSON.stringify(newSearchToken), {
             headers: {
                 'Content-Type': 'application/json',
             }
         })
             .then(response => {
                 setJournals(response.data.journals)
-                setPageData(
-                    {
-                        numberOfPages: response.data.numberOfPages,
-                        pageNumber: pageNumber
-                    }
-                )
+                console.log('JournalList: SUCESS')
+                setPageInfo({
+                    numberOfPages: response.data.numberOfPages,
+                    pageNumber: response.data.pageNumber
+                })
+                // SAVE NEW STATE NOW
+                dispatch({type: "UPDATE", value: {searchToken: newSearchToken}})
+                console.log(newSearchToken)
                 setIsLoading(false)
             })
             .catch(error => {
-                console.log(error)
+                console.log(`JournalList: ERROR | ${error}`)
             })
-    }, [pageNumber])
+    }, [buttonSent])
+
+    function indexValue(index) {
+        if(state.pageSize > 100)
+            return index + 100 * pageInfo.pageNumber + 1
+        return index + state.pageSize * pageInfo.pageNumber + 1
+    }
 
     return(
         <section id="preview">
             {isLoading ? <div aria-busy="true">Please wait…</div> :
                 <>
-                    <PageNav pageData={pageData} setPageNumber={setPageNumber}></PageNav>
+                    <br></br>
+                    <PageNav></PageNav>
                     <table role="grid">
                         <thead>
                             <tr>
@@ -89,7 +93,7 @@ function JournalList(props) {
                         <tbody>
                             {journals.map((journal, index) => (
                                 <tr scope="row" key={index}>
-                                    <td><Link to={`/journal/${journal.id}`}>{index + 1}</Link></td>
+                                    <td><Link to={`/journal/${journal.id}`}>{indexValue(index)}</Link></td>
                                     <td>{journal.id !== '' ? journal.id : '-'}</td>
                                     <td>{journal.title1 !== '' ? journal.title1 : '-'}</td>
                                     <td>{journal.issn1 !== '' ? journal.issn1 : '-'}</td>
@@ -107,7 +111,7 @@ function JournalList(props) {
                             ))}
                         </tbody>
                     </table>
-                    <PageNav pageData={pageData} setPageNumber={setPageNumber}></PageNav>
+                    <PageNav />
                 </>
             }
         </section>
