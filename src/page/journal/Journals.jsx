@@ -7,7 +7,7 @@ import JournalSearch from "./JournalSearch";
 import { SearchTokenContext, defaultSearchToken } from "../../context/SearchTokenProvider";
 
 function Journals() {
-    const {display, dispatchDisplay, state, dispatch, reset,setReset, setButtonSent } = useContext(SearchTokenContext)
+    const {dispatchDisplay, state, dispatch, reset,setReset, setButtonSent } = useContext(SearchTokenContext)
 
     const [isAddJournalModal, setIsAddJournalModal] = useState(false)
     const [isSearch, setIsSearch] = useState(false)
@@ -29,8 +29,9 @@ function Journals() {
 
     function handleSubmit(e) {
         e.preventDefault()
-        dispatch({type: "UPDATE", value: {searchToken: state}})
-        dispatchDisplay({type: "UPDATE", value: {searchToken: state}})
+        const newSearchToken = {...state, orderByArgument: orderByArgument, isDescSort: isDescSort}
+        dispatch({type: "UPDATE", value: {searchToken: newSearchToken}})
+        dispatchDisplay({type: "UPDATE", value: {searchToken: newSearchToken}})
         setButtonSent(s => !s)
     }
 
@@ -89,7 +90,13 @@ function Journals() {
                     <label>
                         Descending order
                     </label>
-                    <input checked={isDescSort} onChange={(e) => setDescSort(e.target.checked)} type="checkbox" name="isDesc" role="switch"/>
+                    <input 
+                        checked={isDescSort} 
+                        onChange={(e) => setDescSort(e.target.checked)} 
+                        type="checkbox" 
+                        name="isDesc" 
+                        role="switch"
+                    />
                 </fieldset>
                 <button type="submit">Search</button>
                 <a onClick={handleReset}>Reset your search filters here...</a>
