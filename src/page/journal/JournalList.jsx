@@ -1,11 +1,11 @@
 import { useState, useEffect, useContext } from 'react'
-import { JOURNALS_TOKENIZED_DOWNLOAD_URL } from "../global"
+import { JOURNALS_TOKENIZED_DOWNLOAD_URL } from "../../global"
 import axios from 'axios'
-import Tag from './Tag'
+import Tag from '../../components/Tag'
 import { Link } from 'react-router-dom'
-import PageNav from '../page/journal/PageNav'
-import { SearchTokenContext } from '../context/SearchTokenProvider'
-import useIsMount from '../hooks/useIsMount'
+import PageNav from './PageNav'
+import { SearchTokenContext } from '../../context/SearchTokenProvider'
+import useIsMount from '../../hooks/useIsMount'
 
 function JournalList() {
     const [journals, setJournals] = useState([])

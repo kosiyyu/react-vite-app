@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import JournalList from "../../components/JournalList"
+import JournalList from "./JournalList"
 import AddJournalModal from "../../components/AddJournalModal"
 import useIsMount from "../../hooks/useIsMount";
 import TagSearch from "./TagSearch"
