@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { SearchTokenContext } from '../../context/SearchTokenProvider'
 
 function PageNav() {
-    const {display, dispatchDisplay, state, dispatch, pageInfo, setSent} = useContext(SearchTokenContext)
+    const {display, dispatchDisplay, pageInfo, setSent} = useContext(SearchTokenContext)
 
     function isNext() {
         return display.pageIndex + 1 < pageInfo.numberOfPages
@@ -29,7 +29,7 @@ function PageNav() {
     function firstNumber(){
         if(pageInfo.numberOfPages === 0)
             return 0
-        return display.pageIndex + 1<= 0 ? 1 : display.pageIndex + 1
+        return display.pageIndex + 1 <= 0 ? 1 : display.pageIndex + 1
     }
  
     function displayPrevious() {

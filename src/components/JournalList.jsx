@@ -11,7 +11,7 @@ function JournalList() {
     const [journals, setJournals] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
-    const { display, dispatchDisplay, state, dispatch, pageInfo, setPageInfo, sent, buttonSent } = useContext(SearchTokenContext)
+    const { display, state, dispatch, pageInfo, setPageInfo, sent, buttonSent } = useContext(SearchTokenContext)
 
     const isMount = useIsMount()
 
