@@ -36,11 +36,12 @@ export default function SearchTokenProvider({children}) {
     const [state, dispatch] = useReducer(reducer, defaultSearchToken)
     const [pageInfo, setPageInfo] = useState(defaultPageInfo)
     const [reset, setReset] = useState(false)
+    const [display, dispatchDisplay] = useReducer(reducer, defaultSearchToken)
     const [sent, setSent] = useState(false)
     const [buttonSent, setButtonSent] = useState(false)
 
     return (
-        <SearchTokenContext.Provider value={{state, dispatch, reset, setReset, pageInfo, setPageInfo, sent, setSent, buttonSent, setButtonSent}}>
+        <SearchTokenContext.Provider value={{display, dispatchDisplay, state, dispatch, reset, setReset, pageInfo, setPageInfo, sent, setSent, buttonSent, setButtonSent}}>
             {children}
         </SearchTokenContext.Provider>
     )

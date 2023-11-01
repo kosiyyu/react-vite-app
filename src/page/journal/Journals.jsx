@@ -7,7 +7,7 @@ import JournalSearch from "./JournalSearch";
 import { SearchTokenContext, defaultSearchToken } from "../../context/SearchTokenProvider";
 
 function Journals() {
-    const { state, dispatch, reset,setReset, setButtonSent } = useContext(SearchTokenContext)
+    const {display, dispatchDisplay, state, dispatch, reset,setReset, setButtonSent } = useContext(SearchTokenContext)
 
     const [displayModal, setDisplayModal] = useState(false)
     const [displaySearch, setDisplaySearch] = useState(false)
@@ -28,12 +28,15 @@ function Journals() {
     function updateOnSubmit(e) {
         e.preventDefault()
         dispatch({type: "UPDATE", value: {searchToken: state}})
+        dispatchDisplay({type: "UPDATE", value: {searchToken: state}})
         setButtonSent(s => !s)
     }
 
     function resetToggle(){
         dispatch({type: "RESET", value: {searchToken: defaultSearchToken}})
+        dispatchDisplay({type: "RESET", value: {searchToken: defaultSearchToken}})
         setReset(r => !r)
+        
     }
 
 

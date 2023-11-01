@@ -11,12 +11,12 @@ function JournalList() {
     const [journals, setJournals] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
-    const { state, dispatch, pageInfo, setPageInfo, sent, buttonSent } = useContext(SearchTokenContext)
+    const { display, dispatchDisplay, state, dispatch, pageInfo, setPageInfo, sent, buttonSent } = useContext(SearchTokenContext)
 
     const isMount = useIsMount()
 
     useEffect(()=>{
-        axios.post(JOURNALS_TOKENIZED_DOWNLOAD_URL, JSON.stringify(state), {
+        axios.post(JOURNALS_TOKENIZED_DOWNLOAD_URL, JSON.stringify(display), {
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -28,7 +28,7 @@ function JournalList() {
                     numberOfPages: response.data.numberOfPages,
                     pageNumber: response.data.pageNumber
                 })
-                console.log(state)
+                console.log(display)
                 setIsLoading(false)
             })
             .catch(error => {
@@ -40,7 +40,7 @@ function JournalList() {
         if(isMount)
             return
         const newSearchToken = {...state, pageIndex: 0}
-        // SENT NEW STATE (NOT SAVED YET)
+        // SENT NEW STATE (NOT SAVED YET)   
         axios.post(JOURNALS_TOKENIZED_DOWNLOAD_URL, JSON.stringify(newSearchToken), {
             headers: {
                 'Content-Type': 'application/json',

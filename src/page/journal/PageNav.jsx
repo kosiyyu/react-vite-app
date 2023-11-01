@@ -2,34 +2,34 @@ import { useContext } from 'react'
 import { SearchTokenContext } from '../../context/SearchTokenProvider'
 
 function PageNav() {
-    const { state, dispatch, pageInfo, setSent} = useContext(SearchTokenContext)
+    const {display, dispatchDisplay, state, dispatch, pageInfo, setSent} = useContext(SearchTokenContext)
 
     function isNext() {
-        return state.pageIndex + 1 < pageInfo.numberOfPages
+        return display.pageIndex + 1 < pageInfo.numberOfPages
     }
 
     function isPrevious() {
-        return state.pageIndex > 0
+        return display.pageIndex > 0
     }
 
     const previous = () => {
-        const pageIndex = state.pageIndex - 1
-        const newSearchToken = {...state, pageIndex: pageIndex}
-        dispatch({type: "UPDATE", value: {searchToken: newSearchToken}})
+        const pageIndex = display.pageIndex - 1
+        const newSearchToken = {...display, pageIndex: pageIndex}
+        dispatchDisplay({type: "UPDATE", value: {searchToken: newSearchToken}})
         setSent(s => !s)
     }
 
     const next = () => {
-        const pageIndex = state.pageIndex + 1
-        const newSearchToken = {...state, pageIndex: pageIndex}
-        dispatch({type: "UPDATE", value: {searchToken: newSearchToken}})
+        const pageIndex = display.pageIndex + 1
+        const newSearchToken = {...display, pageIndex: pageIndex}
+        dispatchDisplay({type: "UPDATE", value: {searchToken: newSearchToken}})
         setSent(s => !s)
     }
 
     function firstNumber(){
         if(pageInfo.numberOfPages === 0)
             return 0
-        return state.pageIndex + 1<= 0 ? 1 : state.pageIndex + 1
+        return display.pageIndex + 1<= 0 ? 1 : display.pageIndex + 1
     }
  
     function displayPrevious() {
