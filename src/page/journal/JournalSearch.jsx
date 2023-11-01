@@ -9,20 +9,20 @@ function JournalSearch() {
     const [searchTerm, setSearchTerm] = useState('')
 
     const { state, dispatch, reset } = useContext(SearchTokenContext)
-    const [isReset, setIsReset] = useState(false)
-    const isMount = useIsMount()
+    const isMountReset = useIsMount()
+    const isMountSearchStrings = useIsMount()
 
     useEffect(() => {
-        console.log("JournalSearch: USE_EFFECT RESET")
+        if (isMountReset) {
+            return
+        }
+        console.log("JOURNALSEARCH RESET")
         setSearchStrings([])
-        setIsReset(true)
     }, [reset])
 
     useEffect(()=>{
-        if (isMount || isReset) {
-            setIsReset(false)
+        if(isMountSearchStrings)
             return
-        }
         const updatedSearchToken = {...state, "searchStrings": searchStrings}
         dispatch({type: "UPDATE", value: {searchToken: updatedSearchToken}})
     }, [searchStrings])
