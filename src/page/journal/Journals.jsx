@@ -1,73 +1,41 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import JournalList from "../../components/JournalList"
 import AddJournalModal from "../../components/AddJournalModal"
 import useIsMount from "../../hooks/useIsMount";
-import TagSelector from "../../components/TagSelector";
+import TagSearch from "./TagSearch"
 import JournalSearch from "./JournalSearch";
+import { SearchTokenContext, defaultSearchToken } from "../../context/SearchTokenProvider";
 
 function Journals() {
-    const [displayModal, setDisplayModal] = useState(false);
-    const [displaySearch, setDisplaySearch] = useState(false);
-    const [searchToken, setsearchToken] = useState(
-        {
-            "searchStrings": [],
-            "tagStrings": [],
-            "orderByArgument": "",
-            "pageIndex": 0,
-            "pageSize": 5,
-            "isDescSort": false
-        }
-    );
-    const [searchStrings, setSearchStrings] = useState([]);
-    const [tagStrings, setTagStrings] = useState([]);
-    const isMountSearchToken = useIsMount();
-    const [reset, setReset] = useState(false);
-    const [orderByArgument, setOrderByArgument] = useState("Id");
-    const [isDescSort, setDescSort] = useState(false);
+    const { state, dispatch, reset,setReset, setButtonSent } = useContext(SearchTokenContext)
 
-    useEffect(()=>{
-        if(isMountSearchToken){
+    const [displayModal, setDisplayModal] = useState(false)
+    const [displaySearch, setDisplaySearch] = useState(false)
+
+    const [orderByArgument, setOrderByArgument] = useState("Id")
+    const [isDescSort, setDescSort] = useState(false)
+
+    const isMount = useIsMount()
+
+    useEffect(() => {
+        if(isMount)
             return
-        }
-    },[searchToken])
+        console.log("JOURNALS RESET")
+        setOrderByArgument("Id")
+        setDescSort(false)
+    }, [reset])
 
     function updateOnSubmit(e) {
         e.preventDefault()
-        setReset(false)
-        setsearchToken((x) => ({
-            ...x,
-            ...{
-            "searchStrings": searchStrings,
-            "tagStrings": tagStrings,
-            "orderByArgument": e.target.elements.orderBy.value,
-            "pageIndex": 0,
-            "pageSize": 5,
-            "isDescSort": e.target.elements.isDesc.checked
-            }
-        })
-        )
+        dispatch({type: "UPDATE", value: {searchToken: state}})
+        setButtonSent(s => !s)
     }
 
     function resetToggle(){
-        setReset(x => !x)
+        dispatch({type: "RESET", value: {searchToken: defaultSearchToken}})
+        setReset(r => !r)
     }
 
-    useEffect(()=>{
-        if(reset){
-            setSearchStrings([])
-            setTagStrings([])
-            setOrderByArgument("Id")
-            setDescSort(false)
-        }
-    }, [reset])
-
-    function transferTags(value){
-        setTagStrings(value.map(v => v.value))
-    }
-
-    function transferSearchStrings(value){
-        setSearchStrings(value)
-    }
 
     return (
         <>
@@ -76,7 +44,7 @@ function Journals() {
             {displayModal && <AddJournalModal closeModal={() => setDisplayModal(false)} />}
             <label>
                 <input type="checkbox" role="switch" checked={displaySearch ? "active" : ""} onChange={() => setDisplaySearch(!displaySearch)}/>
-                Search
+                Search filter
             </label>
             {displaySearch ? 
             <div>
@@ -97,8 +65,8 @@ function Journals() {
                         <option>E-issn 2</option>
                         <option>Points</option>
                     </select>
-                    <JournalSearch reset={reset} transferSearchStrings={(value) => transferSearchStrings(value)}></JournalSearch>
-                    <TagSelector reset={reset} transferTags={(value) => transferTags(value)}/>
+                    <JournalSearch></JournalSearch>
+                    <TagSearch/>
                     <fieldset>
                         <label>
                             Descending order
@@ -106,12 +74,12 @@ function Journals() {
                         <input checked={isDescSort} onChange={(e) => setDescSort(e.target.checked)} type="checkbox" name="isDesc" role="switch"/>
                     </fieldset>
                     <button type="submit">Search</button>
-                    <a onClick={resetToggle}>Fresh start? Reset your search filters here.</a>
+                    <a onClick={resetToggle}>Reset your search filters here...</a>
                 </form>
             </div>
             :
             ""}
-            <JournalList searchToken={searchToken}></JournalList>
+                <JournalList></JournalList>
         </>
     )
 }
