@@ -18,7 +18,7 @@ function Navbar() {
         <ul>
           <li>
             <Link to="/" className="primary">
-              <strong>Kot morderca nie ma serca</strong>
+              <strong>App Name</strong>
             </Link>
           </li>
         </ul>

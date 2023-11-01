@@ -1,21 +1,30 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import TagCorrect from "../../components/TagCorrect";
 import Tag from "../../components/Tag";
 import useIsMount from "../../hooks/useIsMount";
-import PropTypes from 'prop-types'
+import { SearchTokenContext } from "../../context/SearchTokenProvider";
 
-JournalSearch.propTypes = {
-    transferSearchStrings: PropTypes.func.isRequired
-}
-function JournalSearch(props) {
+function JournalSearch() {
     const [searchStrings, setSearchStrings] = useState([]);
     const [searchTerm, setSearchTerm] = useState('')
+
+    const { state, dispatch, reset } = useContext(SearchTokenContext)
+    const isMountReset = useIsMount()
     const isMountSearchStrings = useIsMount()
+
+    useEffect(() => {
+        if (isMountReset) {
+            return
+        }
+        console.log("JOURNALSEARCH RESET")
+        setSearchStrings([])
+    }, [reset])
 
     useEffect(()=>{
         if(isMountSearchStrings)
             return
-        props.transferSearchStrings(searchStrings)
+        const updatedSearchToken = {...state, "searchStrings": searchStrings}
+        dispatch({type: "UPDATE", value: {searchToken: updatedSearchToken}})
     }, [searchStrings])
 
     function selectSearchStrings(searchString) {
@@ -36,7 +45,17 @@ function JournalSearch(props) {
         <>
             <label>
                 Search term
-                <input value={searchTerm} onChange={search} onKeyDown={(e)=>{if(e.key==='Enter'){e.preventDefault();}}} type="search" placeholder="e.g. hello world"/>
+                <input 
+                    value={searchTerm} 
+                    onChange={search} 
+                    onKeyDown={(e)=>{
+                        if(e.key === 'Enter'){
+                            e.preventDefault();
+                        }
+                    }} 
+                    type="search" 
+                    placeholder="e.g. hello world"
+                />
             </label>
             <div>
                 {searchStrings.map((searchString, index) => (

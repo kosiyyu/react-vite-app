@@ -1,99 +1,120 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import JournalList from "../../components/JournalList"
 import AddJournalModal from "../../components/AddJournalModal"
 import useIsMount from "../../hooks/useIsMount";
-import TagSelector from "../../components/TagSelector";
+import TagSearch from "./TagSearch"
 import JournalSearch from "./JournalSearch";
+import { SearchTokenContext, defaultSearchToken } from "../../context/SearchTokenProvider";
 
 function Journals() {
-    const [displayModal, setDisplayModal] = useState(false);
-    const [displaySearch, setDisplaySearch] = useState(false);
-    const [searchToken, setsearchToken] = useState(
-        {
-            "searchStrings": [],
-            "tagStrings": [],
-            "orderByArgument": "",
-            "pageIndex": 0,
-            "pageSize": 5,
-            "isDescSort": false
-        }
-    );
-    const [searchStrings, setSearchStrings] = useState([]);
-    const [tagStrings, setTagStrings] = useState([]);
-    const isMountSearchToken = useIsMount();
+    const {dispatchDisplay, state, dispatch, reset,setReset, setButtonSent } = useContext(SearchTokenContext)
 
-    useEffect(()=>{
-        if(isMountSearchToken){
+    const [isAddJournalModal, setIsAddJournalModal] = useState(false)
+    const [isSearch, setIsSearch] = useState(false)
+
+    // FOR RESET
+    const [orderByArgument, setOrderByArgument] = useState("Id")
+    const [isDescSort, setDescSort] = useState(false)
+    const isMountReset = useIsMount()
+
+    useEffect(() => {
+        if(isMountReset)
             return
-        }
-        /////////////////////////
-        // I send it using JournalList and prop rerender
-        /////////////////////////
-        setSearchStrings([])
-        setTagStrings([])
-        console.log(searchToken)
-    },[searchToken])
+        console.log("JOURNALS RESET")
+        setOrderByArgument("Id")
+        setDescSort(false)
+    }, [reset])
 
-    function updateOnSubmit(e) {
+    // HANDLE FUNCTIONS
+
+    function handleSubmit(e) {
         e.preventDefault()
-        setsearchToken((x) => ({
-            ...x,
-            ...{
-            "searchStrings": searchStrings,
-            "tagStrings": tagStrings,
-            "orderByArgument": e.target.elements.orderBy.value,
-            "pageIndex": 0,
-            "pageSize": 5,
-            "isDescSort": e.target.elements.isDesc.checked
-            }
-        })
+        const newSearchToken = {...state, orderByArgument: orderByArgument, isDescSort: isDescSort}
+        dispatch({type: "UPDATE", value: {searchToken: newSearchToken}})
+        dispatchDisplay({type: "UPDATE", value: {searchToken: newSearchToken}})
+        setButtonSent(s => !s)
+    }
+
+    function handleReset(){
+        dispatch({type: "RESET", value: {searchToken: defaultSearchToken}})
+        dispatchDisplay({type: "RESET", value: {searchToken: defaultSearchToken}})
+        setReset(r => !r)
+        
+    }
+
+    // DISPLAY FUNCTIONS
+
+    function displayAddJournalModal(){
+        if(isAddJournalModal)
+            return <AddJournalModal closeModal={() => setIsAddJournalModal(false)} />
+        return ""
+    }
+
+    function displaySearchSwitch(){
+        return(
+        <label>
+            <input 
+                type="checkbox" 
+                role="switch" 
+                checked={isSearch ? "active" : ""} 
+                onChange={() => setIsSearch(!isSearch)}
+            />
+            Search filter
+        </label>
         )
     }
 
-    function transferTags(value){
-        setTagStrings(value.map(v => v.value))
+    function displaySearch(){
+        if(isSearch)
+            return(
+                <form onSubmit={(e) => handleSubmit(e)}>
+                <label>Sort by</label>
+                <select 
+                    value={orderByArgument}
+                    onChange={(e) => setOrderByArgument(e.target.value)}
+                    name="orderBy" 
+                    required
+                >
+                    <option>Id</option>
+                    <option>Title 1</option>
+                    <option>issn1</option>
+                    <option>E-issn 1</option>
+                    <option>Title 2</option>
+                    <option>Issn 2</option>
+                    <option>E-issn 2</option>
+                    <option>Points</option>
+                </select>
+                <JournalSearch></JournalSearch>
+                <TagSearch/>
+                <fieldset>
+                    <label>
+                        Descending order
+                    </label>
+                    <input 
+                        checked={isDescSort} 
+                        onChange={(e) => setDescSort(e.target.checked)} 
+                        type="checkbox" 
+                        name="isDesc" 
+                        role="switch"
+                    />
+                </fieldset>
+                <button type="submit">Search</button>
+                <a onClick={handleReset}>Reset your search filters here...</a>
+            </form>
+        )
+        return ""
     }
 
-    function transferSearchStrings(value){
-        setSearchStrings(value)
-    }
+    //
 
     return (
         <>
             <h1>📰 Journals</h1>
-            <h6><a onClick={() => setDisplayModal(true)}>🆕 :: add journal ::</a></h6>
-            {displayModal && <AddJournalModal closeModal={() => setDisplayModal(false)} />}
-            <label>
-                <input type="checkbox" role="switch" checked={displaySearch ? "active" : ""} onChange={() => setDisplaySearch(!displaySearch)}/>
-                Search
-            </label>
-            {displaySearch ? 
-            <div>
-                <form onSubmit={(e) => updateOnSubmit(e)}>
-                    <label>Sort by</label>
-                    <select name="orderBy" required>
-                        <option>Id</option>
-                        <option>Title 1</option>
-                        <option>issn1</option>
-                        <option>E-issn 1</option>
-                        <option>Title 2</option>
-                        <option>Issn 2</option>
-                        <option>E-issn 2</option>
-                    </select>
-                    <JournalSearch transferSearchStrings={(value) => transferSearchStrings(value)}></JournalSearch>
-                    <TagSelector transferTags={(value) => transferTags(value)}/>
-                    <fieldset>
-                        <label>
-                            Descending order
-                        </label>
-                        <input type="checkbox" name="isDesc" role="switch"/>
-                    </fieldset>
-                    <button type="submit">Search</button>
-                </form>
-            </div>
-            :
-            ""}
-            <JournalList searchToken={searchToken}></JournalList>
+            <h6><a onClick={() => setIsAddJournalModal(true)}>:: add journal ::</a></h6>
+            {displayAddJournalModal()}
+            {displaySearchSwitch()}
+            {displaySearch()}
+            <JournalList></JournalList>
         </>
     )
 }

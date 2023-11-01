@@ -1,20 +1,28 @@
-import { useState, useEffect } from "react"
-import { TAGS_DOWNLOAD_URL } from '../global'
-import PropTypes from 'prop-types'
-import axios from "axios"
-import TagCorrect from "./TagCorrect"
-import Tag from "./Tag"
-import useIsMount from "../hooks/useIsMount"
+import { useState, useEffect, useContext } from "react"
 
-TagSelector.propTypes  = {
-    transferTags: PropTypes.func.isRequired,
-    reset: PropTypes.bool
-}
-function TagSelector(props){
+import axios from "axios"
+import TagCorrect from "../../components/TagCorrect"
+import Tag from "../../components/Tag"
+import useIsMount from "../../hooks/useIsMount"
+import { SearchTokenContext } from "../../context/SearchTokenProvider"
+import { TAGS_DOWNLOAD_URL } from "../../global"
+
+function TagSearch(){
     const [tags, setTags] = useState([])
     const [selectedTags, setSelectedTags] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
-    const isMount = useIsMount();
+    const isMount = useIsMount()
+
+    const { state, dispatch, reset } = useContext(SearchTokenContext)
+
+    useEffect(() => {
+        if (isMount) {
+            return
+        }
+        console.log("TAGSEARCH RESET")
+        setSelectedTags([])
+        setSearchTerm('')
+    }, [reset])
 
     useEffect(()=>{
         axios.get(TAGS_DOWNLOAD_URL)
@@ -26,19 +34,11 @@ function TagSelector(props){
             })
         }, [])
 
-    useEffect(()=>{
-        if(isMount)
-            return
-        props.transferTags(selectedTags)
+    useEffect(() => {
+        const values = selectedTags.map(v => v.value)
+        const newSearchToken = {...state, tagStrings: values}
+        dispatch({type: "UPDATE", value: {searchToken: newSearchToken}})
     }, [selectedTags])
-
-    useEffect(()=>{
-        if(props.reset !== undefined){
-            setSelectedTags([])
-            setSearchTerm('')
-        }
-    }, [props.reset])
-
 
     const search = (event) => {
         setSearchTerm(event.target.value)
@@ -79,4 +79,4 @@ function TagSelector(props){
     )
 }
 
-export default TagSelector
+export default TagSearch
