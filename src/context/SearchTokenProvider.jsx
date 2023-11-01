@@ -1,5 +1,4 @@
-import { createContext, useEffect, useReducer, useState } from "react"
-import useIsMount from "../hooks/useIsMount"
+import { createContext, useReducer, useState } from "react"
 import PropTypes from "prop-types"
 
 export const defaultSearchToken = {
@@ -39,15 +38,6 @@ export default function SearchTokenProvider({children}) {
     const [reset, setReset] = useState(false)
     const [sent, setSent] = useState(false)
     const [buttonSent, setButtonSent] = useState(false)
-    const isMount = useIsMount()
-
-    useEffect(()=>{
-        if(isMount)
-            return
-        if(JSON.stringify(state) === JSON.stringify(defaultSearchToken)){
-            setReset(r => !r)
-        }
-    }, [state])
 
     return (
         <SearchTokenContext.Provider value={{state, dispatch, reset, setReset, pageInfo, setPageInfo, sent, setSent, buttonSent, setButtonSent}}>
