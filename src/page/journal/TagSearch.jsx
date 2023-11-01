@@ -14,13 +14,14 @@ function TagSearch(){
     const isMount = useIsMount()
 
     const { state, dispatch, reset } = useContext(SearchTokenContext)
-    const [isReset, setIsReset] = useState(false)
 
     useEffect(() => {
-        console.log("TagSearch: USE_EFFECT RESET")
+        if (isMount) {
+            return
+        }
+        console.log("TAGSEARCH RESET")
         setSelectedTags([])
         setSearchTerm('')
-        setIsReset(true)
     }, [reset])
 
     useEffect(()=>{
@@ -34,10 +35,6 @@ function TagSearch(){
         }, [])
 
     useEffect(() => {
-        if (isMount || isReset) {
-            setIsReset(false)
-            return
-        }
         const values = selectedTags.map(v => v.value)
         const newSearchToken = {...state, tagStrings: values}
         dispatch({type: "UPDATE", value: {searchToken: newSearchToken}})
