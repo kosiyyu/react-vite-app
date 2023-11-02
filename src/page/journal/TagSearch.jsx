@@ -57,7 +57,17 @@ function TagSearch(){
         <div>
             <label>
                 Search tag
-                <input value={searchTerm} onChange={search} type="search" placeholder="e.g. super mario" />
+                <input 
+                    value={searchTerm} 
+                    onChange={search} 
+                    type="search" 
+                    placeholder="e.g. super mario"
+                    onKeyDown={(e)=>{
+                        if(e.key === 'Enter'){
+                            e.preventDefault();
+                        }
+                    }} 
+                />
             </label>
             <div>
                 {selectedTags.map((tag, index) => (
