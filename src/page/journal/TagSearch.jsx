@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react"
 
 import axios from "axios"
 import TagCorrect from "../../components/TagCorrect"
-import Tag from "../../components/Tag"
+import TagNormal from "../../components/TagNormal"
 import useIsMount from "../../hooks/useIsMount"
 import { SearchTokenContext } from "../../context/SearchTokenProvider"
 import { TAGS_DOWNLOAD_URL } from "../../global"
@@ -57,7 +57,17 @@ function TagSearch(){
         <div>
             <label>
                 Search tag
-                <input value={searchTerm} onChange={search} type="search" placeholder="e.g. super mario" />
+                <input 
+                    value={searchTerm} 
+                    onChange={search} 
+                    type="search" 
+                    placeholder="e.g. super mario"
+                    onKeyDown={(e)=>{
+                        if(e.key === 'Enter'){
+                            e.preventDefault();
+                        }
+                    }} 
+                />
             </label>
             <div>
                 {selectedTags.map((tag, index) => (
@@ -70,7 +80,7 @@ function TagSearch(){
                         .filter(array => !selectedTags.includes(array))
                         .filter(tag => tag.value?.toLowerCase().includes(searchTerm.toLowerCase()))
                         .map((tag, index) => (
-                            <Tag tagId={tag.id} onClick={() => selectTag(tag)} key={index}>{tag.value}</Tag>
+                            <TagNormal tagId={tag.id} onClick={() => selectTag(tag)} key={index}>{tag.value}</TagNormal>
                         )
                     )
                 }

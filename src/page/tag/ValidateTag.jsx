@@ -1,38 +1,38 @@
 import { useParams } from "react-router-dom"
 import NotFound from "../error/NotFound"
-import Journal from "./Journal"
+import Tag from "./Tag"
 import { useEffect, useState } from "react"
 import axios from "axios"
-import { JOURNAL_DOWNLOAD_URL } from "../../global"
+import { TAG_DOWNLOAD_URL } from "../../global"
 
-function ValidateJournal() {
+function ValidateTag() {
     const params = useParams()
-    const journalId = params.id
-    const [journal, setJournal] = useState(undefined)
+    const tagId = params.id
+    const [tag, setTag] = useState(undefined)
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        axios.get(JOURNAL_DOWNLOAD_URL(journalId))
+        axios.get(TAG_DOWNLOAD_URL(tagId))
         .then(response => {
             if(response.data !== undefined)
-                setJournal(response.data)
+                setTag(response.data)
             setIsLoading(false)
         })
         .catch(error => {
             console.log(error)
             setIsLoading(false)
         })
-    }, [journalId])
+    }, [tagId])
 
     function display(){
         if(isLoading)
             return <p>Loading...</p>
-        if(journal)
-            return <Journal journalData={journal} />
+        if(tag)
+            return <Tag tagData={tag} />
         return <NotFound />
     }
 
     return display()
 }
 
-export default ValidateJournal
+export default ValidateTag

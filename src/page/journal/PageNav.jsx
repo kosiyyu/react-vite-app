@@ -51,7 +51,7 @@ function PageNav() {
     }
 
     return (
-        <>Page {firstNumber()} out of {pageInfo.numberOfPages} {displayPrevious()} {displayNext()} </>
+        <p>Page {firstNumber()} out of {pageInfo.numberOfPages} {displayPrevious()} {displayNext()} </p>
     )
 }
 
