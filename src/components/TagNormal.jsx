@@ -1,13 +1,13 @@
 import "../css/custom.css"
 import PropTypes from 'prop-types'
 
-Tag.propTypes  = {
+TagNormal.propTypes  = {
     children: PropTypes.node.isRequired,
     tagId: PropTypes.number.isRequired,
     onClick: PropTypes.func
 }
 
-function Tag(props) {
+function TagNormal(props) {
     // const num = props.tagId
     // const n = 10 // numer of colors
     // const jump = 30 // jump value
@@ -33,4 +33,4 @@ function Tag(props) {
     )
 }
 
-export default Tag
+export default TagNormal

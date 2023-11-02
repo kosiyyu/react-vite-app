@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import TagCorrect from "../../components/TagCorrect";
-import Tag from "../../components/Tag";
+import TagNormal from "../../components/TagNormal";
 import useIsMount from "../../hooks/useIsMount";
 import { SearchTokenContext } from "../../context/SearchTokenProvider";
 
@@ -62,7 +62,7 @@ function JournalSearch() {
                     <TagCorrect tagId={-1} onClick={() => selectSearchStrings(searchString)} key={index}>{searchString}</TagCorrect>
                 ))}
             </div>
-           {searchTerm === '' ? '' : <Tag tagId={-1} onClick={() => selectSearchStrings(searchTerm)}>{searchTerm}</Tag>}
+           {searchTerm === '' ? '' : <TagNormal tagId={-1} onClick={() => selectSearchStrings(searchTerm)}>{searchTerm}</TagNormal>}
         </>
     )
 }

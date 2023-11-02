@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react"
 
 import axios from "axios"
 import TagCorrect from "../../components/TagCorrect"
-import Tag from "../../components/Tag"
+import TagNormal from "../../components/TagNormal"
 import useIsMount from "../../hooks/useIsMount"
 import { SearchTokenContext } from "../../context/SearchTokenProvider"
 import { TAGS_DOWNLOAD_URL } from "../../global"
@@ -70,7 +70,7 @@ function TagSearch(){
                         .filter(array => !selectedTags.includes(array))
                         .filter(tag => tag.value?.toLowerCase().includes(searchTerm.toLowerCase()))
                         .map((tag, index) => (
-                            <Tag tagId={tag.id} onClick={() => selectTag(tag)} key={index}>{tag.value}</Tag>
+                            <TagNormal tagId={tag.id} onClick={() => selectTag(tag)} key={index}>{tag.value}</TagNormal>
                         )
                     )
                 }

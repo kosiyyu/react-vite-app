@@ -3,7 +3,7 @@ import { TAGS_DOWNLOAD_URL } from '../global'
 import PropTypes from 'prop-types'
 import axios from "axios"
 import TagCorrect from "./TagCorrect"
-import Tag from "./Tag"
+import TagNormal from "./TagNormal"
 import useIsMount from "../hooks/useIsMount"
 
 TagSelector.propTypes  = {
@@ -70,7 +70,7 @@ function TagSelector(props){
                         .filter(array => !selectedTags.includes(array))
                         .filter(tag => tag.value?.toLowerCase().includes(searchTerm.toLowerCase()))
                         .map((tag, index) => (
-                            <Tag tagId={tag.id} onClick={() => selectTag(tag)} key={index}>{tag.value}</Tag>
+                            <TagNormal tagId={tag.id} onClick={() => selectTag(tag)} key={index}>{tag.value}</TagNormal>
                         )
                     )
                 }
