@@ -20,7 +20,7 @@ function Tags(){
 
     function displayTags(){
         if(tags === undefined)
-            return <>Please wait…</> 
+            return <p>Loading...</p> 
         return (
             <table role="grid">
                 <thead>

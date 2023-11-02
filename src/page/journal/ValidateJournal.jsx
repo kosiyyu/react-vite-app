@@ -26,7 +26,7 @@ function ValidateJournal() {
 
     function display(){
         if(isLoading)
-            return <>Loading...</>
+            return <p>Loading...</p>
         if(journal)
             return <Journal journalData={journal} />
         return <NotFound />

@@ -26,7 +26,7 @@ function ValidateTag() {
 
     function display(){
         if(isLoading)
-            return <>Loading...</>
+            return <p>Loading...</p>
         if(tag)
             return <Tag tagData={tag} />
         return <NotFound />

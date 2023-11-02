@@ -8,7 +8,7 @@ import { SearchTokenContext } from '../../context/SearchTokenProvider'
 import useIsMount from '../../hooks/useIsMount'
 
 function JournalList() {
-    const [journals, setJournals] = useState([])
+    const [journals, setJournals] = useState(undefined)
     const [isLoading, setIsLoading] = useState(true)
 
     const { display, state, dispatch, pageInfo, setPageInfo, sent, buttonSent } = useContext(SearchTokenContext)
@@ -69,51 +69,65 @@ function JournalList() {
         return index + state.pageSize * pageInfo.pageNumber + 1
     }
 
+    function displayJournals(){
+        if(journals === undefined)
+            return <p>Loading...</p> 
+        return (
+            <table role="grid">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Id</th>
+                        <th scope="col">Title 1</th>
+                        <th scope="col">Issn 1</th>
+                        <th scope="col">E-issn 1</th>
+                        <th scope="col">Title 2</th>
+                        <th scope="col">Issn 2</th>
+                        <th scope="col">E-issn 2</th>
+                        <th scope="col">Points</th>
+                        <th scope="col">Tags</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {journals.map((journal, index) => (
+                        <tr scope="row" key={index}>
+                            <td><Link to={`/journal/${journal.id}`}>{indexValue(index)}</Link></td>
+                            <td>{journal.id !== '' ? journal.id : '-'}</td>
+                            <td>{journal.title1 !== '' ? journal.title1 : '-'}</td>
+                            <td>{journal.issn1 !== '' ? journal.issn1 : '-'}</td>
+                            <td>{journal.eissn1 !== '' ? journal.eissn1 : '-'}</td>
+                            <td>{journal.title2 !== '' ? journal.title2 : '-'}</td>
+                            <td>{journal.issn2 !== '' ? journal.issn2 : '-'}</td>
+                            <td>{journal.eissn2 !== '' ? journal.eissn2 : '-'}</td>
+                            <td>{journal.points !== '' ? journal.points : '-'}</td>
+                            <td>
+                                {displayTags(journal.tags)}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        )
+    }
+
+    function displayTags(tags){
+        if(tags.length > 0)
+            return (
+                <>
+                    {tags.map((tag, index) => (
+                        <TagRedirect tagId={tag.id} key={index}>{tag.value}</TagRedirect>
+                    ))}
+                </>
+            )
+        else return "-"
+    }
+
     return(
         <section id="preview">
-            {isLoading ? <div aria-busy="true">Please wait…</div> :
-                <>
-                    <br></br>
-                    <PageNav></PageNav>
-                    <table role="grid">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Id</th>
-                                <th scope="col">Title 1</th>
-                                <th scope="col">Issn 1</th>
-                                <th scope="col">E-issn 1</th>
-                                <th scope="col">Title 2</th>
-                                <th scope="col">Issn 2</th>
-                                <th scope="col">E-issn 2</th>
-                                <th scope="col">Points</th>
-                                <th scope="col">Tags</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {journals.map((journal, index) => (
-                                <tr scope="row" key={index}>
-                                    <td><Link to={`/journal/${journal.id}`}>{indexValue(index)}</Link></td>
-                                    <td>{journal.id !== '' ? journal.id : '-'}</td>
-                                    <td>{journal.title1 !== '' ? journal.title1 : '-'}</td>
-                                    <td>{journal.issn1 !== '' ? journal.issn1 : '-'}</td>
-                                    <td>{journal.eissn1 !== '' ? journal.eissn1 : '-'}</td>
-                                    <td>{journal.title2 !== '' ? journal.title2 : '-'}</td>
-                                    <td>{journal.issn2 !== '' ? journal.issn2 : '-'}</td>
-                                    <td>{journal.eissn2 !== '' ? journal.eissn2 : '-'}</td>
-                                    <td>{journal.points !== '' ? journal.points : '-'}</td>
-                                    <td>
-                                        {journal.tags.map((tag, tagIndex) => (
-                                            <TagRedirect tagId={tag.id} key={tagIndex}>{tag.value}</TagRedirect>
-                                        ))}
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <PageNav />
-                </>
-            }
+            <br></br>
+            <PageNav />
+            {displayJournals()}
+            <PageNav />
         </section>
     )
 }
