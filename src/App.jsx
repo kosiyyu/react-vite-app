@@ -5,6 +5,8 @@ import Home from './page/Home'
 import Journals from './page/journal/Journals'
 import ValidateJournal from './page/journal/ValidateJournal'
 import SearchTokenProvider from './context/SearchTokenProvider'
+import Tags from './page/tag/Tags'
+import ValidateTag from './page/tag/ValidateTag'
 
 function App() {
   return (
@@ -23,11 +25,11 @@ function App() {
         }
           >
         </Route>
-        <Route path="/tags" element={<></>}></Route>
-
+        <Route path="/tags" element={<Tags></Tags>}></Route>
         {/* {sub routes} */}
         <Route path="/journal/:id" element={<ValidateJournal />}></Route>
-
+        <Route path="/tag/:id" element={<ValidateTag />}></Route>
+        {/* */}
       </Routes>
     </main>
     </>
