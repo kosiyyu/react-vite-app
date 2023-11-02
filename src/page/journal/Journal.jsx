@@ -1,4 +1,4 @@
-import Tag from "../../components/Tag";
+import TagRedirect from "../../components/TagRedirect";
 import PropTypes from "prop-types"
 
 Journal.propTypes = {
@@ -12,7 +12,7 @@ function Journal(props) {
             return (
                 <>
                     {journal.tags.map((tag, index) => (
-                        <Tag tagId={-1} key={index}>{tag.value}</Tag>
+                        <TagRedirect tagId={tag.id} key={index}>{tag.value}</TagRedirect>
                     ))}
                 </>
             )

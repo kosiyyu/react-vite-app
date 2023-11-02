@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import { JOURNALS_TOKENIZED_DOWNLOAD_URL } from "../../global"
 import axios from 'axios'
-import Tag from '../../components/Tag'
+import TagRedirect from '../../components/TagRedirect'
 import { Link } from 'react-router-dom'
 import PageNav from './PageNav'
 import { SearchTokenContext } from '../../context/SearchTokenProvider'
@@ -104,7 +104,7 @@ function JournalList() {
                                     <td>{journal.points !== '' ? journal.points : '-'}</td>
                                     <td>
                                         {journal.tags.map((tag, tagIndex) => (
-                                            <Tag tagId={tag.id} key={tagIndex}>{tag.value}</Tag>
+                                            <TagRedirect tagId={tag.id} key={tagIndex}>{tag.value}</TagRedirect>
                                         ))}
                                     </td>
                                 </tr>
