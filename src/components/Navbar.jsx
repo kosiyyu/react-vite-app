@@ -21,7 +21,7 @@ function Navbar() {
         <ul>
           <li>
             <Link to="/" className="primary">
-              <img src={icon} width="55" height="55"/>
+              <img src={icon} width="65" height="65"/>
             </Link>
           </li>
         </ul>
