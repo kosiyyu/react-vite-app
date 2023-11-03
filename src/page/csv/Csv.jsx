@@ -1,34 +1,41 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import axios from "axios"
 import { CSV_UPLOAD_URL } from "../../global"
+import toast, { Toaster } from "react-hot-toast"
+
+const displayErrorToast = (msg) => toast.error(msg)
+const displaySuccessToast = () => toast.success("File sent successfully.")
 
 function Csv(){
     const [file, setFile] = useState(undefined)
+    const [isLoading, setIsLoadind] = useState(false)
 
-    useEffect(()=>{
-        console.log(file)
-    }, [file])
-
-    function handleSubmit(e){
-        if(!file){
-            console.log("ERROR")
-        }
+    function handleSubmit(){
+        return (e) => {
         e.preventDefault()
-        const formData = new FormData()
-        formData.append("csv", file)
-        axios.post(CSV_UPLOAD_URL, formData, {
-            "headers": {
-                "Content-Type": "multipart/form-data"
-            }
-        })
-        .then(response => {
-            console.log(response.data)
-            setFile(undefined)
-            e.target.reset()
-        })
-        .catch(error => {
-            console.log(error)
-        })
+        if(!file){
+            displayErrorToast("No file selected. Please choose a CSV file to upload.")
+            return
+        }
+            setIsLoadind(true)
+            const formData = new FormData()
+            formData.append("csv", file)
+            axios.post(CSV_UPLOAD_URL, formData, {
+                "headers": {
+                    "Content-Type": "multipart/form-data"
+                }
+            })
+            .then(() => {
+                setFile(undefined)
+                e.target.reset()
+                setIsLoadind(false)
+                displaySuccessToast()
+            })
+            .catch(() => {
+                setIsLoadind(false)
+                displayErrorToast("Invalid file sent. Please ensure the file is a csv in requred pattern.")
+            })
+        }
     }
 
     function handleOnChnage() {
@@ -36,6 +43,12 @@ function Csv(){
             e.preventDefault()
             setFile(e.target.files[0])
         }
+    }
+
+    function displayButton(){
+        if(isLoading)
+            return <button aria-busy="true" aria-label="Please wait…" />
+        return <button type="submit">Send</button>
     }
 
     return (
@@ -46,19 +59,20 @@ function Csv(){
             </hgroup>
             <hr></hr>
             <article>
-                <form onSubmit={(e) => handleSubmit(e)}>
+                <form onSubmit={handleSubmit()}>
                     <fieldset>
                         <label>Csv file</label>
                         <input 
                             name="file" 
                             type="file"
                             onChange={handleOnChnage()}
-                            accept=".csv" 
+                            accept=".csv"
                         />
                     </fieldset>
-                    <button type="submit">Send</button>
+                    {displayButton()}
                 </form>
             </article>
+            <Toaster />
         </div>
     )
 }
