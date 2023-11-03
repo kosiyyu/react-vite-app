@@ -12,6 +12,7 @@ function Csv(){
     function handleSubmit(e){
         if(!file){
             console.log("ERROR")
+            return
         }
         e.preventDefault()
         const formData = new FormData()
