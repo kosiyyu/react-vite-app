@@ -6,24 +6,26 @@
     /* white-space: nowrap; */
 }
 
-#streach {
-    background-image: url('../assets/fail.gif');
-    background-size: cover;
-    /*background-repeat: no-repeat;*/
-    background-position: center;
-    width: 30vw; /* 100% of the viewport width */
-    height: 30vh; /* 100% of the viewport height */
-}
-
-/* html {
-    background-image: url('../assets/sssquiggly.svg');
-    background-position: center;
-    background-size: cover;
-    background-repeat: repeat;
-} */
-
-.nav{
+.img{
     height: 24px;
     width: 24px;
 }
 
+.nav{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+    background-color: var(--background-color);
+}
+
+.nav-bottom {
+    height: 0;
+    border: 0;
+    border-top: 1px solid var(--muted-border-color);
+    color: inherit;
+}
+
+body {
+    padding-top: 91.8px;
+}
