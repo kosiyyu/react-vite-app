@@ -13,7 +13,6 @@ function App() {
   return (
     <>
     <Navbar />
-    <main className="container-fluid">
       <Routes>
         {/* {main routes} */}
         <Route path="/" element={<Home />}></Route>
@@ -30,7 +29,6 @@ function App() {
         <Route path="/tag/:id" element={<ValidateTag />}></Route>
         {/* */}
       </Routes>
-    </main>
     </>
   )
 }
