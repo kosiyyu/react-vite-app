@@ -57,21 +57,18 @@ function Csv(){
                 <h1>Csv</h1>
                 <h2>Welcome! Upload your Ministerial List of Scientific Journals in <code>.csv</code> format, to save it into the database.</h2>
             </hgroup>
-            <hr></hr>
-            <article>
-                <form onSubmit={handleSubmit()}>
-                    <fieldset>
-                        <label>Csv file</label>
-                        <input 
-                            name="file" 
-                            type="file"
-                            onChange={handleOnChnage()}
-                            accept=".csv"
-                        />
-                    </fieldset>
-                    {displayButton()}
-                </form>
-            </article>
+            <hr />
+            <h3>Add csv file</h3>
+            <form onSubmit={handleSubmit()}>
+                <label>Attach csv file</label>
+                <input 
+                    name="file" 
+                    type="file"
+                    onChange={handleOnChnage()}
+                    accept=".csv"
+                />
+                {displayButton()}
+            </form>
             <Toaster />
         </div>
     )
