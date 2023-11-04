@@ -8,6 +8,7 @@ import SearchTokenProvider from './context/SearchTokenProvider'
 import Tags from './page/tag/Tags'
 import ValidateTag from './page/tag/ValidateTag'
 import Csv from './page/csv/Csv'
+import { Toaster } from "react-hot-toast"
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/tag/:id" element={<ValidateTag />}></Route>
         {/* */}
       </Routes>
+      <Toaster />
     </>
   )
 }

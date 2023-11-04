@@ -36,7 +36,7 @@ function Tags(){
                         <tr key={index}>
                             <td><Link to={`/tag/${tag.id}`}>{index + 1}</Link></td>
                             <td>{tag.id}</td>
-                            <td><TagRedirect tagId={tag.id}>{tag.value}</TagRedirect></td>
+                            <td><TagRedirect tagId={tag.id}>{tag.value ? tag.value : "null"}</TagRedirect></td>
                         </tr>
                     ))}
                 </tbody>
