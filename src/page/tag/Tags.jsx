@@ -1,18 +1,25 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { TAGS_DOWNLOAD_URL } from "../../global"
+import { TAGS_DOWNLOAD_URL, TAG_UPLOAD_URL } from "../../global"
 import { Link } from "react-router-dom"
 import TagRedirect from "../../components/TagRedirect"
+import ButtonCorrect from "../../components/buttons/ButtonCorrect"
+import { applicationJson } from "../../headers/headers"
+import toast from "react-hot-toast"
+
+const displayErrorToast = (msg) => toast.error(msg)
+const displaySuccessToast = (msg) => toast.success(msg)
 
 function Tags(){
     const [tags, setTags] = useState(undefined)
+    const [value, setValue] = useState("")
+    const [isLoading, setIsLoadind] = useState(false)
 
     useEffect(()=>{
         axios.get(TAGS_DOWNLOAD_URL)
         .then(response => {
             console.log("SUCESS")
             setTags(response.data)
-            console.log(response.data)
         })
         .catch(error => {
             console.log(`ERROR | ${error}`)
@@ -44,6 +51,40 @@ function Tags(){
         ) 
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        setIsLoadind(x => !x)
+        if(!value || /^\s*$/.test(value)){
+            setValue("")
+            setIsLoadind(x => !x)
+            displayErrorToast("Tag cannot be empty or blank.")
+            return
+        }
+        axios.post(TAG_UPLOAD_URL, {value: value}, applicationJson)
+        .then(response => {
+            setValue("")
+            setIsLoadind(x => !x)
+            displaySuccessToast(response.data)
+            /////////////////
+            // re-fetch all tags
+            /////////////////
+        })
+        .catch(error => {
+            setIsLoadind(x => !x)
+            displayErrorToast(error.response.data)
+        })
+    }
+
+    const handleValue = (e) => {
+        setValue(e.target.value)
+    }
+
+    function displayButtonCorrect(){
+        if(isLoading)
+            return <ButtonCorrect ariaBusy={true} ariaLabel="Please wait…" />
+        return <ButtonCorrect type="submit">Send</ButtonCorrect>
+    }
+
     return (
         <div className="container">
             <hgroup>
@@ -52,10 +93,10 @@ function Tags(){
             </hgroup>
             <hr />
             <h3>Add tag</h3>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <label>Tag name</label>
-                    <input type="text"/>
-                    <button>Send</button>            
+                    <input type="text" value={value} onChange={handleValue}/>
+                    {displayButtonCorrect()}           
                 </form>
             <h3>Tag list</h3>
             {displayTags()}
