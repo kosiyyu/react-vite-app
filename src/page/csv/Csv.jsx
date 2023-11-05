@@ -4,7 +4,7 @@ import { CSV_UPLOAD_URL } from "../../global"
 import toast, { Toaster } from "react-hot-toast"
 
 const displayErrorToast = (msg) => toast.error(msg)
-const displaySuccessToast = () => toast.success("File sent successfully.")
+const displaySuccessToast = (msg) => toast.success(msg)
 
 function Csv(){
     const [file, setFile] = useState(undefined)
@@ -25,15 +25,15 @@ function Csv(){
                     "Content-Type": "multipart/form-data"
                 }
             })
-            .then(() => {
+            .then(response => {
                 setFile(undefined)
                 e.target.reset()
                 setIsLoadind(false)
-                displaySuccessToast()
+                displaySuccessToast(response.data)
             })
-            .catch(() => {
+            .catch(error => {
                 setIsLoadind(false)
-                displayErrorToast("Invalid file sent. Please ensure the file is a csv in requred pattern.")
+                displayErrorToast(error.response.data)
             })
         }
     }
@@ -57,21 +57,18 @@ function Csv(){
                 <h1>Csv</h1>
                 <h2>Welcome! Upload your Ministerial List of Scientific Journals in <code>.csv</code> format, to save it into the database.</h2>
             </hgroup>
-            <hr></hr>
-            <article>
-                <form onSubmit={handleSubmit()}>
-                    <fieldset>
-                        <label>Csv file</label>
-                        <input 
-                            name="file" 
-                            type="file"
-                            onChange={handleOnChnage()}
-                            accept=".csv"
-                        />
-                    </fieldset>
-                    {displayButton()}
-                </form>
-            </article>
+            <hr />
+            <h3>Add csv file</h3>
+            <form onSubmit={handleSubmit()}>
+                <label>Attach csv file</label>
+                <input 
+                    name="file" 
+                    type="file"
+                    onChange={handleOnChnage()}
+                    accept=".csv"
+                />
+                {displayButton()}
+            </form>
             <Toaster />
         </div>
     )

@@ -6,24 +6,54 @@
     /* white-space: nowrap; */
 }
 
-#streach {
-    background-image: url('../assets/fail.gif');
-    background-size: cover;
-    /*background-repeat: no-repeat;*/
-    background-position: center;
-    width: 30vw; /* 100% of the viewport width */
-    height: 30vh; /* 100% of the viewport height */
-}
-
-/* html {
-    background-image: url('../assets/sssquiggly.svg');
-    background-position: center;
-    background-size: cover;
-    background-repeat: repeat;
-} */
-
-.nav{
+.img{
     height: 24px;
     width: 24px;
 }
 
+.nav{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+    background-color: var(--background-color);
+}
+
+.nav-bottom {
+    height: 0;
+    border: 0;
+    border-top: 1px solid var(--muted-border-color);
+    color: inherit;
+}
+
+body {
+    padding-top: 101px;
+}
+
+.red {
+    background-color: red;
+    border-color: red;
+    color: var(--primary-inverse);
+    box-shadow: red, 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.orange-yellow {
+    background-color: orange;
+    border-color: orange;
+    color: var(--primary-inverse);
+    box-shadow: orange, 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.green {
+    background-color: green;
+    border-color: green;
+    color: var(--primary-inverse);
+    box-shadow: green, 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.green:hover {
+    background-color: rgb(0, 145, 0);
+    border-color: green;
+    color: var(--primary-inverse);
+    box-shadow: green, 0 0 0 rgba(0, 0, 0, 0);
+}
