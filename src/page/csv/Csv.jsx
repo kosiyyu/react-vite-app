@@ -4,7 +4,7 @@ import { CSV_UPLOAD_URL } from "../../global"
 import toast, { Toaster } from "react-hot-toast"
 
 const displayErrorToast = (msg) => toast.error(msg)
-const displaySuccessToast = () => toast.success("File sent successfully.")
+const displaySuccessToast = (msg) => toast.success(msg)
 
 function Csv(){
     const [file, setFile] = useState(undefined)
@@ -25,15 +25,15 @@ function Csv(){
                     "Content-Type": "multipart/form-data"
                 }
             })
-            .then(() => {
+            .then(response => {
                 setFile(undefined)
                 e.target.reset()
                 setIsLoadind(false)
-                displaySuccessToast()
+                displaySuccessToast(response.data)
             })
-            .catch(() => {
+            .catch(error => {
                 setIsLoadind(false)
-                displayErrorToast("Invalid file sent. Please ensure the file is a csv in requred pattern.")
+                displayErrorToast(error.response.data)
             })
         }
     }

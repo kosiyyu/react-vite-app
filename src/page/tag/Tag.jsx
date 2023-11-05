@@ -22,18 +22,6 @@ function Tag(props){
     const [isLoading, setIsLoadind] = useState(false)
     const navigate = useNavigate()
 
-    // useEffect(()=>{
-    //     console.log(tag)
-    // },[tag])
-
-    // useEffect(()=>{
-    //     console.log(value)
-    // },[value])
-
-    // useEffect(()=>{
-    //     console.log(isLoading)
-    // },[isLoading])
-
     const handleValue = (e) => {
         setValue(e.target.value)
     }
@@ -57,6 +45,7 @@ function Tag(props){
 
     const handleDelete = (e) => {
         e.preventDefault()
+        
         setIsLoadind(x => !x)
         axios.delete(TAG_DELETE_URL(tag.id), applicationJson)
         .then(response => {
