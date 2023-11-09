@@ -1,19 +1,6 @@
 import { createContext, useReducer, useState } from "react"
 import PropTypes from "prop-types"
-
-export const defaultSearchToken = {
-    "searchStrings": [],
-    "tagStrings": [],
-    "orderByArgument": "",
-    "pageIndex": 0,
-    "pageSize": 5,
-    "isDescSort": false
-}
-
-export const defaultPageInfo = {
-    "numberOfPages": 0,
-    "pageNumber": 0,
-}
+import { defaultSearchToken, defaultPageInfo } from "./defaultObjects"
 
 export const SearchTokenContext = createContext(undefined)
 

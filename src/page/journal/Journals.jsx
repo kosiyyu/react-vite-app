@@ -1,15 +1,17 @@
 import { useContext, useEffect, useState } from "react"
 import JournalList from "./JournalList"
-import AddJournalModal from "../../components/AddJournalModal"
 import useIsMount from "../../hooks/useIsMount";
 import TagSearch from "./TagSearch"
 import JournalSearch from "./JournalSearch";
-import { SearchTokenContext, defaultSearchToken } from "../../context/SearchTokenProvider";
+import { defaultSearchToken } from "../../context/defaultObjects";
+import { SearchTokenContext } from "../../context/SearchTokenProvider";
+import ButtonCorrect from "../../components/buttons/ButtonCorrect";
+import AddJournal from "./AddJournal";
 
 function Journals() {
-    const {dispatchDisplay, state, dispatch, reset,setReset, setButtonSent } = useContext(SearchTokenContext)
+    const {dispatchDisplay, state, dispatch, reset, setReset, setButtonSent } = useContext(SearchTokenContext)
 
-    const [isAddJournalModal, setIsAddJournalModal] = useState(false)
+    const [isAddJournal, setIsAddJournal] = useState(false)
     const [isSearch, setIsSearch] = useState(false)
 
     // FOR RESET
@@ -44,10 +46,24 @@ function Journals() {
 
     // DISPLAY FUNCTIONS
 
-    function displayAddJournalModal(){
-        if(isAddJournalModal)
-            return <AddJournalModal closeModal={() => setIsAddJournalModal(false)} />
+    function displayAddJournal(){
+        if(isAddJournal)
+            return <AddJournal closeModal={() => setIsAddJournal(false)} />
         return ""
+    }
+
+    function displayAddJournalSwitch(){
+        return(
+        <label>
+            <input 
+                type="checkbox" 
+                role="switch" 
+                checked={isAddJournal ? "active" : ""} 
+                onChange={() => setIsAddJournal(!isAddJournal)}
+            />
+            Add journal
+        </label>
+        )
     }
 
     function displaySearchSwitch(){
@@ -59,7 +75,7 @@ function Journals() {
                 checked={isSearch ? "active" : ""} 
                 onChange={() => setIsSearch(!isSearch)}
             />
-            Search filter
+            Filter
         </label>
         )
     }
@@ -105,17 +121,25 @@ function Journals() {
         return ""
     }
 
-    //
+    // RETURN
 
     return (
-        <>
-            <h1>📰 Journals</h1>
-            <h6><a onClick={() => setIsAddJournalModal(true)}>:: add journal ::</a></h6>
-            {displayAddJournalModal()}
+        <div className="container">
+            <hgroup>
+                <h1>Journals</h1>
+                <h2>Aaaaa elo elo 3 2 0</h2>
+            </hgroup>
+            <hr />
+            <h3>Add journal</h3>
+            {displayAddJournalSwitch()}
+            {displayAddJournal()}
+            <h3>Search</h3>
             {displaySearchSwitch()}
+            <br />
             {displaySearch()}
+            <h3>Journal List</h3>
             <JournalList></JournalList>
-        </>
+        </div>
     )
 }
 

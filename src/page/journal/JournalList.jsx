@@ -15,7 +15,7 @@ function JournalList() {
 
     const isMount = useIsMount()
 
-    useEffect(()=>{
+    useEffect(() => {
         axios.post(JOURNALS_TOKENIZED_DOWNLOAD_URL, JSON.stringify(display), {
             headers: {
                 'Content-Type': 'application/json',
@@ -36,10 +36,10 @@ function JournalList() {
             })
     }, [sent])
 
-    useEffect(()=>{
-        if(isMount)
+    useEffect(() => {
+        if (isMount)
             return
-        const newSearchToken = {...state, pageIndex: 0}
+        const newSearchToken = { ...state, pageIndex: 0 }
         // SENT NEW STATE (NOT SAVED YET)   
         axios.post(JOURNALS_TOKENIZED_DOWNLOAD_URL, JSON.stringify(newSearchToken), {
             headers: {
@@ -54,7 +54,7 @@ function JournalList() {
                     pageNumber: response.data.pageNumber
                 })
                 // SAVE NEW STATE NOW
-                dispatch({type: "UPDATE", value: {searchToken: newSearchToken}})
+                dispatch({ type: "UPDATE", value: { searchToken: newSearchToken } })
                 console.log(newSearchToken)
                 setIsLoading(false)
             })
@@ -64,14 +64,14 @@ function JournalList() {
     }, [buttonSent])
 
     function indexValue(index) {
-        if(state.pageSize > 100)
+        if (state.pageSize > 100)
             return index + 100 * pageInfo.pageNumber + 1
         return index + state.pageSize * pageInfo.pageNumber + 1
     }
 
-    function displayJournals(){
-        if(journals === undefined)
-            return <p>Loading...</p> 
+    function displayJournals() {
+        if (journals === undefined)
+            return <p>Loading...</p>
         return (
             <table role="grid">
                 <thead>
@@ -110,8 +110,8 @@ function JournalList() {
         )
     }
 
-    function displayTags(tags){
-        if(tags.length > 0)
+    function displayTags(tags) {
+        if (tags.length > 0)
             return (
                 <>
                     {tags.map((tag, index) => (
@@ -122,7 +122,7 @@ function JournalList() {
         else return "-"
     }
 
-    return(
+    return (
         <section id="preview">
             <br></br>
             <PageNav />
