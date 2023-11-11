@@ -7,6 +7,7 @@ import { defaultSearchToken } from "../../context/defaultObjects";
 import { SearchTokenContext } from "../../context/SearchTokenProvider";
 import ButtonCorrect from "../../components/buttons/ButtonCorrect";
 import AddJournal from "./AddJournal";
+import LogoTest from "../../assets/LogoTest";
 
 function Journals() {
     const {dispatchDisplay, state, dispatch, reset, setReset, setButtonSent } = useContext(SearchTokenContext)
@@ -139,6 +140,7 @@ function Journals() {
             {displaySearch()}
             <h3>Journal List</h3>
             <JournalList></JournalList>
+            <LogoTest />
         </div>
     )
 }

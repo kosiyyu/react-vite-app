@@ -4,27 +4,19 @@ import useIsMount from "../../hooks/useIsMount"
 import axios from "axios"
 import TagSelector from "../../components/TagSelector"
 import PropTypes from "prop-types"
-import { applicationJson } from "../../headers/headers"
+import { multipartFormData } from "../../headers/headers"
+import ButtonCorrect from "../../components/buttons/ButtonCorrect";
+import { defaultJournal } from "../../context/defaultObjects"
 
 AddJournal.propTypes = {
     closeModal: PropTypes.func.isRequired
 }
-
 function AddJournal(props) {
     const isMoutFile = useIsMount()
     const isMountJournal = useIsMount()
     const isMountTags = useIsMount()
     const [file, setFile] = useState(null)
-    const [journal, setJournal] = useState({
-        title1: null,
-        issn1: null,
-        eissn1: null,
-        title2: null,
-        issn2: null,
-        eissn2: null,
-        points: null,
-        tags: []
-    })
+    const [journal, setJournal] = useState(defaultJournal)
     const [tags, setTags] = useState([])
 
     useEffect(() => {
@@ -36,7 +28,7 @@ function AddJournal(props) {
         const formData = new FormData()
         formData.append("file", file)
         formData.append("journalJson", JSON.stringify(journal))
-        axios.post(JOURNAL_BUNDLE_POST_URL, formData, applicationJson)
+        axios.post(JOURNAL_BUNDLE_POST_URL, formData, multipartFormData)
             .then((response) => {
                 console.log(`SUCCESS: ${response.data}`)
             })
@@ -71,7 +63,7 @@ function AddJournal(props) {
     }
 
     return (
-        <>
+        <article>
             <form onSubmit={(e) => updateData(e)}>
                 <label>Title<input name="title" placeholder="Title" required /></label>
                 <div className="grid">
@@ -88,10 +80,10 @@ function AddJournal(props) {
                     <TagSelector transferTags={(value) => transferTags(value)} />
                 </div>
                 <label>File browser<input type="file" onChange={(e) => setFile(e.target.files[0])} /></label>
-                <button type="submit">Send</button>
+                <ButtonCorrect type="submit">Send</ButtonCorrect>
             </form>
             <button onClick={() => props.closeModal()}>Close</button>
-        </>
+        </article>
     )
 }
 
