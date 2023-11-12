@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { JOURNAL_BUNDLE_POST_URL } from "../../global"
+import { JOURNAL_BUNDLE_UPLOAD_URL } from "../../global"
 import useIsMount from "../../hooks/useIsMount"
 import axios from "axios"
 import TagSelector from "../../components/TagSelector"
@@ -28,7 +28,7 @@ function AddJournal(props) {
         const formData = new FormData()
         formData.append("file", file)
         formData.append("journalJson", JSON.stringify(journal))
-        axios.post(JOURNAL_BUNDLE_POST_URL, formData, multipartFormData)
+        axios.post(JOURNAL_BUNDLE_UPLOAD_URL, formData, multipartFormData)
             .then((response) => {
                 console.log(`SUCCESS: ${response.data}`)
             })
