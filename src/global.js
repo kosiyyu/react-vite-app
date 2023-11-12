@@ -8,8 +8,8 @@ export const DEFAULT_THEME = "dark"
 export const JOURNALS_TOKENIZED_DOWNLOAD_URL = "http://localhost:8081/api/v1/journals/tokenized/download"
 export const JOURNAL_BUNDLE_UPLOAD_URL = "http://localhost:8081/api/v1/journal/bundle/upload/"
 export const JOURNAL_DOWNLOAD_URL = (id) => `http://localhost:8081/api/v1/journal/download/${id}`
-export const JOURNAL_EDIT_URL = "http://localhost:8081/api/v1/journals/edit"
-export const JOURNAL_DELETE_URL = (id) => `http://localhost:8081/api/v1/journals/delete/${id}`
+export const JOURNAL_EDIT_URL = "http://localhost:8081/api/v1/journal/edit"
+export const JOURNAL_DELETE_URL = (id) => `http://localhost:8081/api/v1/journal/delete/${id}`
 
 // TAG
 export const TAGS_DOWNLOAD_URL = "http://localhost:8081/api/v1/tags/download"
