@@ -14,17 +14,46 @@ function Tags(){
     const [tags, setTags] = useState(undefined)
     const [value, setValue] = useState("")
     const [isLoading, setIsLoadind] = useState(false)
+    const [isAdd, setIsAdd] = useState(false)
 
     useEffect(()=>{
-        axios.get(TAGS_DOWNLOAD_URL)
+        if(!isLoading){
+            console.log("Asd")
+            axios.get(TAGS_DOWNLOAD_URL)
+            .then(response => {
+                console.log("SUCESS")
+                setTags(response.data)
+            })
+            .catch(error => {
+                console.log(`ERROR | ${error}`)
+            })
+        }
+    }, [isLoading])
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        setIsLoadind(x => !x)
+        if(!value || /^\s*$/.test(value)){
+            setValue("")
+            setIsLoadind(x => !x)
+            displayErrorToast("Tag cannot be empty or blank.")
+            return
+        }
+        axios.post(TAG_UPLOAD_URL, {value: value}, applicationJson)
         .then(response => {
-            console.log("SUCESS")
-            setTags(response.data)
+            setValue("")
+            setIsLoadind(x => !x)
+            displaySuccessToast(response.data)
         })
         .catch(error => {
-            console.log(`ERROR | ${error}`)
+            setIsLoadind(x => !x)
+            displayErrorToast(error.response.data)
         })
-    }, [])
+    }
+
+    const handleValue = (e) => {
+        setValue(e.target.value)
+    }
 
     function displayTags(){
         if(tags === undefined)
@@ -51,38 +80,36 @@ function Tags(){
         ) 
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        setIsLoadind(x => !x)
-        if(!value || /^\s*$/.test(value)){
-            setValue("")
-            setIsLoadind(x => !x)
-            displayErrorToast("Tag cannot be empty or blank.")
-            return
-        }
-        axios.post(TAG_UPLOAD_URL, {value: value}, applicationJson)
-        .then(response => {
-            setValue("")
-            setIsLoadind(x => !x)
-            displaySuccessToast(response.data)
-            /////////////////
-            // re-fetch all tags
-            /////////////////
-        })
-        .catch(error => {
-            setIsLoadind(x => !x)
-            displayErrorToast(error.response.data)
-        })
-    }
-
-    const handleValue = (e) => {
-        setValue(e.target.value)
-    }
-
     function displayButtonCorrect(){
         if(isLoading)
             return <ButtonCorrect ariaBusy={true} ariaLabel="Please wait…" />
         return <ButtonCorrect type="submit">Send</ButtonCorrect>
+    }
+
+    function displayAddSwitch(){
+        return(
+            <label>
+                <input 
+                    type="checkbox" 
+                    role="switch" 
+                    checked={isAdd ? "active" : ""} 
+                    onChange={() => setIsAdd(!isAdd)}
+                />
+                Add tag
+            </label>
+        )
+    }
+
+    function displayAddTag() {
+        if(isAdd)
+            return (
+                <form onSubmit={handleSubmit}>
+                    <label>Tag name</label>
+                    <input type="text" value={value} onChange={handleValue}/>
+                    {displayButtonCorrect()}           
+                </form>
+            )
+        return ""
     }
 
     return (
@@ -93,11 +120,9 @@ function Tags(){
             </hgroup>
             <hr />
             <h3>Add tag</h3>
-                <form onSubmit={handleSubmit}>
-                    <label>Tag name</label>
-                    <input type="text" value={value} onChange={handleValue}/>
-                    {displayButtonCorrect()}           
-                </form>
+            {displayAddSwitch()}
+            <br />
+            {displayAddTag()}
             <h3>Tag list</h3>
             {displayTags()}
         </div>
