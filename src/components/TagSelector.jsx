@@ -43,7 +43,6 @@ function TagSelector(props){
     useEffect(()=>{
         if(props.reset !== undefined){
             setSelectedTags([])
-            setSearchTerm('')
         }
     }, [props.reset])
 
@@ -59,6 +58,7 @@ function TagSelector(props){
         else {
             setSelectedTags([...selectedTags, tag])
         }
+        setSearchTerm('')
     }
 
     return (

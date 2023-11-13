@@ -23,6 +23,7 @@ function Journal(props) {
     const [journalOldState, setJournalOldState] = useState(props.journalData)
     const [journalNewState, setJournalNewState] = useState(props.journalData)
     const navigate = useNavigate()
+    const [isTagSelector, setIsTagSelector] = useState(false)
 
     useEffect(()=>{
         console.log(journalNewState)
@@ -46,6 +47,7 @@ function Journal(props) {
         e.preventDefault()
         setJournalNewState(journalOldState)
         setTags(journalOldState.tags)
+        setIsTagSelector(x => !x)
         displaySuccessToast("Reset changes.")
     }
 
@@ -69,18 +71,6 @@ function Journal(props) {
             console.error(`ERROR: ${error}`)
             displayErrorToast(error.response.data)
         })
-    }
-
-    function displayTags(){
-        if(journalOldState.tags.length > 0)
-            return (
-                <>
-                    {journalOldState.tags.map((tag, index) => (
-                        <TagRedirect tagId={tag.id} key={index}>{tag.value}</TagRedirect>
-                    ))}
-                </>
-            )
-        else return "-"
     }
 
     function transferTags(array) {
