@@ -103,11 +103,13 @@ function Tags(){
     function displayAddTag() {
         if(isAdd)
             return (
-                <form onSubmit={handleSubmit}>
-                    <label>Tag name</label>
-                    <input type="text" value={value} onChange={handleValue}/>
-                    {displayButtonCorrect()}           
-                </form>
+                <article>
+                    <form onSubmit={handleSubmit}>
+                        <label>Tag name</label>
+                        <input type="text" value={value} onChange={handleValue}/>
+                        {displayButtonCorrect()}           
+                    </form>
+                </article>
             )
         return ""
     }
