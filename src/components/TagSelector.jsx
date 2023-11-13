@@ -8,6 +8,7 @@ import useIsMount from "../hooks/useIsMount"
 
 TagSelector.propTypes  = {
     transferTags: PropTypes.func.isRequired,
+    selectedTags: PropTypes.array,
     reset: PropTypes.bool
 }
 function TagSelector(props){
@@ -15,6 +16,12 @@ function TagSelector(props){
     const [selectedTags, setSelectedTags] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
     const isMount = useIsMount();
+
+    useEffect(()=>{
+        if(props.selectedTags){
+            setSelectedTags(props.selectedTags)
+        }
+    }, [props.selectedTags])
 
     useEffect(()=>{
         axios.get(TAGS_DOWNLOAD_URL)
@@ -30,12 +37,12 @@ function TagSelector(props){
         if(isMount)
             return
         props.transferTags(selectedTags)
+        console.log(selectedTags)
     }, [selectedTags])
 
     useEffect(()=>{
         if(props.reset !== undefined){
             setSelectedTags([])
-            setSearchTerm('')
         }
     }, [props.reset])
 
@@ -51,6 +58,7 @@ function TagSelector(props){
         else {
             setSelectedTags([...selectedTags, tag])
         }
+        setSearchTerm('')
     }
 
     return (
@@ -65,9 +73,9 @@ function TagSelector(props){
                 ))}
             </div>
             <div>
-                {searchTerm !== '' && 
+                {searchTerm !== "" && 
                     tags
-                        .filter(array => !selectedTags.includes(array))
+                        .filter(array => !selectedTags.some(selectedTag => selectedTag.id === array.id))
                         .filter(tag => tag.value?.toLowerCase().includes(searchTerm.toLowerCase()))
                         .map((tag, index) => (
                             <TagNormal tagId={tag.id} onClick={() => selectTag(tag)} key={index}>{tag.value}</TagNormal>

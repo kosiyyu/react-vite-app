@@ -17,8 +17,8 @@ Tag.propTypes = {
     tagData: PropTypes.object.isRequired
 }
 function Tag(props){
-    const [tag, setTag] = useState(props.tagData)
-    const [value, setValue] = useState(props.tagData.value)
+    const [tag, setTag] = useState(props.tagData) // old state
+    const [value, setValue] = useState(props.tagData.value) // new state
     const [isLoading, setIsLoadind] = useState(false)
     const navigate = useNavigate()
 
