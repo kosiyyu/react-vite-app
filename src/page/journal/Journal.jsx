@@ -49,6 +49,7 @@ function Journal(props) {
         setTags(journalOldState.tags)
         setIsTagSelector(x => !x)
         displaySuccessToast("Reset changes.")
+        console.log(journalOldState)
     }
 
     useEffect(()=>{
@@ -64,8 +65,9 @@ function Journal(props) {
         axios.patch(JOURNAL_EDIT_URL, formData, multipartFormData)
         .then((response) => {
             console.log(`SUCCESS: ${response.data}`)
-            setJournalOldState(journalNewState)
-            displaySuccessToast(response.data)
+            setJournalOldState(response.data)
+            setJournalNewState(response.data)
+            displaySuccessToast("Journal edited successfully.")
         })
         .catch((error) => {
             console.error(`ERROR: ${error}`)
@@ -136,14 +138,18 @@ function Journal(props) {
                 <div>
                     <TagSelector selectedTags={tags} transferTags={(value) => transferTags(value)} />
                 </div>
-                <label>File browser
-                    <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+                <label>**File
+                    <input type="file" title="When you attach new file, it will replace old one." onChange={(e) => setFile(e.target.files[0])} />
                 </label>
+                <label>File in system <a>{journalOldState && journalOldState.metadata && journalOldState.metadata.originalFilename ? journalOldState.metadata.originalFilename : ""}</a></label>
+                <br />
                 <div className="grid">
                     {displayButtonEdit()}
                     {displayButtonDelete()}
                     {displayButtonReset()}
                 </div>
+                <label>* Required field</label>
+                <label>** File</label>
             </form>
         )
     }
