@@ -15,7 +15,7 @@ function File(props) {
     const [file] = useState(props.file)
     const [pdf, setPdf] = useState()
     const [isPdf, setIsPdf] = useState(false)
-    const [blobUrl, setBlobUrl] = useState(false)
+    const [blobUrl, setBlobUrl] = useState(undefined)
     const [pageNumber, setPageNumber] = useState(1)
     const [numPages, setNumPages] = useState(null)
 
