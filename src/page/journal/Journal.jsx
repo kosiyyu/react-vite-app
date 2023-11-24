@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import TagRedirect from "../../components/TagRedirect";
 import PropTypes from "prop-types"
 import ButtonEdit from "../../components/buttons/ButtonEdit";
 import ButtonDelete from "../../components/buttons/ButtonDelete";
@@ -8,7 +7,7 @@ import { applicationJson, multipartFormData } from "../../headers/headers";
 import axios from "axios";
 import toast from "react-hot-toast"
 import { JOURNAL_DELETE_URL, JOURNAL_EDIT_URL } from "../../global";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const displayErrorToast = (msg) => toast.error(msg)
 const displaySuccessToast = (msg) => toast.success(msg)
@@ -141,7 +140,7 @@ function Journal(props) {
                 <label>**File
                     <input type="file" title="When you attach new file, it will replace old one." onChange={(e) => setFile(e.target.files[0])} />
                 </label>
-                <label>File in system <a>{journalOldState && journalOldState.metadata && journalOldState.metadata.originalFilename ? journalOldState.metadata.originalFilename : ""}</a></label>
+                <label>File in system <Link to={`/file/${journalOldState && journalOldState.metadata && journalOldState.metadata.originalFilename ? journalOldState.metadata.id : -1}`}>{journalOldState && journalOldState.metadata && journalOldState.metadata.id ? journalOldState.metadata.originalFilename : ""}</Link></label>
                 <br />
                 <div className="grid">
                     {displayButtonEdit()}

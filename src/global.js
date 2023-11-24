@@ -20,3 +20,6 @@ export const TAG_DELETE_URL = (id) => `http://localhost:8081/api/v1/tag/delete/$
 
 // CSV
 export const CSV_UPLOAD_URL = "http://localhost:8081/api/v1/csv/upload"
+
+// FILEMETADATA
+export const FILEMETADATA_DOWNLOAD_URL = (id) => `http://localhost:8081/api/v1/filemetadata/download/${id}`

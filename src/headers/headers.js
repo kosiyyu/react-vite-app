@@ -9,3 +9,10 @@ export const applicationJson = {
         "Content-Type": "application/json"
     }
 }
+
+export const octetStreamWithArraybuffer = {
+    "headers": {
+        "Accept": "application/octet-stream"
+    },
+    responseType: "arraybuffer"
+}
