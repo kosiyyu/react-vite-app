@@ -9,6 +9,7 @@ import Tags from './page/tag/Tags'
 import ValidateTag from './page/tag/ValidateTag'
 import Csv from './page/csv/Csv'
 import { Toaster } from "react-hot-toast"
+import ValidateFile from './page/file/ValidateFile'
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         {/* {sub routes} */}
         <Route path="/journal/:id" element={<ValidateJournal />}></Route>
         <Route path="/tag/:id" element={<ValidateTag />}></Route>
+        <Route path="/file/:metadataId" element={<ValidateFile />}></Route>
         {/* */}
       </Routes>
       <Toaster />
