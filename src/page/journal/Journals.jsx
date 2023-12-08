@@ -7,7 +7,6 @@ import { defaultSearchToken } from "../../context/defaultObjects"
 import { SearchTokenContext } from "../../context/SearchTokenProvider"
 import ButtonCorrect from "../../components/buttons/ButtonCorrect"
 import AddJournal from "./AddJournal"
-import LogoTest from "../../assets/LogoTest"
 import toast from "react-hot-toast"
 
 const displaySuccessToast = (msg) => toast.success(msg)
@@ -134,7 +133,7 @@ function Journals() {
         <div className="container">
             <hgroup>
                 <h1>Journals</h1>
-                <h2>Aaaaa elo elo 3 2 0</h2>
+                <h2>Welcome! You can search for and view journals, or add a journal according to your needs.</h2>
             </hgroup>
             <hr />
             <h3>Add journal</h3>
@@ -147,7 +146,6 @@ function Journals() {
             <br />
             <h3>Journal List</h3>
             <JournalList></JournalList>
-            <LogoTest />
         </div>
     )
 }

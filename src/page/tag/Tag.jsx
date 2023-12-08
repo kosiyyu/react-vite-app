@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import TagDisplay from "../../components/TagDisplay"
+import TagDisplay from "../../components/tags/TagDisplay"
 import "../../css/custom.css"
 import ButtonDelete from "../../components/buttons/ButtonDelete"
 import ButtonEdit from "../../components/buttons/ButtonEdit"
@@ -30,7 +30,7 @@ function Tag(props){
         e.preventDefault()
         setIsLoadind(x => !x)
         const newTag = {...tag, value: value}
-        axios.patch(TAG_EDIT_URL, newTag, applicationJson)
+        axios.put(TAG_EDIT_URL, newTag, applicationJson)
         .then(response => {
             setValue(newTag.value)
             setTag(newTag)  

@@ -1,13 +1,11 @@
-import Header from "../../components/Header"
-
 function NotFound() {
-    console.log("aa")
     return (
-        <>
-            <Header>404 error - page not found</Header>
-            {/* <div id="streach"> </div> */}
-            
-        </>
+        <div className="container">
+            <hgroup>
+                <h1>404</h1>
+                <h2>Page not found</h2>
+            </hgroup>
+        </div>
     )
 }
 

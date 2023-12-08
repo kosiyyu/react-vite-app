@@ -61,7 +61,7 @@ function Journal(props) {
         const formData = new FormData()
         formData.append("file", file)
         formData.append("journalJson", JSON.stringify(journalNewState))
-        axios.patch(JOURNAL_EDIT_URL, formData, multipartFormData)
+        axios.put(JOURNAL_EDIT_URL, formData, multipartFormData)
         .then((response) => {
             console.log(`SUCCESS: ${response.data}`)
             setJournalOldState(response.data)

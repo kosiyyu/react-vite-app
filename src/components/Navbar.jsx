@@ -47,7 +47,6 @@ function Navbar() {
                 <li><Link to="/journals">📰 Journals</Link></li>
                 <li><Link to="/tags">🏷️ Tags</Link></li>
                 <li><Link to="/csv"><img className='img' src={csv}/> Csv</Link></li>
-                <li><Link to="/settings">⚙️ Settings</Link></li>
               </ul>
             </details>
           </li>

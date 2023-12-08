@@ -1,4 +1,4 @@
-import "../css/custom.css"
+import "../../css/custom.css"
 import PropTypes from 'prop-types'
 
 TagNormal.propTypes  = {

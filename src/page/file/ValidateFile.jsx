@@ -4,7 +4,7 @@ import File from "./File"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { FILEMETADATA_DOWNLOAD_URL } from "../../global"
-import { octetStreamWithArraybuffer } from "../../headers/headers"
+import { octetStream } from "../../headers/headers"
 
 function ValidateFile() {
     const params = useParams()
@@ -14,7 +14,7 @@ function ValidateFile() {
     const [isLoading, setIsLoading] = useState(true)
   
     useEffect(() => {
-    axios.get(FILEMETADATA_DOWNLOAD_URL(metadataId),octetStreamWithArraybuffer)
+    axios.get(FILEMETADATA_DOWNLOAD_URL(metadataId), octetStream)
     .then((response) => {
         const contentDisposition = response.headers["content-disposition"]
         const filenameMatch = contentDisposition && contentDisposition.match(/filename="(.+?)"/)

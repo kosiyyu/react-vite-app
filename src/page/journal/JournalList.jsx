@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import { JOURNALS_TOKENIZED_DOWNLOAD_URL } from "../../global"
 import axios from 'axios'
-import TagRedirect from '../../components/TagRedirect'
+import TagRedirect from '../../components/tags/TagRedirect'
 import { Link } from 'react-router-dom'
 import PageNav from './PageNav'
 import { SearchTokenContext } from '../../context/SearchTokenProvider'

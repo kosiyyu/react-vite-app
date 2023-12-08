@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from "react"
 
 import axios from "axios"
-import TagCorrect from "../../components/TagCorrect"
-import TagNormal from "../../components/TagNormal"
+import TagCorrect from "../../components/tags/TagCorrect"
+import TagNormal from "../../components/tags/TagNormal"
 import useIsMount from "../../hooks/useIsMount"
 import { SearchTokenContext } from "../../context/SearchTokenProvider"
 import { TAGS_DOWNLOAD_URL } from "../../global"

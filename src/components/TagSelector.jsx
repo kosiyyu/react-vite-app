@@ -2,8 +2,8 @@ import { useState, useEffect } from "react"
 import { TAGS_DOWNLOAD_URL } from '../global'
 import PropTypes from 'prop-types'
 import axios from "axios"
-import TagCorrect from "./TagCorrect"
-import TagNormal from "./TagNormal"
+import TagCorrect from "./tags/TagCorrect"
+import TagNormal from "./tags/TagNormal"
 import useIsMount from "../hooks/useIsMount"
 
 TagSelector.propTypes  = {
