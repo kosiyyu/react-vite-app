@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types"
 import ButtonEdit from "../../components/buttons/ButtonEdit";
 import ButtonDelete from "../../components/buttons/ButtonDelete";
@@ -23,6 +23,7 @@ function Journal(props) {
     const [journalNewState, setJournalNewState] = useState(props.journalData)
     const navigate = useNavigate()
     const [isTagSelector, setIsTagSelector] = useState(false)
+    const fileInputRef = useRef(null)
 
     useEffect(()=>{
         console.log(journalNewState)
@@ -46,6 +47,8 @@ function Journal(props) {
         e.preventDefault()
         setJournalNewState(journalOldState)
         setTags(journalOldState.tags)
+        setFile(null)
+        fileInputRef.current.value = null
         setIsTagSelector(x => !x)
         displaySuccessToast("Reset changes.")
         console.log(journalOldState)
@@ -66,6 +69,7 @@ function Journal(props) {
             console.log(`SUCCESS: ${response.data}`)
             setJournalOldState(response.data)
             setJournalNewState(response.data)
+            fileInputRef.current.value = null
             displaySuccessToast("Journal edited successfully.")
         })
         .catch((error) => {
@@ -137,8 +141,8 @@ function Journal(props) {
                 <div>
                     <TagSelector selectedTags={tags} transferTags={(value) => transferTags(value)} />
                 </div>
-                <label>**File
-                    <input type="file" title="When you attach new file, it will replace old one." onChange={(e) => setFile(e.target.files[0])} />
+                <label>File
+                    <input name="file" type="file" title="When you attach new file, it will replace old one." ref={fileInputRef} onChange={(e) => setFile(e.target.files[0])} />
                 </label>
                 <label>File in system <Link to={`/file/${journalOldState && journalOldState.metadata && journalOldState.metadata.originalFilename ? journalOldState.metadata.id : -1}`}>{journalOldState && journalOldState.metadata && journalOldState.metadata.id ? journalOldState.metadata.originalFilename : ""}</Link></label>
                 <br />
@@ -147,8 +151,6 @@ function Journal(props) {
                     {displayButtonDelete()}
                     {displayButtonReset()}
                 </div>
-                <label>* Required field</label>
-                <label>** File</label>
             </form>
         )
     }
