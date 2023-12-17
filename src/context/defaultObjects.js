@@ -4,7 +4,8 @@ export const defaultSearchToken = {
     "orderByArgument": "",
     "pageIndex": 0,
     "pageSize": 5,
-    "isDescSort": false
+    "isDescSort": false,
+    "isOr": false
 }
 
 export const defaultPageInfo = {

@@ -17,9 +17,11 @@ function Journals() {
     const [isAddJournal, setIsAddJournal] = useState(false)
     const [isSearch, setIsSearch] = useState(false)
 
-    // FOR RESET
     const [orderByArgument, setOrderByArgument] = useState("Id")
-    const [isDescSort, setDescSort] = useState(false)
+    const [isDescSort, setIsDescSort] = useState(false)
+    const [isOr, setIsOr] = useState(false)
+
+    // FOR RESET
     const isMountReset = useIsMount()
 
     useEffect(() => {
@@ -27,14 +29,21 @@ function Journals() {
             return
         console.log("JOURNALS RESET")
         setOrderByArgument("Id")
-        setDescSort(false)
+        setIsDescSort(false)
+        setIsOr(false)
     }, [reset])
 
     // HANDLE FUNCTIONS
 
     function handleSubmit(e) {
         e.preventDefault()
-        const newSearchToken = {...state, orderByArgument: orderByArgument, isDescSort: isDescSort}
+        const newSearchToken = 
+        {
+            ...state,
+            orderByArgument: orderByArgument,
+            isDescSort: isDescSort,
+            isOr: isOr
+        }
         dispatch({type: "UPDATE", value: {searchToken: newSearchToken}})
         dispatchDisplay({type: "UPDATE", value: {searchToken: newSearchToken}})
         setButtonSent(s => !s)
@@ -105,19 +114,33 @@ function Journals() {
                         <option>E-issn 2</option>
                         <option>Points</option>
                     </select>
+                    <fieldset>
+                        <label>
+                            Search term using or condition
+                        </label>
+                        <input 
+                            checked={isOr} 
+                            onChange={(e) => setIsOr(e.target.checked)} 
+                            type="checkbox" 
+                            name="isOr" 
+                            role="switch"
+                        />
+                        Using {isOr ? <strong>or</strong> : <strong>and</strong>}
+                    </fieldset>
                     <JournalSearch></JournalSearch>
                     <TagSearch/>
                     <fieldset>
                         <label>
-                            Descending order
+                            Sort in descending order
                         </label>
                         <input 
                             checked={isDescSort} 
-                            onChange={(e) => setDescSort(e.target.checked)} 
+                            onChange={(e) => setIsDescSort(e.target.checked)} 
                             type="checkbox" 
                             name="isDesc" 
                             role="switch"
                         />
+                        Sorting {isDescSort ? <strong>descending</strong> : <strong>ascending</strong>}
                     </fieldset>
                     <ButtonCorrect type="submit">Search</ButtonCorrect>
                     <a onClick={handleReset}>Reset your search filters here...</a>
