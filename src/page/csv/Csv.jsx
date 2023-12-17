@@ -2,6 +2,7 @@ import { useState } from "react"
 import axios from "axios"
 import { CSV_UPLOAD_URL } from "../../global"
 import toast, { Toaster } from "react-hot-toast"
+import { multipartFormData } from "../../headers/headers"
 
 const displayErrorToast = (msg) => toast.error(msg)
 const displaySuccessToast = (msg) => toast.success(msg)
@@ -20,11 +21,7 @@ function Csv(){
             setIsLoadind(true)
             const formData = new FormData()
             formData.append("csv", file)
-            axios.post(CSV_UPLOAD_URL, formData, {
-                "headers": {
-                    "Content-Type": "multipart/form-data"
-                }
-            })
+            axios.post(CSV_UPLOAD_URL, formData, multipartFormData)
             .then(response => {
                 setFile(undefined)
                 e.target.reset()

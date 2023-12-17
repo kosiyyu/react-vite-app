@@ -10,6 +10,7 @@ import ValidateTag from './page/tag/ValidateTag'
 import Csv from './page/csv/Csv'
 import { Toaster } from "react-hot-toast"
 import ValidateFile from './page/file/ValidateFile'
+import NotFound from './page/error/NotFound'
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/tag/:id" element={<ValidateTag />}></Route>
         <Route path="/file/:metadataId" element={<ValidateFile />}></Route>
         {/* */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster />
     </>

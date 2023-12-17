@@ -44,7 +44,7 @@ function setThemeStrategy(themeStrategy) {
         default:
             html.setAttribute('data-theme', 'light')
             break
-        }
+    }
 }
 
 export default setThemeStrategy

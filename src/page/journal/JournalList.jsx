@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import PageNav from './PageNav'
 import { SearchTokenContext } from '../../context/SearchTokenProvider'
 import useIsMount from '../../hooks/useIsMount'
+import { applicationJson } from '../../headers/headers'
 
 function JournalList() {
     const [journals, setJournals] = useState(undefined)
@@ -16,11 +17,7 @@ function JournalList() {
     const isMount = useIsMount()
 
     useEffect(() => {
-        axios.post(JOURNALS_TOKENIZED_DOWNLOAD_URL, JSON.stringify(display), {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
+        axios.post(JOURNALS_TOKENIZED_DOWNLOAD_URL, JSON.stringify(display), applicationJson)
             .then(response => {
                 setJournals(response.data.journals)
                 console.log('JournalList: SUCESS')
@@ -41,11 +38,7 @@ function JournalList() {
             return
         const newSearchToken = { ...state, pageIndex: 0 }
         // SENT NEW STATE (NOT SAVED YET)   
-        axios.post(JOURNALS_TOKENIZED_DOWNLOAD_URL, JSON.stringify(newSearchToken), {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
+        axios.post(JOURNALS_TOKENIZED_DOWNLOAD_URL, JSON.stringify(newSearchToken), applicationJson)
             .then(response => {
                 setJournals(response.data.journals)
                 console.log('JournalList: SUCESS')

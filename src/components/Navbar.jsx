@@ -21,7 +21,7 @@ function Navbar() {
         <ul>
           <li>
             <Link to="/" className="primary">
-              <img src={icon} width="65" height="65"/>
+              SciJourDex
             </Link>
           </li>
         </ul>

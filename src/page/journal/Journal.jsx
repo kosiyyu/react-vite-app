@@ -73,6 +73,7 @@ function Journal(props) {
             displaySuccessToast("Journal edited successfully.")
         })
         .catch((error) => {
+            console.log(error)
             console.error(`ERROR: ${error}`)
             displayErrorToast(error.response.data)
         })
