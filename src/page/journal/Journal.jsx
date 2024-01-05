@@ -8,6 +8,7 @@ import axios from "axios";
 import toast from "react-hot-toast"
 import { JOURNAL_DELETE_URL, JOURNAL_EDIT_URL } from "../../global";
 import { Link, useNavigate } from "react-router-dom";
+import TagDisplay from "../../components/tags/TagDisplay";
 
 const displayErrorToast = (msg) => toast.error(msg)
 const displaySuccessToast = (msg) => toast.success(msg)
@@ -178,7 +179,7 @@ function Journal(props) {
         <div className="container">
             <hgroup>
                 <h1>Journal</h1>
-                <h2>Welcome! ble ble ble.</h2>
+                <h2>Welcome! You can view and edit <TagDisplay>Journal</TagDisplay> in here.</h2>
             </hgroup>
             <h3>Journal content</h3>
             {displayJournal()}

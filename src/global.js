@@ -1,7 +1,3 @@
-/**
- * @DEFAULT_THEME - The default theme
- * must be 'dark' or 'light'
- */
 export const DEFAULT_THEME = "dark"
 
 // JOURNAL

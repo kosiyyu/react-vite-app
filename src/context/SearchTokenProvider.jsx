@@ -28,7 +28,16 @@ export default function SearchTokenProvider({children}) {
     const [buttonSent, setButtonSent] = useState(false)
 
     return (
-        <SearchTokenContext.Provider value={{display, dispatchDisplay, state, dispatch, reset, setReset, pageInfo, setPageInfo, sent, setSent, buttonSent, setButtonSent}}>
+        <SearchTokenContext.Provider value={
+            {
+                display, dispatchDisplay,
+                state, dispatch,
+                reset, setReset,
+                pageInfo, setPageInfo,
+                sent, setSent,
+                buttonSent, setButtonSent
+            }
+        }>
             {children}
         </SearchTokenContext.Provider>
     )

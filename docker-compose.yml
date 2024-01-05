@@ -1,8 +1,11 @@
 version: '3.8'
+
 services:
   scijourdex-frontend:
     build:
       context: .
       dockerfile: Dockerfile
+    image: scijourdex-frontend-image
+    container_name: scijourdex-frontend-container
     ports:
       - '5173:5173'

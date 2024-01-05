@@ -3,7 +3,6 @@ import setThemeStrategy from '../theme/setThemeStrategy'
 import ThemeStrategy from '../theme/ThemeStrategy'
 import { Link } from 'react-router-dom'
 import csv from "../assets/icons/csv.svg"
-import icon from "../assets/icons/icon.svg"
 import "../css/custom.css"
 
 function Navbar() {
@@ -16,7 +15,7 @@ function Navbar() {
     }, [])
 
     return(
-      <div className='nav'>
+      <div className="nav">
         <nav className="container-fluid">
         <ul>
           <li>

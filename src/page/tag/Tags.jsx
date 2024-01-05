@@ -118,7 +118,7 @@ function Tags(){
         <div className="container">
             <hgroup>
                 <h1>Tags</h1>
-                <h2>Welcome! Examine and manage your content with <kbd>tags</kbd>.</h2>
+                <h2>Welcome! Examine and manage your content with tags.</h2>
             </hgroup>
             <hr />
             <h3>Add tag</h3>

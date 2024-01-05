@@ -7,14 +7,18 @@ function Home() {
                 <h2>Welcome to home page!</h2>
             </hgroup>
             <hr />
-            <h3>Description</h3>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam architecto natus placeat iusto reiciendis nemo sit dolorum provident omnis at impedit, aperiam rerum hic labore repudiandae corporis consequatur quas atque.</p>
-            <h3>1. Csv</h3>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam architecto natus placeat iusto reiciendis nemo sit dolorum provident omnis at impedit, aperiam rerum hic labore repudiandae corporis consequatur quas atque.</p>
-            <h3>2. Journals</h3>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam architecto natus placeat iusto reiciendis nemo sit dolorum provident omnis at impedit, aperiam rerum hic labore repudiandae corporis consequatur quas atque.</p>
-            <h3>3. Tags</h3>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam architecto natus placeat iusto reiciendis nemo sit dolorum provident omnis at impedit, aperiam rerum hic labore repudiandae corporis consequatur quas atque.</p>
+            <hgroup>
+                <h3>✨SciJourDex✨</h3>
+                <p>The project comprises two essential segments: the backend and the frontend. Project overview:</p>
+            </hgroup>
+            <hgroup>
+                <h3>Backend</h3>
+                <p>The REST API is built on Java-based Spring, coupled with PostgreSQL as the database. It is designed for efficiently filtering and managing scientific journals using data from the Polish Ministry of Education. The API provides file upload capabilities for physical storage, with metadata carefully managed within the database. Additionally, users can manage tags associated with the scientific journals.</p>
+            </hgroup>
+            <hgroup>
+                <h3>Frontend</h3>
+                <p>The frontend, developed with React, Pico CSS, and JavaScript, seamlessly integrates with the backend REST. Users can experience an intuitive interface for scientific journal management, which includes features such as data search and filtering, file uploads, precise metadata control, as well as journal and tag management.</p>
+            </hgroup>
         </div>
     )
 }
