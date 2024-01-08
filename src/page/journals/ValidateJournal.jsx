@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import NotFound from "../error/NotFound"
-import Journal from "./Journal"
+import Journal from "./journal/Journal"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { JOURNAL_DOWNLOAD_URL } from "../../global"

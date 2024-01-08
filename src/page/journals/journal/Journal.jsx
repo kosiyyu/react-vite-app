@@ -1,15 +1,15 @@
 import { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types"
-import ButtonEdit from "../../components/buttons/ButtonEdit";
-import ButtonDelete from "../../components/buttons/ButtonDelete";
-import ButtonCorrect from "../../components/buttons/ButtonCorrect";
-import TagSelector from "../../components/TagSelector";
-import { applicationJson, multipartFormData } from "../../headers/headers";
+import ButtonEdit from "../../../components/buttons/ButtonEdit";
+import ButtonDelete from "../../../components/buttons/ButtonDelete";
+import ButtonCorrect from "../../../components/buttons/ButtonCorrect";
+import TagSelector from "../../../components/TagSelector";
+import { applicationJson, multipartFormData } from "../../../headers/headers";
 import axios from "axios";
 import toast from "react-hot-toast"
-import { JOURNAL_DELETE_URL, JOURNAL_EDIT_URL, WEB_CRAWLER_URL } from "../../global";
+import { JOURNAL_DELETE_URL, JOURNAL_EDIT_URL, WEB_CRAWLER_URL } from "../../../global";
 import { Link, useNavigate } from "react-router-dom";
-import TagDisplay from "../../components/tags/TagDisplay";
+import TagDisplay from "../../../components/tags/TagDisplay";
 
 const displayErrorToast = (msg) => toast.error(msg)
 const displaySuccessToast = (msg) => toast.success(msg)
