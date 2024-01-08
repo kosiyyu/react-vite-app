@@ -19,3 +19,6 @@ export const CSV_UPLOAD_URL = "http://localhost:8081/api/v1/csv/upload"
 
 // FILEMETADATA
 export const FILEMETADATA_DOWNLOAD_URL = (id) => `http://localhost:8081/api/v1/filemetadata/download/${id}`
+
+// WEB CRAWLER
+export const WEB_CRAWLER_URL = (value) => `http://localhost:3000/${value}`

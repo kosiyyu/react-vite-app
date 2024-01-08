@@ -16,3 +16,10 @@ export const octetStream = {
     },
     responseType: "arraybuffer"
 }
+
+export const applicationJsonCors = {
+    "headers": {
+        "Content-Type": "application",
+        "Access-Control-Allow-Origin": "*"
+    }
+}

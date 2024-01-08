@@ -20,6 +20,9 @@ export const defaultJournal = {
     title2: "",
     issn2: "",
     eissn2: "",
+    aimsAndScope: "",
     points: null,
-    tags: []
+    citeScore: null,
+    metadata: null,
+    tags: [],
 }
