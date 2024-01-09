@@ -62,6 +62,13 @@ function JournalList() {
         return index + state.pageSize * pageInfo.pageNumber + 1
     }
 
+    function displayAimsAndScope(aimsAndScope) {
+        if (!aimsAndScope) {
+          return '-';
+        }
+        return aimsAndScope.length > 255 ? `${aimsAndScope.substring(0, 252)}...` : aimsAndScope;
+      }
+
     function displayJournals() {
         if (journals === undefined)
             return <p>Loading...</p>
@@ -78,6 +85,8 @@ function JournalList() {
                         <th scope="col">Issn 2</th>
                         <th scope="col">E-issn 2</th>
                         <th scope="col">Points</th>
+                        <th scope="col">Cite score</th>
+                        <th scope="col">Aims and scope</th>
                         <th scope="col">Tags</th>
                     </tr>
                 </thead>
@@ -85,14 +94,16 @@ function JournalList() {
                     {journals.map((journal, index) => (
                         <tr scope="row" key={index}>
                             <td><Link to={`/journal/${journal.id}`}>{indexValue(index)}</Link></td>
-                            <td>{journal.id !== '' ? journal.id : '-'}</td>
-                            <td>{journal.title1 !== '' ? journal.title1 : '-'}</td>
-                            <td>{journal.issn1 !== '' ? journal.issn1 : '-'}</td>
-                            <td>{journal.eissn1 !== '' ? journal.eissn1 : '-'}</td>
-                            <td>{journal.title2 !== '' ? journal.title2 : '-'}</td>
-                            <td>{journal.issn2 !== '' ? journal.issn2 : '-'}</td>
-                            <td>{journal.eissn2 !== '' ? journal.eissn2 : '-'}</td>
-                            <td>{journal.points !== '' ? journal.points : '-'}</td>
+                            <td>{journal.id ? journal.id : '-'}</td>
+                            <td>{journal.title1 ? journal.title1 : '-'}</td>
+                            <td>{journal.issn1 ? journal.issn1 : '-'}</td>
+                            <td>{journal.eissn1 ? journal.eissn1 : '-'}</td>
+                            <td>{journal.title2 ? journal.title2 : '-'}</td>
+                            <td>{journal.issn2 ? journal.issn2 : '-'}</td>
+                            <td>{journal.eissn2 ? journal.eissn2 : '-'}</td>
+                            <td>{journal.points ? journal.points : '-'}</td>
+                            <td>{journal.citeScore ? journal.citeScore : '-'}</td>
+                            <td>{displayAimsAndScope(journal.aimsAndScope)}</td>
                             <td>
                                 {displayTags(journal.tags)}
                             </td>

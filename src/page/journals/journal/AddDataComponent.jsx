@@ -9,6 +9,7 @@ import '../../../css/custom.css'
 import PropTypes from 'prop-types'
 
 const displayErrorToast = (msg) => toast.error(msg)
+const displaySuccessToast = (msg) => toast.success(msg)
 
 AddDataComponent.propTypes = {
     journalNewState: PropTypes.object.isRequired,
@@ -26,7 +27,7 @@ function AddDataComponent({ journalNewState, setJournalNewState, isAddData }) {
         setIsLoading(true)
         setJournalNewState(prevState => ({
             ...prevState,
-            citeScore: Number(citeScore),
+            citeScore: parseFloat(citeScore),
             aimsAndScope: aimsAndScope
         }))
         setCiteScore(null)
@@ -46,10 +47,13 @@ function AddDataComponent({ journalNewState, setJournalNewState, isAddData }) {
         setIsFetching(true)
         axios.get(`${WEB_CRAWLER_URL(value)}`, applicationJson)
             .then((response) => {
-                if (Array.isArray(response.data) && response.data.length == 0) {
+                console.log(response.data)
+                if (!response.data || !Array.isArray(response.data) || response.data.length == 0){
                     displayErrorToast('No data found.')
                 }
                 else {
+                    let isCiteScore = false
+                    let isAimsAndScope = false
                     response.data.forEach((obj) => {
                         if ('CiteScore' in obj) {
                             const match = obj['CiteScore'].match(/\d+(\.\d+)?/)
@@ -57,13 +61,28 @@ function AddDataComponent({ journalNewState, setJournalNewState, isAddData }) {
                                 const number = match[0]
                                 if (!isNaN(number)) {
                                     setCiteScore(number)
+                                    isCiteScore = true
                                 }
                             }
                         }
                         if ('Aims and Scope' in obj) {
                             setAimsAndScope(obj['Aims and Scope'])
+                            isAimsAndScope = true
                         }
                     })
+                    
+                    if(!isCiteScore && !isAimsAndScope){
+                        displayErrorToast('No data found.')   
+                    }
+                    else if(!isCiteScore){
+                        displaySuccessToast('Aims and scope found.')
+                        displayErrorToast('Cite score found.')
+                    }
+                    else if(!isAimsAndScope){
+                        displaySuccessToast('Aims and scope found.')  
+                        displayErrorToast('No aims and scope found.')   
+                    }
+                    else displaySuccessToast('Data found.')
                 }
                 setIsFetching(false)
             })
@@ -99,7 +118,13 @@ function AddDataComponent({ journalNewState, setJournalNewState, isAddData }) {
                 <label>CiteScore</label>
                 <input name='citescore' placeholder='CiteScore' type='number' value={citeScore || ''} onChange={e => setCiteScore(e.target.value)} className='no-spin-buttons ' />
                 <label>Aims and Scope</label>
-                <textarea name='aimsandscope' placeholder='Aims and Scope' rows='5' value={aimsAndScope || ''} onChange={e => setAimsAndScope(e.target.value)} />
+                <textarea 
+                    name='aimsandscope' 
+                    placeholder='Aims and Scope' 
+                    maxLength='8191'
+                    rows='5' value={aimsAndScope || ''} 
+                    onChange={e => setAimsAndScope(e.target.value)} 
+                />
                 <div className='grid'>
                     {displayButtonCorrect()}
                     {displayButtonDelete()}
