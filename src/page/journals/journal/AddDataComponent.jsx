@@ -26,7 +26,7 @@ function AddDataComponent({ journalNewState, setJournalNewState, isAddData }) {
         setIsLoading(true)
         setJournalNewState(prevState => ({
             ...prevState,
-            citeScore: citeScore,
+            citeScore: Number(citeScore),
             aimsAndScope: aimsAndScope
         }))
         setCiteScore(null)

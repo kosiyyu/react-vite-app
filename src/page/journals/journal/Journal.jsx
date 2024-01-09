@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types"
 import ButtonEdit from "../../../components/buttons/ButtonEdit";
 import ButtonDelete from "../../../components/buttons/ButtonDelete";
-import ButtonCorrect from "../../../components/buttons/ButtonCorrect";
 import TagSelector from "../../../components/TagSelector";
 import { applicationJson, multipartFormData } from "../../../headers/headers";
 import axios from "axios";
@@ -26,7 +25,7 @@ function Journal(props) {
     const [journalOldState, setJournalOldState] = useState(props.journalData)
     const [journalNewState, setJournalNewState] = useState(props.journalData)
     const navigate = useNavigate()
-    const [isTagSelector, setIsTagSelector] = useState(false)
+    const [, setIsTagSelector] = useState(false)
     const fileInputRef = useRef(null)
     const [isAddData, setIsAddData] = useState(false)
 
@@ -56,9 +55,9 @@ function Journal(props) {
         setFile(null)
         fileInputRef.current.value = null
         setIsTagSelector(x => !x)
+        setIsLoading(false)
         displaySuccessToast("Reset changes.")
         console.log(journalOldState)
-        setIsLoading(false)
     }
 
     useEffect(()=>{
@@ -124,6 +123,14 @@ function Journal(props) {
         setJournalNewState({ ...journalNewState, eissn2: e.target.value})
     }
 
+    const handleCiteScore = (e) => {
+        setJournalNewState({ ...journalNewState, citeScore: e.target.value})
+    }
+
+    const handleAimsAndScope= (e) => {
+        setJournalNewState({ ...journalNewState, aimsAndScope: e.target.value})
+    }
+
     function displayAddAddDataSwitch(){
         return(
             <label>
@@ -167,11 +174,11 @@ function Journal(props) {
                         <input name="points" value={journalNewState.points} onChange={handlePoints} placeholder="Points" />
                     </label>
                     <label>Cite score
-                        <input name="citeScore" value={journalNewState.citeScore} onChange={handlePoints} placeholder="Cite score" />
+                        <input name="citeScore" value={journalNewState.citeScore} onChange={handleCiteScore} placeholder="Cite score" />
                     </label>
                 </div>
                 <label>Aims and scope
-                    <textarea name="aimAndScope" rows="5" value={journalNewState.aimsAndScope || ""} onChange={handlePoints} placeholder="Aims and Scope" />
+                    <textarea name="aimsAndScope" rows="5" value={journalNewState.aimsAndScope || ""} onChange={handleAimsAndScope} placeholder="Aims and Scope" />
                 </label>
                 <div>
                     <TagSelector selectedTags={tags} transferTags={(value) => transferTags(value)} />
