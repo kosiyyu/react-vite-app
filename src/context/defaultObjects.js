@@ -5,7 +5,9 @@ export const defaultSearchToken = {
     "pageIndex": 0,
     "pageSize": 5,
     "isDescSort": false,
-    "isOr": false
+    "isOr": false,
+    "similarityString": "",
+    "similarityValue": 0
 }
 
 export const defaultPageInfo = {
@@ -14,15 +16,15 @@ export const defaultPageInfo = {
 }
 
 export const defaultJournal = {
-    title1: "",
-    issn1: "",
-    eissn1: "",
-    title2: "",
-    issn2: "",
-    eissn2: "",
-    aimsAndScope: "",
-    points: null,
-    citeScore: null,
-    metadata: null,
-    tags: [],
+    title1: "", // string
+    issn1: "", // string
+    eissn1: "", // string
+    title2: "", // string
+    issn2: "", // string
+    eissn2: "", // string
+    aimsAndScope: "", // string
+    points: null, // int
+    citeScore: null, // double
+    metadata: null, // object
+    tags: [], // array
 }

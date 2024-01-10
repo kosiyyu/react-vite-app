@@ -43,7 +43,11 @@ function AddDataComponent({ journalNewState, setJournalNewState, isAddData }) {
         setIsLoading(false)
     }
 
-    function addDataFetch(value) {
+    function addDataFetch(values) {
+        console.log(values)
+        const value = (values.filter((value) => value !== undefined && value !== null && value !== '')[0]) || '';
+        console.log(`${WEB_CRAWLER_URL(value)}`)
+        console.log(value)
         setIsFetching(true)
         axios.get(`${WEB_CRAWLER_URL(value)}`, applicationJson)
             .then((response) => {
@@ -86,13 +90,17 @@ function AddDataComponent({ journalNewState, setJournalNewState, isAddData }) {
                 }
                 setIsFetching(false)
             })
-            .catch((error) => { console.log(error); setIsFetching(false) })
+            .catch((error) => { 
+                console.log(error) 
+                setIsFetching(false) 
+                displayErrorToast('No data found.')
+            })
     }
 
     function displayButtonFetch(){
         if(isFetching)
             return <button aria-busy={true} aria-label="Please wait…"  />
-        return <button onClick={() => addDataFetch(journalNewState.issn1)}>Fetch</button>
+        return <button onClick={() => addDataFetch([journalNewState.issn1, journalNewState.eissn1, journalNewState.issn2, journalNewState.eissn2])}>Fetch</button>
     }
 
     function displayButtonCorrect(){

@@ -20,8 +20,10 @@ function Journals() {
     const [orderByArgument, setOrderByArgument] = useState("Id")
     const [isDescSort, setIsDescSort] = useState(false)
     const [isOr, setIsOr] = useState(false)
+    const [similarityValue, setSimilarityValue] = useState(0)
+    const [aimsAndScope, setAimsAndScope] = useState("")
 
-    // FOR RESET
+    // RESET OPTION IN SEARCH -> displaySearch() there is a link to reset search that's it
     const isMountReset = useIsMount()
 
     useEffect(() => {
@@ -31,7 +33,18 @@ function Journals() {
         setOrderByArgument("Id")
         setIsDescSort(false)
         setIsOr(false)
+        setSimilarityValue(0)
+        setAimsAndScope("")
     }, [reset])
+
+    // RESET FOR CLOSING SEARCH
+    useEffect(() => {
+        setOrderByArgument("Id")
+        setIsDescSort(false)
+        setIsOr(false)
+        setSimilarityValue(0)
+        setAimsAndScope("")
+    }, [isSearch])
 
     // HANDLE FUNCTIONS
 
@@ -42,7 +55,10 @@ function Journals() {
             ...state,
             orderByArgument: orderByArgument,
             isDescSort: isDescSort,
-            isOr: isOr
+            isOr: isOr,
+            similarityValue: similarityValue,
+            similarityString: aimsAndScope
+            
         }
         dispatch({type: "UPDATE", value: {searchToken: newSearchToken}})
         dispatchDisplay({type: "UPDATE", value: {searchToken: newSearchToken}})
@@ -129,6 +145,20 @@ function Journals() {
                     </fieldset>
                     <JournalSearch></JournalSearch>
                     <TagSearch/>
+                    <label>
+                        Aims and scope
+                    </label>
+                    <textarea 
+                        name='aimsAndScope' 
+                        maxLength='8191'
+                        rows='5' value={aimsAndScope || ''} 
+                        onChange={e => setAimsAndScope(e.target.value)} 
+                    />  
+                    <label>
+                        Similarity value
+                    </label>
+                    <input type="range" min="0" max="1" value={similarityValue} onChange={e => setSimilarityValue(e.target.value)} step="0.01" id="range" name="range" />
+                    <input type="text" value={similarityValue} readOnly/> 
                     <fieldset>
                         <label>
                             Sort in descending order
