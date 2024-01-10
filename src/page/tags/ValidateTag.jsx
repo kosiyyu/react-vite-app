@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import NotFound from "../error/NotFound"
-import Tag from "./Tag"
+import Tag from "./tag/Tag"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { TAG_DOWNLOAD_URL } from "../../global"

@@ -1,15 +1,16 @@
 import { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types"
-import ButtonEdit from "../../components/buttons/ButtonEdit";
-import ButtonDelete from "../../components/buttons/ButtonDelete";
-import ButtonCorrect from "../../components/buttons/ButtonCorrect";
-import TagSelector from "../../components/TagSelector";
-import { applicationJson, multipartFormData } from "../../headers/headers";
+import ButtonEdit from "../../../components/buttons/ButtonEdit";
+import ButtonDelete from "../../../components/buttons/ButtonDelete";
+import TagSelector from "../../../components/TagSelector";
+import { applicationJson, multipartFormData } from "../../../headers/headers";
 import axios from "axios";
 import toast from "react-hot-toast"
-import { JOURNAL_DELETE_URL, JOURNAL_EDIT_URL, WEB_CRAWLER_URL } from "../../global";
+import { JOURNAL_DELETE_URL, JOURNAL_EDIT_URL } from "../../../global";
 import { Link, useNavigate } from "react-router-dom";
-import TagDisplay from "../../components/tags/TagDisplay";
+import TagDisplay from "../../../components/tags/TagDisplay";
+
+import AddDataComponent from './AddDataComponent'
 
 const displayErrorToast = (msg) => toast.error(msg)
 const displaySuccessToast = (msg) => toast.success(msg)
@@ -24,11 +25,9 @@ function Journal(props) {
     const [journalOldState, setJournalOldState] = useState(props.journalData)
     const [journalNewState, setJournalNewState] = useState(props.journalData)
     const navigate = useNavigate()
-    const [isTagSelector, setIsTagSelector] = useState(false)
+    const [, setIsTagSelector] = useState(false)
     const fileInputRef = useRef(null)
     const [isAddData, setIsAddData] = useState(false)
-    const [citeScore, setCiteScore] = useState(null);
-    const [aimsAndScope, setAimsAndScope] = useState(null);
 
     useEffect(()=>{
         console.log(journalNewState)
@@ -50,11 +49,13 @@ function Journal(props) {
 
     const handleReset = (e) => {
         e.preventDefault()
+        setIsLoading(true)
         setJournalNewState(journalOldState)
         setTags(journalOldState.tags)
         setFile(null)
         fileInputRef.current.value = null
         setIsTagSelector(x => !x)
+        setIsLoading(false)
         displaySuccessToast("Reset changes.")
         console.log(journalOldState)
     }
@@ -65,6 +66,7 @@ function Journal(props) {
 
     const handleEdit = (e) => {
         e.preventDefault()
+        setIsLoading(true)
         console.log("EDIT")
         const formData = new FormData()
         formData.append("file", file)
@@ -76,12 +78,15 @@ function Journal(props) {
             setJournalNewState(response.data)
             fileInputRef.current.value = null
             displaySuccessToast("Journal edited successfully.")
+            setIsLoading(false)
         })
         .catch((error) => {
             console.log(error)
             console.error(`ERROR: ${error}`)
             displayErrorToast(error.response.data)
+            setIsLoading(false)
         })
+        setIsLoading(false)
     }
 
     function transferTags(array) {
@@ -118,6 +123,14 @@ function Journal(props) {
         setJournalNewState({ ...journalNewState, eissn2: e.target.value})
     }
 
+    const handleCiteScore = (e) => {
+        setJournalNewState({ ...journalNewState, citeScore: e.target.value})
+    }
+
+    const handleAimsAndScope= (e) => {
+        setJournalNewState({ ...journalNewState, aimsAndScope: e.target.value})
+    }
+
     function displayAddAddDataSwitch(){
         return(
             <label>
@@ -132,59 +145,6 @@ function Journal(props) {
         )
     }
         
-    function addDataFetch(value){
-        console.log(value)
-        console.log(WEB_CRAWLER_URL(value))
-        axios.get(`${WEB_CRAWLER_URL(value)}`, applicationJson)
-        .then((response) => {
-            if(Array.isArray(response.data) && response.data.length == 0){
-                displayErrorToast("No data found.")
-            }
-            else {
-                response.data.forEach((obj) => {
-                    if ('CiteScore' in obj) {
-                        const match = obj['CiteScore'].match(/\d+(\.\d+)?/)
-                        if (match) {
-                          const number = match[0]
-                          if (!isNaN(number)) {
-                            setCiteScore(number)
-                          }
-                        }
-                    }
-                    if ('Aims and Scope' in obj) {
-                        setAimsAndScope(obj['Aims and Scope'])
-                    }
-                })        
-                console.log(response.data)
-            }
-        })
-        .catch((error) => {console.log(error)})
-    }
-
-    function displayAddData(){
-        if(isAddData){
-            return (
-                <div>
-                    <br />
-                    <button onClick={() => addDataFetch(journalNewState.issn1)}>Fetch</button>
-                        <form 
-                        onSubmit={(e) => {e.preventDefault(); console.log(">.<")}}
-                        onReset={(e) => {e.preventDefault(); setIsAddData(!isAddData)}}
-                        >
-                        <label>CiteScore</label>
-                        <input name="citescore" placeholder="CiteScore" value={citeScore || ''} onChange={e => setCiteScore(e.target.value)}  />
-                        <label>Aims and Scope</label>
-                        <textarea name="aimsandscope" placeholder="Aims and Scope" rows="5" value={aimsAndScope || ''} onChange={e => setAimsAndScope(e.target.value)}  />
-                        <div className="grid">
-                            <ButtonCorrect type="submit">Accept</ButtonCorrect>
-                            <ButtonDelete type="reset">Reject</ButtonDelete>
-                        </div>
-                        </form>
-                </div>
-            )
-        }
-        return ""
-    }
 
     function displayJournal(){
         return (
@@ -214,11 +174,11 @@ function Journal(props) {
                         <input name="points" value={journalNewState.points} onChange={handlePoints} placeholder="Points" />
                     </label>
                     <label>Cite score
-                        <input  />
+                        <input name="citeScore" value={journalNewState.citeScore} onChange={handleCiteScore} placeholder="Cite score" />
                     </label>
                 </div>
                 <label>Aims and scope
-                    <textarea name="aimsandscope" placeholder="Aims and Scope" />
+                    <textarea name="aimsAndScope" rows="5" value={journalNewState.aimsAndScope || ""} onChange={handleAimsAndScope} placeholder="Aims and Scope" />
                 </label>
                 <div>
                     <TagSelector selectedTags={tags} transferTags={(value) => transferTags(value)} />
@@ -263,7 +223,12 @@ function Journal(props) {
             </hgroup>
             <h3>Fetch CiteScore, Aims and Scope</h3>
             {displayAddAddDataSwitch()}
-            {displayAddData()}
+            <AddDataComponent 
+                setJournalNewState={setJournalNewState}
+                journalNewState={journalNewState} 
+                isAddData={isAddData} 
+                setIsAddData={setIsAddData} 
+            />
             <br />
             <h3>Journal content</h3>
             {displayJournal()}

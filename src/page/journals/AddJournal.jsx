@@ -65,6 +65,24 @@ function AddJournal() {
                 <div>
                     <TagSelector reset={isTagSelector} transferTags={(value) => transferTags(value)} />
                 </div>
+                <label>CiteScore</label>
+                <input 
+                    name='citescore' 
+                    placeholder='CiteScore' 
+                    type='number' 
+                    // value={citeScore || ''} 
+                    // onChange={e => setCiteScore(e.target.value)} 
+                    className='no-spin-buttons ' 
+                />
+                <label>Aims and Scope</label>
+                <textarea 
+                    name='aimsandscope' 
+                    placeholder='Aims and Scope' 
+                    maxLength='8191'
+                    rows='5' 
+                    // value={aimsAndScope || ''} 
+                    // onChange={e => setAimsAndScope(e.target.value)} 
+                />
                 <label>File browser<input type="file" onChange={(e) => setFile(e.target.files[0])} /></label>
                 <ButtonCorrect type="submit">Send</ButtonCorrect>
             </form>
