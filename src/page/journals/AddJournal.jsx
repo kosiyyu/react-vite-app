@@ -65,10 +65,10 @@ function AddJournal() {
                 <div>
                     <TagSelector reset={isTagSelector} transferTags={(value) => transferTags(value)} />
                 </div>
-                <label>CiteScore</label>
+                <label>Cite score</label>
                 <input 
                     name='citescore' 
-                    placeholder='CiteScore' 
+                    placeholder='citeScore' 
                     type='number' 
                     // value={citeScore || ''} 
                     // onChange={e => setCiteScore(e.target.value)} 
