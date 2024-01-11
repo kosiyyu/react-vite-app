@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 import { applicationJson } from '../../../headers/headers'
-import { WEB_CRAWLER_URL } from '../../../global'
+import { WEB_SCRAPER_URL } from '../../../global'
 import ButtonCorrect from '../../../components/buttons/ButtonCorrect'
 import ButtonDelete from '../../../components/buttons/ButtonDelete'
 import toast from 'react-hot-toast'
@@ -46,10 +46,10 @@ function AddDataComponent({ journalNewState, setJournalNewState, isAddData }) {
     function addDataFetch(values) {
         console.log(values)
         const value = (values.filter((value) => value !== undefined && value !== null && value !== '')[0]) || '';
-        console.log(`${WEB_CRAWLER_URL(value)}`)
+        console.log(`${WEB_SCRAPER_URL(value)}`)
         console.log(value)
         setIsFetching(true)
-        axios.get(`${WEB_CRAWLER_URL(value)}`, applicationJson)
+        axios.get(`${WEB_SCRAPER_URL(value)}`, applicationJson)
             .then((response) => {
                 console.log(response.data)
                 if (!response.data || !Array.isArray(response.data) || response.data.length == 0){
