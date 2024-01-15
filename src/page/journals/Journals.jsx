@@ -128,6 +128,8 @@ function Journals() {
                         <option>Title 2</option>
                         <option>Issn 2</option>
                         <option>E-issn 2</option>
+                        <option>Impact factor</option>
+                        <option>CiteScore</option>
                         <option>Points</option>
                     </select>
                     <fieldset>

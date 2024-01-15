@@ -10,7 +10,7 @@ import { applicationJson } from '../../headers/headers'
 
 function JournalList() {
     const [journals, setJournals] = useState(undefined)
-    const [isLoading, setIsLoading] = useState(true)
+    const [, setIsLoading] = useState(true)
 
     const { display, state, dispatch, pageInfo, setPageInfo, sent, buttonSent } = useContext(SearchTokenContext)
 
@@ -85,7 +85,8 @@ function JournalList() {
                         <th scope="col">Issn 2</th>
                         <th scope="col">E-issn 2</th>
                         <th scope="col">Points</th>
-                        <th scope="col">Cite score</th>
+                        <th scope="col">Impact factor</th>
+                        <th scope="col">CiteScore</th>
                         <th scope="col">Aims and scope</th>
                         <th scope="col">Tags</th>
                     </tr>
@@ -102,6 +103,7 @@ function JournalList() {
                             <td>{journal.issn2 ? journal.issn2 : '-'}</td>
                             <td>{journal.eissn2 ? journal.eissn2 : '-'}</td>
                             <td>{journal.points ? journal.points : '-'}</td>
+                            <td>{journal.impactFactor ? journal.impactFactor : '-'}</td>
                             <td>{journal.citeScore ? journal.citeScore : '-'}</td>
                             <td>{displayAimsAndScope(journal.aimsAndScope)}</td>
                             <td>
