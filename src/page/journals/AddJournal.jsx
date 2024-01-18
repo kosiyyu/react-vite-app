@@ -15,8 +15,13 @@ function AddJournal() {
     const [tags, setTags] = useState([])
     const [isTagSelector, setIsTagSelector] = useState(false)
 
-    function updateData(e) {
+    function handleSubmit(e) {
         e.preventDefault()
+        e.preventDefault()    
+        if (!e.target.elements.title.value && !e.target.elements.title2.value) {
+            alert("At least one title must be filled in.")
+            return
+        }
         const newJournal = {...defaultJournal,
             title1: e.target.elements.title.value,
             issn1: e.target.elements.issn.value,
@@ -25,6 +30,9 @@ function AddJournal() {
             issn2: e.target.elements.issn2.value,
             eissn2: e.target.elements.eissn2.value,
             points: e.target.elements.points.value,
+            impactFactor: parseFloat(e.target.elements.impactFactor.value),
+            aimsAndScope: e.target.elements.aimsAndScope.value,
+            citeScore: parseFloat(e.target.elements.citeScore.value),
             tags: tags
         }
         const formData = new FormData()
@@ -50,8 +58,8 @@ function AddJournal() {
 
     return (
         <article>
-            <form onSubmit={(e) => updateData(e)}>
-                <label>Title<input name="title" placeholder="Title" required /></label>
+            <form onSubmit={(e) => handleSubmit(e)}>
+                <label>Title<input name="title" placeholder="Title" /></label>
                 <div className="grid">
                     <label>Issn code<input name="issn" placeholder="Issn code" /></label>
                     <label>E-issn code<input name="eissn" placeholder="E-issn code" /></label>
@@ -65,23 +73,28 @@ function AddJournal() {
                 <div>
                     <TagSelector reset={isTagSelector} transferTags={(value) => transferTags(value)} />
                 </div>
+                <label>Impact factor</label>
+                <input
+                    name='impactFactor' 
+                    placeholder='Impact factor' 
+                    type='number'
+                    step='0.01'
+                    className='no-spin-buttons' 
+                />
                 <label>Cite score</label>
                 <input 
-                    name='citescore' 
-                    placeholder='citeScore' 
-                    type='number' 
-                    // value={citeScore || ''} 
-                    // onChange={e => setCiteScore(e.target.value)} 
-                    className='no-spin-buttons ' 
+                    name='citeScore' 
+                    placeholder='CiteScore' 
+                    type='number'
+                    step='0.01'
+                    className='no-spin-buttons' 
                 />
                 <label>Aims and Scope</label>
                 <textarea 
-                    name='aimsandscope' 
+                    name='aimsAndScope' 
                     placeholder='Aims and Scope' 
                     maxLength='8191'
                     rows='5' 
-                    // value={aimsAndScope || ''} 
-                    // onChange={e => setAimsAndScope(e.target.value)} 
                 />
                 <label>File browser<input type="file" onChange={(e) => setFile(e.target.files[0])} /></label>
                 <ButtonCorrect type="submit">Send</ButtonCorrect>

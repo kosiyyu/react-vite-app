@@ -65,7 +65,11 @@ function Journal(props) {
     },[tags])
 
     const handleEdit = (e) => {
-        e.preventDefault()
+        e.preventDefault()    
+        if (!journalNewState.title1 && !journalNewState.title2) {
+            alert("At least one title must be filled in.")
+            return
+        }
         setIsLoading(true)
         console.log("EDIT")
         const formData = new FormData()
@@ -127,8 +131,12 @@ function Journal(props) {
         setJournalNewState({ ...journalNewState, citeScore: e.target.value})
     }
 
-    const handleAimsAndScope= (e) => {
+    const handleAimsAndScope = (e) => {
         setJournalNewState({ ...journalNewState, aimsAndScope: e.target.value})
+    }
+
+    const handleImpactFactor = (e) => {
+        setJournalNewState({ ...journalNewState, impactFactor: e.target.value})
     }
 
     function displayAddAddDataSwitch(){
@@ -150,7 +158,7 @@ function Journal(props) {
         return (
             <form onSubmit={handleEdit} onReset={handleReset}>
                 <label>Title</label>
-                <input value={journalNewState.title1} onChange={handleTitle1} placeholder="Title" required />
+                <input value={journalNewState.title1} onChange={handleTitle1} placeholder="Title"  />
                 <div className="grid">
                     <label>Issn code
                         <input name="issn" value={journalNewState.issn1} onChange={handleIssn1} placeholder="Issn code" />
@@ -160,7 +168,7 @@ function Journal(props) {
                     </label>
                 </div>
                 <label>Title 2</label>
-                <input value={journalNewState.title2} onChange={handleTitle2} placeholder="Title" required />
+                <input value={journalNewState.title2} onChange={handleTitle2} placeholder="Title"  />
                 <div className="grid">
                     <label>Issn code 2
                         <input name="issn2" value={journalNewState.issn2}  onChange={handleIssn2} placeholder="Issn code 2" />
@@ -169,11 +177,14 @@ function Journal(props) {
                         <input name="eissn2" value={journalNewState.eissn2} onChange={handleEissn2} placeholder="E-issn code 2" />
                     </label>
                 </div>
+                <label>Impact Factor
+                    <input name="points" value={journalNewState.impactFactor} onChange={handleImpactFactor} placeholder="Points" />
+                </label>
                 <div className="grid">
                     <label>Points
                         <input name="points" value={journalNewState.points} onChange={handlePoints} placeholder="Points" />
                     </label>
-                    <label>Cite score
+                    <label>CiteScore
                         <input name="citeScore" value={journalNewState.citeScore} onChange={handleCiteScore} placeholder="Cite score" />
                     </label>
                 </div>

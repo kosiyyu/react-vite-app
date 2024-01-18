@@ -22,6 +22,7 @@ export const defaultJournal = {
     title2: "", // string
     issn2: "", // string
     eissn2: "", // string
+    impactFactor: null, // int
     aimsAndScope: "", // string
     points: null, // int
     citeScore: null, // double

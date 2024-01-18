@@ -128,6 +128,8 @@ function Journals() {
                         <option>Title 2</option>
                         <option>Issn 2</option>
                         <option>E-issn 2</option>
+                        <option>Impact factor</option>
+                        <option>CiteScore</option>
                         <option>Points</option>
                     </select>
                     <fieldset>
@@ -155,7 +157,7 @@ function Journals() {
                         onChange={e => setAimsAndScope(e.target.value)} 
                     />  
                     <label>
-                        Similarity value
+                        Aims and scope similarity value
                     </label>
                     <input type="range" min="0" max="1" value={similarityValue} onChange={e => setSimilarityValue(e.target.value)} step="0.01" id="range" name="range" />
                     <input type="text" value={similarityValue} readOnly/> 
